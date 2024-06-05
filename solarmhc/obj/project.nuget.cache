@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "NOScyvkzjs42prpA/eO8AQPCGYbCMsPDd3ykb+Fz7GEkTxcValrb2bzNC7RVmpid0obZAuMr2S+qV6BTANOxdw==",
+  "dgSpecHash": "ma/nWuhkzoDU5/1avXsvDA2B/vT2/lL4CzaFcex4N8md/8x1lgIexI+F+l/mhmeRHNkdg2aTe4qsOvE0EAfojw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\solarmhc.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Brendan.Ball\\.nuget\\packages\\htmlagilitypack\\1.11.61\\htmlagilitypack.1.11.61.nupkg.sha512",
     "C:\\Users\\Brendan.Ball\\.nuget\\packages\\htmlagilitypack.cssselectors\\1.0.2\\htmlagilitypack.cssselectors.1.0.2.nupkg.sha512",
+    "C:\\Users\\Brendan.Ball\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.18.1\\microsoft.visualstudio.azure.containers.tools.targets.1.18.1.nupkg.sha512",
     "C:\\Users\\Brendan.Ball\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\Brendan.Ball\\.nuget\\packages\\selenium.support\\4.21.0\\selenium.support.4.21.0.nupkg.sha512",
     "C:\\Users\\Brendan.Ball\\.nuget\\packages\\selenium.webdriver\\4.21.0\\selenium.webdriver.4.21.0.nupkg.sha512",

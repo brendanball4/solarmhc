@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebScraper
 {
-    public class WebScraperService
+    public class FroniusWebScraper
     {
         public async Task<string> GetCurrentPowerAsync(string dataUrl)
         {
