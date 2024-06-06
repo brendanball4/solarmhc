@@ -50,9 +50,21 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "HtmlAgilityPack": {
+              "target": "Package",
+              "version": "[1.11.37, )"
+            },
+            "HtmlAgilityPack.CssSelectors": {
+              "target": "Package",
+              "version": "[1.0.2, )"
+            },
             "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
               "target": "Package",
               "version": "[1.18.1, )"
+            },
+            "MudBlazor": {
+              "target": "Package",
+              "version": "[6.20.0, )"
             }
           },
           "imports": [
@@ -119,9 +131,13 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "DotNetSeleniumExtras.WaitHelpers": {
+              "target": "Package",
+              "version": "[3.11.0, )"
+            },
             "HtmlAgilityPack": {
               "target": "Package",
-              "version": "[1.11.61, )"
+              "version": "[1.11.37, )"
             },
             "HtmlAgilityPack.CssSelectors": {
               "target": "Package",

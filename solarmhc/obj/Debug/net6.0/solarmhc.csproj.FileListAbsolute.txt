@@ -41,3 +41,16 @@ C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\selenium-m
 C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\WebDriver.dll
 C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\WebDriver.Support.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\SeleniumExtras.WaitHelpers.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.AspNetCore.Authorization.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.AspNetCore.Components.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.AspNetCore.Components.Forms.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.AspNetCore.Components.Web.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.AspNetCore.Metadata.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.Extensions.Localization.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.Extensions.Localization.Abstractions.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.JSInterop.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\MudBlazor.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\System.IO.Pipelines.dll

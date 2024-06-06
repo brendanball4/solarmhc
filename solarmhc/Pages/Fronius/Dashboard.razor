@@ -1,0 +1,38 @@
+﻿@page "/fronius/dashboard"
+
+<h3>Fronius Dashboard</h3>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="FetchData">Fetch Data</MudButton>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="StopFetchingData">Stop Fetching</MudButton>
+
+@if (!string.IsNullOrEmpty(Data))
+{
+    <pre>@Data</pre>
+}
+
+@code {
+    private string Data;
+    private WebScraper.FroniusWebScraper webScraperService;
+    private CancellationTokenSource cts;
+
+    private async Task FetchData()
+    {
+        // Replace with your actual data URL
+        string dataUrl = "https://www.solarweb.com/Home/GuestLogOn?pvSystemId=fadf7bd8-f901-4948-8683-a4dfd7d8b677";
+
+        webScraperService = new WebScraper.FroniusWebScraper();
+        cts = new CancellationTokenSource();
+        await webScraperService.StartFetchingPowerAsync(dataUrl, cts.Token, UpdateData);
+    }
+
+    private void UpdateData(string data)
+    {
+        Data = data;
+        InvokeAsync(StateHasChanged); // Ensure the UI updates
+    }
+
+    private void StopFetchingData()
+    {
+        cts.Cancel();
+        webScraperService.StopFetching();
+    }
+}

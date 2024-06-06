@@ -2,7 +2,19 @@
   "version": 3,
   "targets": {
     "net6.0": {
-      "HtmlAgilityPack/1.11.61": {
+      "DotNetSeleniumExtras.WaitHelpers/3.11.0": {
+        "type": "package",
+        "dependencies": {
+          "Selenium.WebDriver": "3.10.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/SeleniumExtras.WaitHelpers.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/SeleniumExtras.WaitHelpers.dll": {}
+        }
+      },
+      "HtmlAgilityPack/1.11.37": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/HtmlAgilityPack.dll": {
@@ -94,14 +106,29 @@
     }
   },
   "libraries": {
-    "HtmlAgilityPack/1.11.61": {
-      "sha512": "hqZASeEFHS9quHvfZSwaULoAJLWkOYVPiQjc3P9J4pQS8vSYzrP3bxe04Vm7vYYuxwbQhq9hCSVvZVLTyRaNaQ==",
+    "DotNetSeleniumExtras.WaitHelpers/3.11.0": {
+      "sha512": "xc6jVVl5ymgk3ZNWnC/KHxkEup1QpnwYbrwF+NQoCOGERsD8YMlLwmsX4lGhLXCLo/YQTRTIwlKCN9E/doGUNg==",
       "type": "package",
-      "path": "htmlagilitypack/1.11.61",
+      "path": "dotnetseleniumextras.waithelpers/3.11.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "htmlagilitypack.1.11.61.nupkg.sha512",
+        "dotnetseleniumextras.waithelpers.3.11.0.nupkg.sha512",
+        "dotnetseleniumextras.waithelpers.nuspec",
+        "lib/net35/SeleniumExtras.WaitHelpers.dll",
+        "lib/net40/SeleniumExtras.WaitHelpers.dll",
+        "lib/net45/SeleniumExtras.WaitHelpers.dll",
+        "lib/netstandard2.0/SeleniumExtras.WaitHelpers.dll"
+      ]
+    },
+    "HtmlAgilityPack/1.11.37": {
+      "sha512": "HioktZJuMHVW7QTwVayHDoBL8dPL68vGRLFdQXYNuSJkVfhxn6xihcocUgbR+B1Lm/YesigUvWrdH0JY+PZ+0g==",
+      "type": "package",
+      "path": "htmlagilitypack/1.11.37",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "htmlagilitypack.1.11.37.nupkg.sha512",
         "htmlagilitypack.nuspec",
         "lib/Net35/HtmlAgilityPack.dll",
         "lib/Net35/HtmlAgilityPack.pdb",
@@ -245,7 +272,8 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "HtmlAgilityPack >= 1.11.61",
+      "DotNetSeleniumExtras.WaitHelpers >= 3.11.0",
+      "HtmlAgilityPack >= 1.11.37",
       "HtmlAgilityPack.CssSelectors >= 1.0.2",
       "Selenium.Support >= 4.21.0",
       "Selenium.WebDriver >= 4.21.0",
@@ -297,9 +325,13 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
+          "DotNetSeleniumExtras.WaitHelpers": {
+            "target": "Package",
+            "version": "[3.11.0, )"
+          },
           "HtmlAgilityPack": {
             "target": "Package",
-            "version": "[1.11.61, )"
+            "version": "[1.11.37, )"
           },
           "HtmlAgilityPack.CssSelectors": {
             "target": "Package",
