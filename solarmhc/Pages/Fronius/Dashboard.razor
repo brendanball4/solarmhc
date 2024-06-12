@@ -1,32 +1,24 @@
-﻿@page "/fronius/dashboard"
+﻿@using WebScraper;
+@using solarmhc.Pages.Fronius.Components
+@page "/fronius/dashboard"
 
 <h3>Fronius Dashboard</h3>
 <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="FetchData">Fetch Data</MudButton>
 <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="StopFetchingData">Stop Fetching</MudButton>
 
-@if (!string.IsNullOrEmpty(Data))
-{
-    <MudGrid Class="mt-5">
-        <MudItem>
-            <MudPaper>
-                <h2 class="text-center pt-3">Current Power</h2>
-                <hr>
-                <MudChart ChartType="ChartType.Donut" Width="300px" Height="300px" InputData="ChartData" InputLabels='new string[] { "Utilization", "Capacity" }' Colors='new string[] { "#ff0000", "#cccccc" }'>
-                    <CustomGraphics>
-                        <text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">@Data.Substring(0,7)</text>
-                        <text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">@Data.Substring(7)</text>
-                    </CustomGraphics>
-                </MudChart>
-            </MudPaper>
-        </MudItem>
-    </MudGrid>
-}
+<MudGrid Class="mt-5">
+    @* Current Power Widget *@
+    <MudItem>
+        <CascadingValue Value="SharedData">
+            <CurrentPower />
+        </CascadingValue>
+    </MudItem>
+</MudGrid>
 
 @code {
-    private string Data;
+    private SharedData SharedData = new SharedData();
     private WebScraper.FroniusWebScraper webScraperService;
     private CancellationTokenSource cts;
-    private double[] ChartData = new double[2];
 
     private async Task FetchData()
     {
@@ -40,16 +32,15 @@
 
     private void UpdateData(string data)
     {
-        Data = data;
-
+        SharedData.Data = data;
         // Parse and update the chart data
         if (TryParseData(data, out double utilizedPower))
         {
             double totalCapacity = 25.0; // Total capacity of the system in kWh
             double remainingCapacity = totalCapacity - utilizedPower;
 
-            ChartData[0] = utilizedPower; // Utilized power
-            ChartData[1] = remainingCapacity; // Remaining capacity
+            SharedData.ChartData[0] = utilizedPower; // Utilized power
+            SharedData.ChartData[1] = remainingCapacity; // Remaining capacity
         }
 
         InvokeAsync(StateHasChanged); // Ensure the UI updates
@@ -80,7 +71,11 @@
 
     private void StopFetchingData()
     {
+        SharedData.ChartData[0] = 0; // Utilized power
+        SharedData.ChartData[1] = 100; // Remaining capacity
         cts.Cancel();
         webScraperService.StopFetching();
+        SharedData.Data = null;
+        InvokeAsync(StateHasChanged); // Ensure the UI updates
     }
 }
