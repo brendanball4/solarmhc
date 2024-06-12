@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\" />
     <Folder Include="Pages\Huawei\" />
     <Folder Include="Pages\APSystems\" />
     <Folder Include="Pages\Sunny\" />

@@ -9,7 +9,7 @@
       "WebScraper/1.0.0": {
         "dependencies": {
           "DotNetSeleniumExtras.WaitHelpers": "3.11.0",
-          "HtmlAgilityPack": "1.11.61",
+          "HtmlAgilityPack": "1.11.37",
           "HtmlAgilityPack.CssSelectors": "1.0.2",
           "Selenium.Support": "4.21.0",
           "Selenium.WebDriver": "4.21.0",
@@ -30,17 +30,17 @@
           }
         }
       },
-      "HtmlAgilityPack/1.11.61": {
+      "HtmlAgilityPack/1.11.37": {
         "runtime": {
           "lib/netstandard2.0/HtmlAgilityPack.dll": {
-            "assemblyVersion": "1.11.61.0",
-            "fileVersion": "1.11.61.0"
+            "assemblyVersion": "1.11.37.0",
+            "fileVersion": "1.11.37.0"
           }
         }
       },
       "HtmlAgilityPack.CssSelectors/1.0.2": {
         "dependencies": {
-          "HtmlAgilityPack": "1.11.61"
+          "HtmlAgilityPack": "1.11.37"
         },
         "runtime": {
           "lib/net45/HtmlAgilityPack.CssSelectors.dll": {
@@ -95,12 +95,12 @@
       "path": "dotnetseleniumextras.waithelpers/3.11.0",
       "hashPath": "dotnetseleniumextras.waithelpers.3.11.0.nupkg.sha512"
     },
-    "HtmlAgilityPack/1.11.61": {
+    "HtmlAgilityPack/1.11.37": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-hqZASeEFHS9quHvfZSwaULoAJLWkOYVPiQjc3P9J4pQS8vSYzrP3bxe04Vm7vYYuxwbQhq9hCSVvZVLTyRaNaQ==",
-      "path": "htmlagilitypack/1.11.61",
-      "hashPath": "htmlagilitypack.1.11.61.nupkg.sha512"
+      "sha512": "sha512-HioktZJuMHVW7QTwVayHDoBL8dPL68vGRLFdQXYNuSJkVfhxn6xihcocUgbR+B1Lm/YesigUvWrdH0JY+PZ+0g==",
+      "path": "htmlagilitypack/1.11.37",
+      "hashPath": "htmlagilitypack.1.11.37.nupkg.sha512"
     },
     "HtmlAgilityPack.CssSelectors/1.0.2": {
       "type": "package",

@@ -6,13 +6,27 @@
 
 @if (!string.IsNullOrEmpty(Data))
 {
-    <pre>@Data</pre>
+    <MudGrid Class="mt-5">
+        <MudItem>
+            <MudPaper>
+                <h2 class="text-center pt-3">Current Power</h2>
+                <hr>
+                <MudChart ChartType="ChartType.Donut" Width="300px" Height="300px" InputData="ChartData" InputLabels='new string[] { "Utilization", "Capacity" }' Colors='new string[] { "#ff0000", "#cccccc" }'>
+                    <CustomGraphics>
+                        <text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">@Data.Substring(0,7)</text>
+                        <text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">@Data.Substring(7)</text>
+                    </CustomGraphics>
+                </MudChart>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
 }
 
 @code {
     private string Data;
     private WebScraper.FroniusWebScraper webScraperService;
     private CancellationTokenSource cts;
+    private double[] ChartData = new double[2];
 
     private async Task FetchData()
     {
@@ -27,7 +41,41 @@
     private void UpdateData(string data)
     {
         Data = data;
+
+        // Parse and update the chart data
+        if (TryParseData(data, out double utilizedPower))
+        {
+            double totalCapacity = 25.0; // Total capacity of the system in kWh
+            double remainingCapacity = totalCapacity - utilizedPower;
+
+            ChartData[0] = utilizedPower; // Utilized power
+            ChartData[1] = remainingCapacity; // Remaining capacity
+        }
+
         InvokeAsync(StateHasChanged); // Ensure the UI updates
+    }
+
+    private bool TryParseData(string data, out double utilizedPower)
+    {
+        utilizedPower = 0;
+        try
+        {
+            // Example input: "21.2 kW\nUtilization 89 %"
+            var lines = data.Split('\n');
+            if (lines.Length >= 1)
+            {
+                var powerString = lines[0].Replace("kW", "").Trim();
+                if (double.TryParse(powerString, out utilizedPower))
+                {
+                    return true;
+                }
+            }
+        }
+        catch
+        {
+            // Handle any parsing errors
+        }
+        return false;
     }
 
     private void StopFetchingData()

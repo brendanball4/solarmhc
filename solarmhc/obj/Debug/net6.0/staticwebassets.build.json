@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "JZT24EwW6Co2S4P+Z66VlSGy2FsEJ4TSEPMnkCL0jMI=",
+  "Hash": "sbGXDGJM6UScB2RoUutUivVL0vsgKMWbl/viwvNoTDw=",
   "Source": "solarmhc",
   "BasePath": "_content/solarmhc",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "solarmhc\\wwwroot",
       "Source": "solarmhc",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\",
       "BasePath": "_content/solarmhc",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\.nuget\\packages\\mudblazor\\6.20.0\\staticwebassets\\MudBlazor.min.css",
+      "Identity": "C:\\Users\\Brendan\\.nuget\\packages\\mudblazor\\6.20.0\\staticwebassets\\MudBlazor.min.css",
       "SourceId": "MudBlazor",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\.nuget\\packages\\mudblazor\\6.20.0\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\Brendan\\.nuget\\packages\\mudblazor\\6.20.0\\staticwebassets\\",
       "BasePath": "_content/MudBlazor",
       "RelativePath": "MudBlazor.min.css",
       "AssetKind": "All",
@@ -31,13 +31,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\Brendan.Ball\\.nuget\\packages\\mudblazor\\6.20.0\\staticwebassets\\MudBlazor.min.css"
+      "OriginalItemSpec": "C:\\Users\\Brendan\\.nuget\\packages\\mudblazor\\6.20.0\\staticwebassets\\MudBlazor.min.css"
     },
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\.nuget\\packages\\mudblazor\\6.20.0\\staticwebassets\\MudBlazor.min.js",
+      "Identity": "C:\\Users\\Brendan\\.nuget\\packages\\mudblazor\\6.20.0\\staticwebassets\\MudBlazor.min.js",
       "SourceId": "MudBlazor",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\.nuget\\packages\\mudblazor\\6.20.0\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\Brendan\\.nuget\\packages\\mudblazor\\6.20.0\\staticwebassets\\",
       "BasePath": "_content/MudBlazor",
       "RelativePath": "MudBlazor.min.js",
       "AssetKind": "All",
@@ -48,13 +48,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\Brendan.Ball\\.nuget\\packages\\mudblazor\\6.20.0\\staticwebassets\\MudBlazor.min.js"
+      "OriginalItemSpec": "C:\\Users\\Brendan\\.nuget\\packages\\mudblazor\\6.20.0\\staticwebassets\\MudBlazor.min.js"
     },
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\obj\\Debug\\net6.0\\scopedcss\\bundle\\solarmhc.styles.css",
+      "Identity": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\obj\\Debug\\net6.0\\scopedcss\\bundle\\solarmhc.styles.css",
       "SourceId": "solarmhc",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
       "BasePath": "_content/solarmhc",
       "RelativePath": "solarmhc.styles.css",
       "AssetKind": "All",
@@ -65,13 +65,13 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\obj\\Debug\\net6.0\\scopedcss\\bundle\\solarmhc.styles.css"
+      "OriginalItemSpec": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\obj\\Debug\\net6.0\\scopedcss\\bundle\\solarmhc.styles.css"
     },
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\solarmhc.bundle.scp.css",
+      "Identity": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\solarmhc.bundle.scp.css",
       "SourceId": "solarmhc",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/solarmhc",
       "RelativePath": "solarmhc.bundle.scp.css",
       "AssetKind": "All",
@@ -82,13 +82,13 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\solarmhc.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\solarmhc.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "Identity": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "SourceId": "solarmhc",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\",
       "BasePath": "_content/solarmhc",
       "RelativePath": "css/bootstrap/bootstrap.min.css",
       "AssetKind": "All",
@@ -102,10 +102,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "solarmhc",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\",
       "BasePath": "_content/solarmhc",
       "RelativePath": "css/bootstrap/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -119,10 +119,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "Identity": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "SourceId": "solarmhc",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\",
       "BasePath": "_content/solarmhc",
       "RelativePath": "css/open-iconic/font/css/open-iconic-bootstrap.min.css",
       "AssetKind": "All",
@@ -136,10 +136,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "Identity": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "SourceId": "solarmhc",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\",
       "BasePath": "_content/solarmhc",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.eot",
       "AssetKind": "All",
@@ -153,10 +153,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
     },
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "Identity": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "SourceId": "solarmhc",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\",
       "BasePath": "_content/solarmhc",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.otf",
       "AssetKind": "All",
@@ -170,10 +170,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
     },
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "Identity": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "SourceId": "solarmhc",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\",
       "BasePath": "_content/solarmhc",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.svg",
       "AssetKind": "All",
@@ -187,10 +187,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
     },
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "Identity": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "SourceId": "solarmhc",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\",
       "BasePath": "_content/solarmhc",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.ttf",
       "AssetKind": "All",
@@ -204,10 +204,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
     },
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "Identity": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "SourceId": "solarmhc",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\",
       "BasePath": "_content/solarmhc",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.woff",
       "AssetKind": "All",
@@ -221,10 +221,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
     },
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "Identity": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "SourceId": "solarmhc",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\",
       "BasePath": "_content/solarmhc",
       "RelativePath": "css/open-iconic/FONT-LICENSE",
       "AssetKind": "All",
@@ -238,10 +238,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
     },
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "Identity": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "SourceId": "solarmhc",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\",
       "BasePath": "_content/solarmhc",
       "RelativePath": "css/open-iconic/ICON-LICENSE",
       "AssetKind": "All",
@@ -255,10 +255,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\ICON-LICENSE"
     },
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\README.md",
+      "Identity": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\css\\open-iconic\\README.md",
       "SourceId": "solarmhc",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\",
       "BasePath": "_content/solarmhc",
       "RelativePath": "css/open-iconic/README.md",
       "AssetKind": "All",
@@ -272,10 +272,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\README.md"
     },
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\css\\site.css",
+      "Identity": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\css\\site.css",
       "SourceId": "solarmhc",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\",
       "BasePath": "_content/solarmhc",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -289,10 +289,10 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\favicon.ico",
+      "Identity": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\favicon.ico",
       "SourceId": "solarmhc",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\",
       "BasePath": "_content/solarmhc",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",
@@ -304,6 +304,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\images\\mhcanopy.png",
+      "SourceId": "solarmhc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\wwwroot\\",
+      "BasePath": "_content/solarmhc",
+      "RelativePath": "images/mhcanopy.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\mhcanopy.png"
     }
   ]
 }
