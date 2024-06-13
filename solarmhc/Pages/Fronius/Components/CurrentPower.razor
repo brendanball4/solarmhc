@@ -1,6 +1,12 @@
 ﻿@using WebScraper
+@inject SolarMHCDbContext DbContext
 
-<MudPaper>
+<MudButtonGroup Class="mud-width-full" Color="Color.Primary" Variant="Variant.Filled">
+    <MudButton FullWidth="true" @onclick="FetchData">Fetch Data</MudButton>
+    <MudButton FullWidth="true" @onclick="StopFetchingData">Stop Fetching</MudButton>
+</MudButtonGroup>
+
+<MudPaper Class="mt-3">
     <h2 class="text-center pt-3">Current Power</h2>
     <hr>
     @if (!string.IsNullOrEmpty(SharedData.Data) && !SharedData.Data.Contains("Offline"))
@@ -24,6 +30,71 @@
 </MudPaper>
 
 @code {
-    [CascadingParameter]
-    public SharedData SharedData { get; set; }
+    private SharedData SharedData = new SharedData();
+    private global::WebScraper.WebScraper webScraperService;
+    private CancellationTokenSource cts;
+
+    private async Task FetchData()
+    {
+        // Replace with your actual data URL
+        string dataUrl = "https://www.solarweb.com/Home/GuestLogOn?pvSystemId=fadf7bd8-f901-4948-8683-a4dfd7d8b677";
+
+            webScraperService = new global::WebScraper.WebScraper();
+        cts = new CancellationTokenSource();
+        await webScraperService.StartFetchingPowerAsync(dataUrl, cts.Token, UpdateData);
+    }
+
+    private void UpdateData(string data)
+    {
+        SharedData.Data = data;
+        // Parse and update the chart data
+        if (TryParseData(data, out double utilizedPower))
+        {
+            double totalCapacity = 25.0; // Total capacity of the system in kWh
+            double remainingCapacity = totalCapacity - utilizedPower;
+
+            SharedData.ChartData[0] = utilizedPower; // Utilized power
+            SharedData.ChartData[1] = remainingCapacity; // Remaining capacity
+        }
+
+        InvokeAsync(StateHasChanged); // Ensure the UI updates
+    }
+
+    private bool TryParseData(string data, out double utilizedPower)
+    {
+        utilizedPower = 0;
+        try
+        {
+            // Example input: "21.2 kW\nUtilization 89 %"
+            var lines = data.Split('\n');
+            if (lines.Length >= 1)
+            {
+                var powerString = lines[0].Replace("kW", "").Trim();
+                if (double.TryParse(powerString, out utilizedPower))
+                {
+                    return true;
+                }
+            }
+        }
+        catch
+        {
+            // Handle any parsing errors
+        }
+        return false;
+    }
+
+    private void StopFetchingData()
+    {
+        SharedData.ChartData[0] = 0; // Utilized power
+        SharedData.ChartData[1] = 100; // Remaining capacity
+        cts.Cancel();
+        webScraperService.StopFetching();
+        SharedData.Data = null;
+        InvokeAsync(StateHasChanged); // Ensure the UI updates
+    }
+}
+
+@code {
+
+
 }

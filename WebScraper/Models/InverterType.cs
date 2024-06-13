@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace WebScraper.Models
 {
-    internal class InverterType
+    public class InverterType
     {
         public int Id { get; set; }
-        public string Model { get; set; }
-        public string Manufacturer { get; set; }
-        public decimal Capacity { get; set; } // in kW
+        public Model Model { get; set; }
+        public decimal RatedCapacity { get; set; }
+        public Location Location { get; set; }
+        public string? Notes { get; set; }
     }
 }

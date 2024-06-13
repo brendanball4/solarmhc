@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace WebScraper.Models
 {
-    internal class PowerIntake
+    public class PowerIntake
     {
         public int Id { get; set; }
-        public SolarArray ArrayName { get; set; }
-        public decimal KW { get; set; }
+        public SolarSegment ArrayName { get; set; }
+        public decimal Watts { get; set; }
         public int Utilization { get; set; }
         public DateTime TimeStamp { get; set; }
+        public decimal KW => Watts / 1000;
     }
 }

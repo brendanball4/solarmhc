@@ -2,14 +2,20 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using WebScraper;
 using MudBlazor.Services;
+using Microsoft.EntityFrameworkCore;
+using WebScraper.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddHttpClient<FroniusWebScraper>();
+builder.Services.AddHttpClient<WebScraper>();
 builder.Services.AddMudServices();
+
+// Configure DbContext
+builder.Services.AddDbContext<SolarMHCDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SolarMhcDatabase")));
 
 var app = builder.Build();
 

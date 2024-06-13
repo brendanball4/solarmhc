@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "solarmhc", "solarmhc\solarmhc.csproj", "{3D265C5A-8C2A-4BF5-997D-1F7467375D5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "solarmhc.Web", "solarmhc\solarmhc.Web.csproj", "{3D265C5A-8C2A-4BF5-997D-1F7467375D5F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebScraper", "WebScraper\WebScraper.csproj", "{ACB7992A-C03F-4E0D-BCB0-81E8CB08BE46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "solarmhc.Models", "WebScraper\solarmhc.Models.csproj", "{ACB7992A-C03F-4E0D-BCB0-81E8CB08BE46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
