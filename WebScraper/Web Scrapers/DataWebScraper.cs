@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace WebScraper
 {
-    public class WebScraper
+    public class DataWebScraper
     {
         private IWebDriver driver;
         private bool isRunning;
 
-        public WebScraper()
+        public DataWebScraper()
         {
             var options = new ChromeOptions();
             options.AddArgument("--disable-gpu");
@@ -25,7 +25,7 @@ namespace WebScraper
             driver = new ChromeDriver(options);
         }
 
-        public async Task StartFetchingPowerAsync(string dataUrl, CancellationToken token, Action<string> updateCallback)
+        public async Task FroniusStartFetchingPowerData(string dataUrl, CancellationToken token, Action<string, string> updateCallback)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace WebScraper
                     var currentPower = powerElement.Text;
 
                     // Update the data via callback
-                    updateCallback(currentPower);
+                    updateCallback(currentPower, dataUrl);
 
                     // Wait for 1 second before the next iteration
                     await Task.Delay(1000);
@@ -55,6 +55,50 @@ namespace WebScraper
                 // Log or handle exceptions as necessary
                 Console.WriteLine($"Error: {ex.Message}");
             }
+        }
+
+        public async Task APSStartFetchingPowerData(string dataUrl, CancellationToken token, Action<string, string> updateCallback)
+        {
+            try
+            {
+                // Navigate to the data URL
+                driver.Navigate().GoToUrl(dataUrl);
+
+                // Wait for the element with the class "js-status-bar-text" to be visible
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("div.js-status-bar-text")));
+
+                isRunning = true;
+                while (isRunning && !token.IsCancellationRequested)
+                {
+                    // Find the element with the class "js-status-bar-text"
+                    var powerElement = driver.FindElement(By.CssSelector("div.js-status-bar-text"));
+                    var currentPower = powerElement.Text;
+
+                    // Update the data via callback
+                    updateCallback(currentPower, dataUrl);
+
+                    // Wait for 1 second before the next iteration
+                    await Task.Delay(1000);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle exceptions as necessary
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+
+        public async Task SolarEdgeStartFetchingPowerData(string dataUrl, CancellationToken token, Action<string, string> updateCallback)
+        {
+        }
+
+        public async Task HuaweiStartFetchingPowerData(string dataUrl, CancellationToken token, Action<string, string> updateCallback)
+        {
+        }
+
+        public async Task SunnyStartFetchingPowerData(string dataUrl, CancellationToken token, Action<string, string> updateCallback)
+        {
         }
 
         public void StopFetching()

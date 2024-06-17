@@ -87,3 +87,11 @@ C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\refint\sol
 C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.Web.pdb
 C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.Web.genruntimeconfig.cache
 C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\ref\solarmhc.Web.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
