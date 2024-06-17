@@ -9,6 +9,15 @@ namespace solarmhc.Models
 {
     public static class Constants
     {
+        public static class Names
+        {
+            public const string SolarEdge = "SolarEdge";
+            public const string Sunny = "Sunny";
+            public const string APS = "APS";
+            public const string Huawei = "Huawei";
+            public const string Fronius = "Fronius";
+        }
+
         public static class DataUrls
         {
             public const string SolarEdge = "https://monitoring.solaredge.com/solaredge-web/p/login";

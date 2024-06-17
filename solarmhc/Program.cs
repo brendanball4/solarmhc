@@ -5,6 +5,8 @@ using MudBlazor.Services;
 using Microsoft.EntityFrameworkCore;
 using WebScraper.Data;
 using solarmhc.Models;
+using solarmhc.Models.Web_Scrapers;
+;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient<DataWebScraper>();
 builder.Services.AddMudServices();
 builder.Services.AddSingleton<SolarDataService>();
+builder.Services.AddHostedService<WebScraperBackgroundService>();
 
 // Configure DbContext
 builder.Services.AddDbContext<SolarMHCDbContext>(options =>

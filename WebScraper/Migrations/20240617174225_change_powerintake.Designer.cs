@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebScraper.Data;
 
@@ -11,9 +12,10 @@ using WebScraper.Data;
 namespace solarmhc.Models.Migrations
 {
     [DbContext(typeof(SolarMHCDbContext))]
-    partial class SolarMHCDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240617174225_change_powerintake")]
+    partial class change_powerintake
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

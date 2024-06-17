@@ -24,7 +24,7 @@ namespace WebScraper.Data
                 .HasPrecision(18, 2); // Specify precision and scale
 
             modelBuilder.Entity<PowerIntake>()
-                .Property(p => p.Watts)
+                .Property(p => p.KW)
                 .HasPrecision(18, 2); // Specify precision and scale
         }
     }
