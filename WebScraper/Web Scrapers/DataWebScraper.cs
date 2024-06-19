@@ -1,66 +1,54 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
+using solarmhc.Models.Services;
 using WebScraper.Data;
 using WebScraper.Models;
 
-namespace WebScraper
+namespace solarmhc.Models.Services
 {
     public class DataWebScraper
     {
-        private IWebDriver driver;
+        private readonly ChromeDriverService _chromeDriverService;
         private readonly ILogger<DataWebScraper> _logger;
         private readonly IServiceProvider _serviceProvider;
+        private readonly WebScraperHelperService _webScraperHelper;
         private bool isRunning;
 
-        public DataWebScraper(IServiceProvider serviceProvider)
+        public DataWebScraper(IServiceProvider serviceProvider, WebScraperHelperService webScraperHelper, ChromeDriverService chromeDriverService)
         {
             // Inject the service provider
             _serviceProvider = serviceProvider;
-
-            // Set up the Chrome driver
-            var options = new ChromeOptions();
-            options.AddArgument("--disable-gpu");
-            options.AddArgument("--no-sandbox");
-            options.AddArgument("--disable-dev-shm-usage");
-            options.AddArgument("--headless"); // Runs in headless mode. Commenting out for easier debugging.
-
-            // Add the extension to the Chrome driver
-            options.AddArguments("load-extension=C:\\Users\\Brendan.Ball\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\ofpnikijgfhlmmjlpkfaifhhdonchhoi\\1.0.3_1");
-
-            // Create the Chrome driver with extensions and arguments
-            driver = new ChromeDriver(options);
+            _webScraperHelper = webScraperHelper;
+            _chromeDriverService = chromeDriverService;
         }
 
+        #region DB Data Scrapers
         public async Task FroniusStartFetchingPowerData(string dataUrl)
         {
             try
             {
                 // Navigate to the data URL
-                driver.Navigate().GoToUrl(dataUrl);
+                _chromeDriverService.Driver.Navigate().GoToUrl(dataUrl);
 
                 // Wait for the element with the class "js-status-bar-text" to be visible
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-                wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("div.js-status-bar-text")));
+                WebDriverWait wait = new WebDriverWait(_chromeDriverService.Driver, TimeSpan.FromSeconds(10));
+                wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(Constants.TargetedElements.Fronius)));
 
                 // Find the element with the class "js-status-bar-text"
-                var powerElement = driver.FindElement(By.CssSelector("div.js-status-bar-text"));
+                var powerElement = _chromeDriverService.Driver.FindElement(By.CssSelector(Constants.TargetedElements.Fronius));
                 var currentPower = powerElement.Text;
 
                 // Parse the data and enter the information into the database
-                var result = TryParseData(currentPower, out double utilizationPercentage, out decimal currentWattage);
+                var result = _webScraperHelper.TryParseData(currentPower, out double utilizationPercentage, out decimal currentWattage);
 
                 if (result)
                 {
-                    SubmitPowerIntakeData(solarmhc.Models.Constants.Names.Fronius, utilizationPercentage, currentWattage);
-                    driver.Close();
+                    SubmitPowerIntakeData(Constants.Names.Fronius, utilizationPercentage, currentWattage);
+                    _chromeDriverService.Driver.Close();
                 } else
                 {
                     _logger.LogError("An error occurred while parsing the data.");
@@ -72,7 +60,6 @@ namespace WebScraper
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
-
 
         public async Task APSStartFetchingPowerData(string dataUrl)
         {
@@ -89,6 +76,7 @@ namespace WebScraper
         public async Task SunnyStartFetchingPowerData(string dataUrl)
         {
         }
+        #endregion
 
         private void SubmitPowerIntakeData(string inverterName, double utilizationPercentage, decimal currentWattage)
         {
@@ -119,41 +107,6 @@ namespace WebScraper
                 dbContext.PowerIntakes.Add(powerIntake);
                 dbContext.SaveChanges();
             }
-        }
-
-        private bool TryParseData(string data, out double utilizedPower, out decimal currentWattage)
-        {
-            utilizedPower = 0;
-            currentWattage = 0;
-            try
-            {
-                var lines = data.Split('\n');
-                if (lines.Length >= 2)
-                {
-                    // Clean and parse the KW value
-                    var kwString = lines[0].Replace("kW", "").Replace("\r", "").Trim();
-                    // Clean and parse the Utilization value
-                    var utilizationString = lines[1].Replace("Utilization", "").Replace("%", "").Trim();
-
-                    if (decimal.TryParse(kwString, out currentWattage) &&
-                        double.TryParse(utilizationString, out utilizedPower))
-                    {
-                        return true;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while parsing the data.");
-            }
-            return false;
-        }
-
-
-        public void StopFetching()
-        {
-            isRunning = false;
-            driver.Quit();
         }
     }
 }

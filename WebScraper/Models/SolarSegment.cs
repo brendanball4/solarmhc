@@ -12,7 +12,7 @@ namespace WebScraper.Models
         public string Name { get; set; }
         public Model Model { get; set; }
         public DateTime? InstallationDate { get; set; }
-        public Location Location { get; set; }   
+        public ELocation Location { get; set; }   
         public InverterType InverterType { get; set; }
         public decimal RatedCapacity { get; set; }
         public string? Notes { get; set; }

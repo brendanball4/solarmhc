@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using WebScraper;
+using solarmhc.Models.Services;
 
-namespace solarmhc.Models.Web_Scrapers
+namespace solarmhc.Models.Background_Services
 {
     public class WebScraperBackgroundService : BackgroundService
     {
@@ -11,16 +11,20 @@ namespace solarmhc.Models.Web_Scrapers
         private readonly ILogger<WebScraperBackgroundService> _logger;
         private readonly SolarDataService _solarDataService;
         private readonly IServiceProvider _serviceProvider;
+        private readonly ChromeDriverService _chromeDriverService;
+        private readonly WebScraperHelperService _webScraperHelper;
 
         // Set the interval in minutes
         private readonly int _intervalInMinutes = 5;
 
-        public WebScraperBackgroundService(ILogger<WebScraperBackgroundService> logger, IServiceProvider serviceProvider, SolarDataService solarDataService)
+        public WebScraperBackgroundService(ILogger<WebScraperBackgroundService> logger, IServiceProvider serviceProvider, SolarDataService solarDataService, ChromeDriverService chromeDriverService, WebScraperHelperService webScraperHelper)
         {
             // Inject the logger and the service provider
             _logger = logger;
             _serviceProvider = serviceProvider;
             _solarDataService = solarDataService;
+            _chromeDriverService = chromeDriverService;
+            _webScraperHelper = webScraperHelper;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -46,7 +50,7 @@ namespace solarmhc.Models.Web_Scrapers
             try
             {
                 // Instantiate the DataWebScraper class
-                var dataWebScraper = new DataWebScraper(_serviceProvider);
+                var dataWebScraper = new DataWebScraper(_serviceProvider, _webScraperHelper, _chromeDriverService);
 
                 // Instantiating the service
                 using (var scope = _serviceProvider.CreateScope())

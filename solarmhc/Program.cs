@@ -1,12 +1,9 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using WebScraper;
 using MudBlazor.Services;
 using Microsoft.EntityFrameworkCore;
 using WebScraper.Data;
-using solarmhc.Models;
-using solarmhc.Models.Web_Scrapers;
-;
+using solarmhc.Models.Services;
+using solarmhc.Models.Services.Web_Scrapers;
+using solarmhc.Models.Background_Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient<DataWebScraper>();
+builder.Services.AddHttpClient<LiveDataWebScraper>();
 builder.Services.AddMudServices();
 builder.Services.AddSingleton<SolarDataService>();
+builder.Services.AddSingleton<ChromeDriverService>();
+builder.Services.AddSingleton<WebScraperHelperService>();
 builder.Services.AddHostedService<WebScraperBackgroundService>();
+builder.Services.AddHostedService<LiveDataWebScraperBackgroundService>();
 
 // Configure DbContext
 builder.Services.AddDbContext<SolarMHCDbContext>(options =>

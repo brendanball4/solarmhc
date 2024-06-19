@@ -11,7 +11,7 @@ namespace WebScraper.Models
         public int Id { get; set; }
         public Model Model { get; set; }
         public decimal RatedCapacity { get; set; }
-        public Location Location { get; set; }
+        public ELocation Location { get; set; }
         public string? Notes { get; set; }
     }
 }

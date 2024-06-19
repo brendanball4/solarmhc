@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebScraper
 {
-    public enum Location
+    public enum ELocation
     {
         CarportCanopy = 1,
         Canopy = 2,

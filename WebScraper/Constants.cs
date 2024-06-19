@@ -35,5 +35,14 @@ namespace solarmhc.Models
             public const double Huawei = 25;
             public const double Fronius = 25;
         }
+
+        public static class TargetedElements
+        {
+            public const string SolarEdge = "SolarEdge";
+            public const string Sunny = "Sunny";
+            public const string APS = "APS";
+            public const string Huawei = "Huawei";
+            public const string Fronius = "div.js-status-bar-text";
+        }
     }
 }

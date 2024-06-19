@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace solarmhc.Models
+namespace solarmhc.Models.Services
 {
     public class SolarDataService
     {
