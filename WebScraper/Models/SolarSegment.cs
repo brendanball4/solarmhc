@@ -11,9 +11,11 @@ namespace WebScraper.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public Model Model { get; set; }
+        public int ModelId { get; set; }
         public DateTime? InstallationDate { get; set; }
         public ELocation Location { get; set; }   
         public InverterType InverterType { get; set; }
+        public int InverterTypeId { get; set; }
         public decimal RatedCapacity { get; set; }
         public string? Notes { get; set; }
     }

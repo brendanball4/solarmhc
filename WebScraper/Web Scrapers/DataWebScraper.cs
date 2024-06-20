@@ -97,7 +97,7 @@ namespace solarmhc.Models.Services
                 // Create a new PowerIntake object
                 PowerIntake powerIntake = new PowerIntake
                 {
-                    ArrayName = solarSegment,
+                    SolarSegment = solarSegment,
                     KW = currentWattage,
                     Utilization = utilizationPercentage,
                     TimeStamp = DateTime.Now

@@ -11,7 +11,8 @@ namespace WebScraper.Models
     public class PowerIntake
     {
         public int Id { get; set; }
-        public SolarSegment ArrayName { get; set; }
+        public SolarSegment SolarSegment { get; set; }
+        public int SolarSegmentId { get; set; }
         public decimal KW { get; set; }
         public double Utilization { get; set; }
         public DateTime TimeStamp { get; set; }

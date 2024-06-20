@@ -10,6 +10,7 @@ namespace WebScraper.Models
     {
         public int Id { get; set; }
         public Model Model { get; set; }
+        public int ModelId { get; set; }
         public decimal RatedCapacity { get; set; }
         public ELocation Location { get; set; }
         public string? Notes { get; set; }

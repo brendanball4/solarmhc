@@ -22,25 +22,7 @@ namespace solarmhc.Models.Services.Web_Scrapers
 
         public async Task<string> FetchFroniusPowerDataAsync(string dataUrl, CancellationToken token)
         {
-            while (!token.IsCancellationRequested)
-            {
-                try
-                {
-                    _chromeDriverService.Driver.Navigate().GoToUrl(dataUrl);
-
-                    WebDriverWait wait = new WebDriverWait(_chromeDriverService.Driver, TimeSpan.FromSeconds(10));
-                    wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(Constants.TargetedElements.Fronius)));
-
-                    var powerElement = _chromeDriverService.Driver.FindElement(By.CssSelector(Constants.TargetedElements.Fronius));
-                    return powerElement.Text;
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Error fetching data from " + Constants.Names.Fronius);
-                    _chromeDriverService?.Dispose();
-                    return null;
-                }
-            }
+            throw new NotImplementedException();
         }
 
         internal void APSStartFetchingPowerDataAsync(string dataUrl, CancellationToken cts)

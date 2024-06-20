@@ -9,57 +9,59 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = solarmhc.Web
 build_property.RootNamespace = solarmhc.Web
-build_property.ProjectDir = C:\Users\Brendan\github\solarmhc\solarmhc\
+build_property.ProjectDir = C:\Users\Wanatda\Source\Repos\solarmhc\solarmhc\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Brendan\github\solarmhc\solarmhc
+build_property.MSBuildProjectDirectory = C:\Users\Wanatda\Source\Repos\solarmhc\solarmhc
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Brendan/github/solarmhc/solarmhc/App.razor]
+[C:/Users/Wanatda/Source/Repos/solarmhc/solarmhc/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Fronius/Components/CO2Savings.razor]
+[C:/Users/Wanatda/Source/Repos/solarmhc/solarmhc/Pages/Fronius/Components/CO2Savings.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRnJvbml1c1xDb21wb25lbnRzXENPMlNhdmluZ3MucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Fronius/Components/CurrentPower.razor]
+[C:/Users/Wanatda/Source/Repos/solarmhc/solarmhc/Pages/Fronius/Components/CurrentPower.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRnJvbml1c1xDb21wb25lbnRzXEN1cnJlbnRQb3dlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Fronius/Components/EnergyBalance.razor]
+[C:/Users/Wanatda/Source/Repos/solarmhc/solarmhc/Pages/Fronius/Components/EnergyBalance.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRnJvbml1c1xDb21wb25lbnRzXEVuZXJneUJhbGFuY2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Fronius/Dashboard.razor]
+[C:/Users/Wanatda/Source/Repos/solarmhc/solarmhc/Pages/Fronius/Dashboard.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRnJvbml1c1xEYXNoYm9hcmQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Index.razor]
+[C:/Users/Wanatda/Source/Repos/solarmhc/solarmhc/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Brendan/github/solarmhc/solarmhc/_Imports.razor]
+[C:/Users/Wanatda/Source/Repos/solarmhc/solarmhc/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Brendan/github/solarmhc/solarmhc/Shared/MainLayout.razor]
+[C:/Users/Wanatda/Source/Repos/solarmhc/solarmhc/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-8r9ui67mun
 
-[C:/Users/Brendan/github/solarmhc/solarmhc/Shared/NavMenu.razor]
+[C:/Users/Wanatda/Source/Repos/solarmhc/solarmhc/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-mz9aynqmnn
 
-[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Error.cshtml]
+[C:/Users/Wanatda/Source/Repos/solarmhc/solarmhc/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/_Host.cshtml]
+[C:/Users/Wanatda/Source/Repos/solarmhc/solarmhc/Pages/_Host.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/_Layout.cshtml]
+[C:/Users/Wanatda/Source/Repos/solarmhc/solarmhc/Pages/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0xheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

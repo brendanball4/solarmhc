@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebScraper.Data;
 
@@ -11,9 +12,10 @@ using WebScraper.Data;
 namespace solarmhc.Models.Migrations
 {
     [DbContext(typeof(SolarMHCDbContext))]
-    partial class SolarMHCDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240620220624_Seeding")]
+    partial class Seeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,7 +106,6 @@ namespace solarmhc.Models.Migrations
                             Id = 1,
                             Location = 2,
                             ModelId = 2,
-                            Notes = "SolarEdge",
                             RatedCapacity = 20000m
                         },
                         new
@@ -112,7 +113,6 @@ namespace solarmhc.Models.Migrations
                             Id = 2,
                             Location = 2,
                             ModelId = 3,
-                            Notes = "Sunny",
                             RatedCapacity = 24000m
                         },
                         new
@@ -120,7 +120,6 @@ namespace solarmhc.Models.Migrations
                             Id = 3,
                             Location = 2,
                             ModelId = 4,
-                            Notes = "APS",
                             RatedCapacity = 1000m
                         },
                         new
@@ -128,7 +127,6 @@ namespace solarmhc.Models.Migrations
                             Id = 4,
                             Location = 2,
                             ModelId = 5,
-                            Notes = "Huawei",
                             RatedCapacity = 24000m
                         },
                         new
@@ -136,7 +134,6 @@ namespace solarmhc.Models.Migrations
                             Id = 5,
                             Location = 2,
                             ModelId = 6,
-                            Notes = "Fronius",
                             RatedCapacity = 23955m
                         });
                 });
@@ -276,7 +273,6 @@ namespace solarmhc.Models.Migrations
                             Location = 1,
                             ModelId = 1,
                             Name = "SolarEdge",
-                            Notes = "Field Segment 3",
                             RatedCapacity = 385m
                         },
                         new
@@ -286,7 +282,6 @@ namespace solarmhc.Models.Migrations
                             Location = 1,
                             ModelId = 1,
                             Name = "Sunny",
-                            Notes = "Field Segment 4",
                             RatedCapacity = 385m
                         },
                         new
@@ -296,7 +291,6 @@ namespace solarmhc.Models.Migrations
                             Location = 1,
                             ModelId = 1,
                             Name = "APS",
-                            Notes = "Field Segment 2",
                             RatedCapacity = 385m
                         },
                         new
@@ -306,7 +300,6 @@ namespace solarmhc.Models.Migrations
                             Location = 1,
                             ModelId = 1,
                             Name = "Huawei",
-                            Notes = "Field Segment 1",
                             RatedCapacity = 385m
                         },
                         new
@@ -316,7 +309,6 @@ namespace solarmhc.Models.Migrations
                             Location = 1,
                             ModelId = 1,
                             Name = "Fronius",
-                            Notes = "Field Segment 5",
                             RatedCapacity = 385m
                         });
                 });
