@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Wanatda\\Source\\Repos\\solarmhc\\solarmhc\\solarmhc.Web.csproj": {}
+    "C:\\Users\\Brendan\\github\\solarmhc\\solarmhc\\solarmhc.Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Wanatda\\Source\\Repos\\solarmhc\\solarmhc\\solarmhc.Web.csproj": {
+    "C:\\Users\\Brendan\\github\\solarmhc\\solarmhc\\solarmhc.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Wanatda\\Source\\Repos\\solarmhc\\solarmhc\\solarmhc.Web.csproj",
+        "projectUniqueName": "C:\\Users\\Brendan\\github\\solarmhc\\solarmhc\\solarmhc.Web.csproj",
         "projectName": "solarmhc.Web",
-        "projectPath": "C:\\Users\\Wanatda\\Source\\Repos\\solarmhc\\solarmhc\\solarmhc.Web.csproj",
-        "packagesPath": "C:\\Users\\Wanatda\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Wanatda\\Source\\Repos\\solarmhc\\solarmhc\\obj\\",
+        "projectPath": "C:\\Users\\Brendan\\github\\solarmhc\\solarmhc\\solarmhc.Web.csproj",
+        "packagesPath": "C:\\Users\\Brendan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Brendan\\github\\solarmhc\\solarmhc\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Wanatda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Brendan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,14 +26,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Wanatda\\Source\\Repos\\solarmhc\\WebScraper\\solarmhc.Models.csproj": {
-                "projectPath": "C:\\Users\\Wanatda\\Source\\Repos\\solarmhc\\WebScraper\\solarmhc.Models.csproj"
+              "C:\\Users\\Brendan\\github\\solarmhc\\WebScraper\\solarmhc.Models.csproj": {
+                "projectPath": "C:\\Users\\Brendan\\github\\solarmhc\\WebScraper\\solarmhc.Models.csproj"
               }
             }
           }
@@ -38,11 +43,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -99,21 +99,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Wanatda\\Source\\Repos\\solarmhc\\WebScraper\\solarmhc.Models.csproj": {
+    "C:\\Users\\Brendan\\github\\solarmhc\\WebScraper\\solarmhc.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Wanatda\\Source\\Repos\\solarmhc\\WebScraper\\solarmhc.Models.csproj",
+        "projectUniqueName": "C:\\Users\\Brendan\\github\\solarmhc\\WebScraper\\solarmhc.Models.csproj",
         "projectName": "solarmhc.Models",
-        "projectPath": "C:\\Users\\Wanatda\\Source\\Repos\\solarmhc\\WebScraper\\solarmhc.Models.csproj",
-        "packagesPath": "C:\\Users\\Wanatda\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Wanatda\\Source\\Repos\\solarmhc\\WebScraper\\obj\\",
+        "projectPath": "C:\\Users\\Brendan\\github\\solarmhc\\WebScraper\\solarmhc.Models.csproj",
+        "packagesPath": "C:\\Users\\Brendan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Brendan\\github\\solarmhc\\WebScraper\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Wanatda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Brendan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -121,6 +125,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -133,11 +138,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -203,7 +203,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

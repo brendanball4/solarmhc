@@ -8,80 +8,105 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebScraper;
 
 namespace solarmhc.Models.Background_Services
 {
     public class LiveDataWebScraperBackgroundService : BackgroundService
     {
-        // Inject the logger and the service provider
+        // Inject the services
         private readonly ILogger _logger;
-        private readonly SolarDataService _solarDataService;
         private readonly IServiceProvider _serviceProvider;
-        private readonly ChromeDriverService _chromeDriverService;
         private readonly WebScraperHelperService _webScraperHelper;
+        private readonly LiveDataService _liveDataService;
+        private int intervalInMinutes = 5;
 
-        public LiveDataWebScraperBackgroundService(ILogger<LiveDataWebScraperBackgroundService> logger, IServiceProvider serviceProvider, SolarDataService solarDataService, ChromeDriverService chromeDriverService, WebScraperHelperService webScraperHelper)
+        public LiveDataWebScraperBackgroundService(ILogger<LiveDataWebScraperBackgroundService> logger, IServiceProvider serviceProvider, WebScraperHelperService webScraperHelper, LiveDataService liveDataService)
         {
-            // Inject the logger and the service provider
+            // Inject the services
             _logger = logger;
             _serviceProvider = serviceProvider;
-            _solarDataService = solarDataService;
-            _chromeDriverService = chromeDriverService;
             _webScraperHelper = webScraperHelper;
+            _liveDataService = liveDataService;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _logger.LogInformation("Concurrent scraper service is starting.");
+            _logger.LogInformation("Starting web scraper services.");
 
-            stoppingToken.Register(() => _logger.LogInformation("Concurrent scraper service is stopping."));
+            stoppingToken.Register(() => _logger.LogInformation("Stopping web scraper services."));
 
-            await Task.Run(async () =>
+            _ = Task.Run(async () =>
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    _logger.LogInformation("Concurrent scraper service is running.");
-
-                    var tasks = new List<Task>
-                    {
-                       //FetchAndServeDataAsync(Constants.DataUrls.SolarEdge, stoppingToken),
-                       //FetchAndServeDataAsync(Constants.DataUrls.Sunny, stoppingToken),
-                       //FetchAndServeDataAsync(Constants.DataUrls.APS, stoppingToken),
-                       //FetchAndServeDataAsync(Constants.DataUrls.Huawei, stoppingToken),
-                        FetchAndServeDataAsync(Constants.DataUrls.Fronius, stoppingToken)
-                    };
-
-                    await Task.WhenAll(tasks);
+                    await FetchAndServeDataAsync(Constants.DataUrls.Fronius, stoppingToken, EScraper.Live);
+                    await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken); // Adjust the delay as needed
                 }
             }, stoppingToken);
+
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                _logger.LogInformation("Database filler service ran at: {time}", DateTimeOffset.Now);
+
+                await FetchAndServeDataAsync(Constants.DataUrls.Fronius, null, EScraper.Data);
+
+                await Task.Delay(TimeSpan.FromMinutes(intervalInMinutes), stoppingToken);
+            }
+
+            _logger.LogInformation("Web scraper services have stopped.");
         }
 
-        private async Task FetchAndServeDataAsync(string dataUrl, CancellationToken cts)
+        private async Task FetchAndServeDataAsync(string dataUrl, CancellationToken? cts, EScraper eScraper)
         {
             try
             {
                 // Instantiate the DataWebScraper class
-                var dataWebScraper = new LiveDataWebScraper(_logger, _chromeDriverService);
+                var dataWebScraper = new DataWebScraper(_serviceProvider, _webScraperHelper);
 
-                // Instantiating the service
-                using (var scope = _serviceProvider.CreateScope())
+                // Instantiate the DataWebScraper class
+                var liveWebScraper = new LiveDataWebScraper(_logger, _webScraperHelper, _serviceProvider, _liveDataService);
+
+                if (eScraper == EScraper.Live)
                 {
-                    // Start fetching the power data
                     switch (dataUrl)
                     {
                         case Constants.DataUrls.SolarEdge:
-                            dataWebScraper.SolarEdgeStartFetchingPowerDataAsync(dataUrl, cts);
+                            await liveWebScraper.SolarEdgeStartFetchingPowerDataAsync(dataUrl);
                             break;
                         case Constants.DataUrls.Sunny:
-                            dataWebScraper.SunnyStartFetchingPowerDataAsync(dataUrl, cts);
+                            await liveWebScraper.SunnyStartFetchingPowerDataAsync(dataUrl);
                             break;
                         case Constants.DataUrls.APS:
-                            dataWebScraper.APSStartFetchingPowerDataAsync(dataUrl, cts);
+                            await liveWebScraper.APSStartFetchingPowerDataAsync(dataUrl);
                             break;
                         case Constants.DataUrls.Huawei:
-                            dataWebScraper.HuaweiStartFetchingPowerDataAsync(dataUrl, cts);
+                            await liveWebScraper.HuaweiStartFetchingPowerDataAsync(dataUrl);
                             break;
                         case Constants.DataUrls.Fronius:
-                            dataWebScraper.FroniusStartFetchingPowerDataAsync(dataUrl, cts);
+                            await liveWebScraper.FroniusStartFetchingPowerDataAsync(dataUrl);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else if (eScraper == EScraper.Data)
+                {
+                    switch (dataUrl)
+                    {
+                        case Constants.DataUrls.SolarEdge:
+                            await dataWebScraper.SolarEdgeStartFetchingPowerDataAsync(dataUrl);
+                            break;
+                        case Constants.DataUrls.Sunny:
+                            await dataWebScraper.SunnyStartFetchingPowerDataAsync(dataUrl);
+                            break;
+                        case Constants.DataUrls.APS:
+                            await dataWebScraper.APSStartFetchingPowerDataAsync(dataUrl);
+                            break;
+                        case Constants.DataUrls.Huawei:
+                            await dataWebScraper.HuaweiStartFetchingPowerDataAsync(dataUrl);
+                            break;
+                        case Constants.DataUrls.Fronius:
+                            await dataWebScraper.FroniusStartFetchingPowerDataAsync(dataUrl);
                             break;
                         default:
                             break;

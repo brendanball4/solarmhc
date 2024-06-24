@@ -4,6 +4,7 @@ using WebScraper.Data;
 using solarmhc.Models.Services;
 using solarmhc.Models.Services.Web_Scrapers;
 using solarmhc.Models.Background_Services;
+using solarmhc.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,11 +14,13 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient<DataWebScraper>();
 builder.Services.AddHttpClient<LiveDataWebScraper>();
 builder.Services.AddMudServices();
-builder.Services.AddSingleton<SolarDataService>();
-builder.Services.AddSingleton<ChromeDriverService>();
+builder.Services.AddSingleton<LiveDataService>();
 builder.Services.AddSingleton<WebScraperHelperService>();
-builder.Services.AddHostedService<WebScraperBackgroundService>();
+//builder.Services.AddHostedService<WebScraperBackgroundService>();
 builder.Services.AddHostedService<LiveDataWebScraperBackgroundService>();
+
+// Register ChromeDriver as a scoped service using the factory method
+builder.Services.AddScoped(sp => ChromeDriverFactory.CreateChromeDriver());
 
 // Configure DbContext
 builder.Services.AddDbContext<SolarMHCDbContext>(options =>

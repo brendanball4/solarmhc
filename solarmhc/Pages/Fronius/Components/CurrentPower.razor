@@ -1,22 +1,28 @@
-﻿@using solarmhc.Models;
-@using solarmhc.Models.Services;
-@inject SolarDataService SolarDataService
+﻿@using solarmhc.Models
+@using solarmhc.Models.Services
+@inject LiveDataService liveDataService
 
 <MudPaper Class="mt-3">
     <h2 class="text-center pt-3">Current Power</h2>
     <hr>
-    @if (!string.IsNullOrEmpty(SolarDataService.Data) && !SolarDataService.Data.Contains("Offline"))
+    @if (liveDataService.CurrentPower.utilizationPercentage > 0 && liveDataService.CurrentPower.currentWattage > 0)
     {
-        <MudChart ChartType="ChartType.Donut" Width="300px" Height="300px" InputData="SolarDataService.ChartData" InputLabels='new string[] { "Utilization", "Capacity" }' Colors='new string[] { "#ff0000", "#cccccc" }'>
+        <MudChart ChartType="ChartType.Donut" Width="300px" Height="300px"
+                  InputData="new double[] { liveDataService.CurrentPower.utilizationPercentage, 100 - liveDataService.CurrentPower.utilizationPercentage }"
+                  InputLabels='new string[] { "Utilization", "Capacity" }'
+                  Colors='new string[] { "#ff0000", "#cccccc" }'>
             <CustomGraphics>
-                <text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">@SolarDataService.Data.Substring(0,7)</text>
-                <text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">@SolarDataService.Data.Substring(7)</text>
+                <text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">@liveDataService.CurrentPower.utilizationPercentage.ToString("F2")%</text>
+                <text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">@liveDataService.CurrentPower.currentWattage kW</text>
             </CustomGraphics>
         </MudChart>
     }
     else
     {
-        <MudChart ChartType="ChartType.Donut" Width="300px" Height="300px" InputData="new double[] {0, 100}" InputLabels='new string[] { "Utilization", "Capacity" }' Colors='new string[] { "#ff0000", "#cccccc" }'>
+        <MudChart ChartType="ChartType.Donut" Width="300px" Height="300px"
+                  InputData="new double[] { 0, 100 }"
+                  InputLabels='new string[] { "Utilization", "Capacity" }'
+                  Colors='new string[] { "#ff0000", "#cccccc" }'>
             <CustomGraphics>
                 <text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Currently</text>
                 <text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Offline</text>
@@ -26,13 +32,26 @@
 </MudPaper>
 
 @code {
+    private double utilizationPercentage;
+    private decimal currentWattage;
+
     protected override void OnInitialized()
     {
-        SolarDataService.OnChange += StateHasChanged;
+        liveDataService.OnChange += UpdateLiveData;
+        (utilizationPercentage, currentWattage) = liveDataService.CurrentPower;
+    }
+
+    private void UpdateLiveData()
+    {
+        InvokeAsync(() =>
+        {
+            (utilizationPercentage, currentWattage) = liveDataService.CurrentPower;
+            StateHasChanged();
+        });
     }
 
     public void Dispose()
     {
-        SolarDataService.OnChange -= StateHasChanged;
+        liveDataService.OnChange -= UpdateLiveData;
     }
 }

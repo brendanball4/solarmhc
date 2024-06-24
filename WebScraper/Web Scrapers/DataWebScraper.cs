@@ -12,68 +12,71 @@ namespace solarmhc.Models.Services
 {
     public class DataWebScraper
     {
-        private readonly ChromeDriverService _chromeDriverService;
         private readonly ILogger<DataWebScraper> _logger;
         private readonly IServiceProvider _serviceProvider;
         private readonly WebScraperHelperService _webScraperHelper;
         private bool isRunning;
 
-        public DataWebScraper(IServiceProvider serviceProvider, WebScraperHelperService webScraperHelper, ChromeDriverService chromeDriverService)
+        public DataWebScraper(IServiceProvider serviceProvider, WebScraperHelperService webScraperHelper)
         {
             // Inject the service provider
             _serviceProvider = serviceProvider;
             _webScraperHelper = webScraperHelper;
-            _chromeDriverService = chromeDriverService;
         }
 
         #region DB Data Scrapers
-        public async Task FroniusStartFetchingPowerData(string dataUrl)
+        public async Task FroniusStartFetchingPowerDataAsync(string dataUrl)
         {
-            try
+            using (var scope = _serviceProvider.CreateScope())
             {
-                // Navigate to the data URL
-                _chromeDriverService.Driver.Navigate().GoToUrl(dataUrl);
-
-                // Wait for the element with the class "js-status-bar-text" to be visible
-                WebDriverWait wait = new WebDriverWait(_chromeDriverService.Driver, TimeSpan.FromSeconds(10));
-                wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(Constants.TargetedElements.Fronius)));
-
-                // Find the element with the class "js-status-bar-text"
-                var powerElement = _chromeDriverService.Driver.FindElement(By.CssSelector(Constants.TargetedElements.Fronius));
-                var currentPower = powerElement.Text;
-
-                // Parse the data and enter the information into the database
-                var result = _webScraperHelper.TryParseData(currentPower, out double utilizationPercentage, out decimal currentWattage);
-
-                if (result)
+                var driver = scope.ServiceProvider.GetService<ChromeDriver>();
+                try
                 {
-                    SubmitPowerIntakeData(Constants.Names.Fronius, utilizationPercentage, currentWattage);
-                    _chromeDriverService.Driver.Close();
-                } else
+                    // Navigate to the data URL
+                    driver.Navigate().GoToUrl(dataUrl);
+
+                    // Wait for the element with the class "js-status-bar-text" to be visible
+                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                    wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(Constants.TargetedElements.Fronius)));
+
+                    // Find the element with the class "js-status-bar-text"
+                    var powerElement = driver.FindElement(By.CssSelector(Constants.TargetedElements.Fronius));
+                    var currentPower = powerElement.Text;
+
+                    // Parse the data and enter the information into the database
+                    var result = _webScraperHelper.TryParseData(currentPower, out double utilizationPercentage, out decimal currentWattage);
+
+                    if (result)
+                    {
+                        SubmitPowerIntakeData(Constants.Names.Fronius, utilizationPercentage, currentWattage);
+                        driver.Close();
+                    }
+                    else
+                    {
+                        _logger.LogError("An error occurred while parsing the data.");
+                    }
+                }
+                catch (Exception ex)
                 {
-                    _logger.LogError("An error occurred while parsing the data.");
+                    // Log or handle exceptions as necessary
+                    Console.WriteLine($"Error: {ex.Message}");
                 }
             }
-            catch (Exception ex)
-            {
-                // Log or handle exceptions as necessary
-                Console.WriteLine($"Error: {ex.Message}");
-            }
         }
 
-        public async Task APSStartFetchingPowerData(string dataUrl)
+        public async Task APSStartFetchingPowerDataAsync(string dataUrl)
         {
         }
 
-        public async Task SolarEdgeStartFetchingPowerData(string dataUrl)
+        public async Task SolarEdgeStartFetchingPowerDataAsync(string dataUrl)
         {
         }
 
-        public async Task HuaweiStartFetchingPowerData(string dataUrl)
+        public async Task HuaweiStartFetchingPowerDataAsync(string dataUrl)
         {
         }
 
-        public async Task SunnyStartFetchingPowerData(string dataUrl)
+        public async Task SunnyStartFetchingPowerDataAsync(string dataUrl)
         {
         }
         #endregion

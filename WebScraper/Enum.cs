@@ -13,4 +13,10 @@ namespace WebScraper
         Residence = 3,
         Other = 4
     }
+
+    public enum EScraper
+    {
+        Live = 0,
+        Data = 1
+    }
 }
