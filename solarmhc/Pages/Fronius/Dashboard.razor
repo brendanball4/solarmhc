@@ -2,11 +2,12 @@
 @using solarmhc.Web.Pages.Fronius.Components
 @page "/fronius/dashboard"
 
-<h3>Fronius Dashboard</h3>
-
 <MudGrid>
     @* Current Power Widget *@
     <MudItem>
         <CurrentPower />
+    </MudItem>
+    <MudItem>
+        <CO2Savings />
     </MudItem>
 </MudGrid>

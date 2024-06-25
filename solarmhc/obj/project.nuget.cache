@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "wppaSGyA05JFKO5Dm1VudzSUYYvrigVolbEMdCp2NGJmo9x5402LoXEkR6GJbc+j/yl+WyotmBCyGkF11skKjQ==",
+  "dgSpecHash": "M6N5yXfy9w08I+JedTPK/VAY4jReaM3dzBq0WBW9r7s9Em5tZfYD1/JtyuWQ66H1Ja0+m7zpCeynl+kivXNSHg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Brendan\\github\\solarmhc\\solarmhc\\solarmhc.Web.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Brendan\\.nuget\\packages\\blazor-apexcharts\\3.3.0\\blazor-apexcharts.3.3.0.nupkg.sha512",
     "C:\\Users\\Brendan\\.nuget\\packages\\dotnetseleniumextras.waithelpers\\3.11.0\\dotnetseleniumextras.waithelpers.3.11.0.nupkg.sha512",
     "C:\\Users\\Brendan\\.nuget\\packages\\htmlagilitypack\\1.11.37\\htmlagilitypack.1.11.37.nupkg.sha512",
     "C:\\Users\\Brendan\\.nuget\\packages\\htmlagilitypack.cssselectors\\1.0.2\\htmlagilitypack.cssselectors.1.0.2.nupkg.sha512",

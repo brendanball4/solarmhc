@@ -49,6 +49,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Blazor-ApexCharts": {
+              "target": "Package",
+              "version": "[3.3.0, )"
+            },
             "HtmlAgilityPack": {
               "target": "Package",
               "version": "[1.11.37, )"

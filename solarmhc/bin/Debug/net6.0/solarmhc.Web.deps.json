@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "solarmhc.Web/1.0.0": {
         "dependencies": {
+          "Blazor-ApexCharts": "3.3.0",
           "HtmlAgilityPack": "1.11.37",
           "HtmlAgilityPack.CssSelectors": "1.0.2",
           "Microsoft.EntityFrameworkCore": "6.0.0",
@@ -19,6 +20,18 @@
         },
         "runtime": {
           "solarmhc.Web.dll": {}
+        }
+      },
+      "Blazor-ApexCharts/3.3.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "6.0.28",
+          "Microsoft.AspNetCore.Components.Web": "6.0.28"
+        },
+        "runtime": {
+          "lib/net6.0/Blazor-ApexCharts.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.3.0.0"
+          }
         }
       },
       "DotNetSeleniumExtras.WaitHelpers/3.11.0": {
@@ -714,6 +727,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Blazor-ApexCharts/3.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fVvNIgC7IDtkKnwY7RhTYJ4kFrfqxxI3CuxU9x6NpI/xACRJSRWPDoeMWSgzGN4++HwdWLtzHEZzDXa873lBUA==",
+      "path": "blazor-apexcharts/3.3.0",
+      "hashPath": "blazor-apexcharts.3.3.0.nupkg.sha512"
     },
     "DotNetSeleniumExtras.WaitHelpers/3.11.0": {
       "type": "package",

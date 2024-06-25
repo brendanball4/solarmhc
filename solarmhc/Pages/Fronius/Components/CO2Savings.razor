@@ -1,8 +1,39 @@
 ﻿@using solarmhc.Models.Services;
 @inject LiveDataService liveDataService;
 
-<h3>CO2Savings</h3>
+<MudPaper Class="mt-3">
+    <div class="bg-gradient bg-success border-bottom border-dark">
+        <h2 class="text-center text-white pe-3 ps-3 pt-2">Environmental Benefits</h2>
+    </div>
+    <p class="pe-3 ps-3 pb-0 pt-3">CO2 Emissions Saved</p>
+    <p class="pe-3 ps-3 pb-3 pt-0 text-success fw-bold">Saved @savedEmissions.ToString("F1") kg of CO2 Emissions</p>
+    <hr>
+    <p class="pe-3 ps-3 pb-0 pt-0">Equivalent Trees Planted</p>
+    <p class="pe-3 ps-3 pb-3 pt-0 text-success fw-bold">Planted equivalent of @savedTrees.ToString("F1") trees</p>
+</MudPaper>
 
 @code {
+    private double savedEmissions;
+    private double savedTrees;
 
+    protected override void OnInitialized()
+    {
+        liveDataService.OnChange += UpdateLiveData;
+        savedEmissions = liveDataService.SavedEmissions;
+    }
+
+    private void UpdateLiveData()
+    {
+        InvokeAsync(() =>
+        {
+            savedEmissions = liveDataService.SavedEmissions;
+            savedTrees = liveDataService.SavedTrees;
+            StateHasChanged();
+        });
+    }
+
+    public void Dispose()
+    {
+        liveDataService.OnChange -= UpdateLiveData;
+    }
 }

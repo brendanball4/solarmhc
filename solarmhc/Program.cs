@@ -16,7 +16,8 @@ builder.Services.AddHttpClient<LiveDataWebScraper>();
 builder.Services.AddMudServices();
 builder.Services.AddSingleton<LiveDataService>();
 builder.Services.AddSingleton<WebScraperHelperService>();
-//builder.Services.AddHostedService<WebScraperBackgroundService>();
+builder.Services.AddSingleton<EmissionCalculator>();
+builder.Services.AddSingleton<EmissionSaved>();
 builder.Services.AddHostedService<LiveDataWebScraperBackgroundService>();
 
 // Register ChromeDriver as a scoped service using the factory method
