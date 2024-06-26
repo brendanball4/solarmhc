@@ -17,8 +17,10 @@ namespace solarmhc.Models.Services
         }
         public async Task FroniusEmissionCalculation()
         {
-            await _liveDataService.UpdateCO2Async(_emissionCalculator.CalculateEnvironmentalImpact(Constants.Environmental.Canada.CO2Factor));
-            await _liveDataService.UpdateTreesAsync(_emissionCalculator.CalculateEnvironmentalImpact(Constants.Environmental.Canada.Trees));
+            double CO2 = _emissionCalculator.CalculateEnvironmentalImpact(Constants.Environmental.Canada.CO2Factor);
+            double Trees = _emissionCalculator.CalculateEnvironmentalImpact(Constants.Environmental.Canada.Trees);
+            await _liveDataService.UpdateCO2Async(CO2);
+            await _liveDataService.UpdateTreesAsync(Trees);
         }
     }
 }

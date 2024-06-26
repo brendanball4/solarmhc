@@ -291,3 +291,4 @@ C:\Users\Wanatda\Source\Repos\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.C4927B
 C:\Users\Wanatda\Source\Repos\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.Web.genruntimeconfig.cache
 C:\Users\Wanatda\Source\Repos\solarmhc\solarmhc\obj\Debug\net6.0\ref\solarmhc.Web.dll
 C:\Users\Brendan\github\solarmhc\solarmhc\bin\Debug\net6.0\Blazor-ApexCharts.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Blazor-ApexCharts.dll

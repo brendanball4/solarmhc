@@ -51,7 +51,7 @@ namespace solarmhc.Models.Background_Services
                 while (!stoppingToken.IsCancellationRequested)
                 {
                     await _emissionSaved.FroniusEmissionCalculation();
-                    await Task.Delay(TimeSpan.FromMinutes(intervalInMinutes), stoppingToken); // Adjust the delay as needed
+                    await Task.Delay(TimeSpan.FromSeconds(intervalInMinutes), stoppingToken); // Adjust the delay as needed
                 }
             }, stoppingToken);
 
