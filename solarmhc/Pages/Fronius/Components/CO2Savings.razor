@@ -2,14 +2,21 @@
 @inject LiveDataService liveDataService;
 
 <MudPaper Class="mt-3">
-    <div class="bg-gradient bg-success border-bottom border-dark">
-        <h2 class="text-center text-white pe-3 ps-3 pt-2">Environmental Benefits</h2>
-    </div>
-    <p class="pe-3 ps-3 pb-0 pt-3">CO2 Emissions Saved</p>
-    <p class="pe-3 ps-3 pb-3 pt-0 text-success fw-bold">Saved @savedEmissions.ToString("F1") kg of CO2 Emissions</p>
-    <hr>
-    <p class="pe-3 ps-3 pb-0 pt-0">Equivalent Trees Planted</p>
-    <p class="pe-3 ps-3 pb-3 pt-0 text-success fw-bold">Planted equivalent of @savedTrees.ToString("F1") trees</p>
+        <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h5" Class="mb-3 text-center">Environmental Benefits</MudText>
+                <MudDivider Style="border-color: black;" />
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudText class="pe-3 ps-3 pb-0 pt-0 fw-bold">CO2 Emissions Saved</MudText>
+            <MudText class="pe-3 ps-3 pb-3 pt-0 text-success fw-bold">Saved @savedEmissions.ToString("F1") kg of CO2 Emissions</MudText>
+            <MudDivider Style="border-color: black;" />
+            <MudText class="pe-3 ps-3 pb-0 pt-3 fw-bold">Equivalent Trees Planted</MudText>
+            <MudText class="pe-3 ps-3 pb-1 pt-0 text-success fw-bold">Planted equivalent of @savedTrees.ToString("F1") trees</MudText>
+        </MudCardContent>
+    </MudCard>
 </MudPaper>
 
 @code {

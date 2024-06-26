@@ -1,5 +1,4 @@
-﻿@page "/chart"
-@using ApexCharts
+﻿@using ApexCharts
 @using solarmhc.Models.Services
 @implements IDisposable
 @inject LiveDataService liveDataService
@@ -8,7 +7,7 @@
     <MudCard>
         <MudCardHeader>
             <CardHeaderContent>
-                <MudText Typo="Typo.h5" Class="mb-3">Current Power</MudText>
+                <MudText Typo="Typo.h5" Class="mb-3 text-center">Current Power</MudText>
                 <MudDivider Style="border-color: black;" />
             </CardHeaderContent>
         </MudCardHeader>
@@ -55,13 +54,26 @@
     {
         if (chart != null)
         {
-            await chart.UpdateSeriesAsync(true);
+            try
+            {
+                await chart.UpdateSeriesAsync(true);
+            }
+            catch (TaskCanceledException e)
+            {
+                // Handle the cancellation specifically
+                Console.WriteLine("Update was cancelled: " + e.Message);
+            }
+            catch (Exception e)
+            {
+                // Handle other exceptions
+                Console.WriteLine("Error updating chart: " + e.Message);
+            }
         }
     }
 
     private async void UpdateLiveData()
     {
-        if (liveDataService.CurrentPower.utilizationPercentage > 0 && liveDataService.CurrentPower.currentWattage > 0)
+      if (liveDataService.CurrentPower.utilizationPercentage > 0 && liveDataService.CurrentPower.currentWattage > 0)
         {
             dataPoints = new List<ChartDataPoint>
             {
