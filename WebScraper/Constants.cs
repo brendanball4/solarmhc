@@ -44,5 +44,14 @@ namespace solarmhc.Models
             public const string Huawei = "Huawei";
             public const string Fronius = "div.js-status-bar-text";
         }
+
+        public static class Environmental
+        {
+            public static class Canada
+            {
+                public const decimal CO2Factor = 392;
+                public const decimal Trees = 0.0117M;
+            }
+        }
     }
 }

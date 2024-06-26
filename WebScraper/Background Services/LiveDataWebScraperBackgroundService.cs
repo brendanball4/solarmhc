@@ -19,15 +19,17 @@ namespace solarmhc.Models.Background_Services
         private readonly IServiceProvider _serviceProvider;
         private readonly WebScraperHelperService _webScraperHelper;
         private readonly LiveDataService _liveDataService;
+        private readonly EmissionSaved _emissionSaved;
         private int intervalInMinutes = 5;
 
-        public LiveDataWebScraperBackgroundService(ILogger<LiveDataWebScraperBackgroundService> logger, IServiceProvider serviceProvider, WebScraperHelperService webScraperHelper, LiveDataService liveDataService)
+        public LiveDataWebScraperBackgroundService(ILogger<LiveDataWebScraperBackgroundService> logger, IServiceProvider serviceProvider, WebScraperHelperService webScraperHelper, LiveDataService liveDataService, EmissionSaved emissionSaved)
         {
             // Inject the services
             _logger = logger;
             _serviceProvider = serviceProvider;
             _webScraperHelper = webScraperHelper;
             _liveDataService = liveDataService;
+            _emissionSaved = emissionSaved;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -41,6 +43,15 @@ namespace solarmhc.Models.Background_Services
                 {
                     await FetchAndServeDataAsync(Constants.DataUrls.Fronius, stoppingToken, EScraper.Live);
                     await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken); // Adjust the delay as needed
+                }
+            }, stoppingToken);
+
+            _ = Task.Run(async () =>
+            {
+                while (!stoppingToken.IsCancellationRequested)
+                {
+                    await _emissionSaved.FroniusEmissionCalculation();
+                    await Task.Delay(TimeSpan.FromMinutes(intervalInMinutes), stoppingToken); // Adjust the delay as needed
                 }
             }, stoppingToken);
 
