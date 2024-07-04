@@ -38,11 +38,26 @@ namespace solarmhc.Models
 
         public static class TargetedElements
         {
-            public const string SolarEdge = "SolarEdge";
-            public const string Sunny = "Sunny";
-            public const string APS = "APS";
-            public const string Huawei = "Huawei";
+            public const string SolarEdge = "";
+            public const string Sunny = "";
+            public const string APS = "";
             public const string Fronius = "div.js-status-bar-text";
+
+            public static class Huawei
+            {
+                public static class Data
+                {
+                    public const string kwId = "pvSystemOverviewPower";
+                }
+
+                public static class Auth
+                {
+                    public const string loginForm = "loginForm";
+                    public const string username = "userName";
+                    public const string password = "password";
+                    public const string loginButton = "a[href='javascript:void(0)']";
+                }
+            }
         }
 
         public static class Environmental

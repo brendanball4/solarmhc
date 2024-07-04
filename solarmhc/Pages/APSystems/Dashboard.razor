@@ -1,6 +1,8 @@
 ﻿@using WebScraper;
 @using solarmhc.Models;
+@using solarmhc.Models.Services;
 @using solarmhc.Web.Pages.Components
+@inject LiveDataService liveDataService;
 @page "/apsystems/dashboard"
 
 <MudGrid>
@@ -9,10 +11,25 @@
         <CurrentPower DashboardName="@DashboardName" />
     </MudItem>
     <MudItem>
-        <CO2Savings />
+        <CO2Savings SavedEmissions="@liveDataService.GetSavedEmissions(DashboardName)" SavedTrees="@liveDataService.GetSavedTrees(DashboardName)" />
     </MudItem>
 </MudGrid>
 
 @code {
     public string DashboardName { get; set; } = Constants.Names.APS;
+
+    protected override void OnInitialized()
+    {
+        liveDataService.OnChange += UpdateLiveData;
+    }
+
+    private void UpdateLiveData()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        liveDataService.OnChange -= UpdateLiveData;
+    }
 }

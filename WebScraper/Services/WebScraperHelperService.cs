@@ -21,17 +21,15 @@ namespace solarmhc.Models.Services
             _serviceProvider = serviceProvider;
         }
 
-        public bool TryParseData(string data, out double utilizedPower, out decimal currentWattage)
+        public bool TryParseData(string data, out decimal currentWattage)
         {
             var kwString = "";
-            utilizedPower = 0;
             currentWattage = 0;
             try
             {
                 var lines = data.Split('\n');
                 if (lines.Length >= 2)
                 {
-                    
                     // Clean and parse the W value
                     if (data.Contains("kW"))
                     {
@@ -42,12 +40,8 @@ namespace solarmhc.Models.Services
                         currentWattage /= 1000;
                         kwString = lines[0].Replace("W", "").Replace("\r", "").Trim();
                     }
-                    
-                    // Clean and parse the Utilization value
-                    var utilizationString = lines[1].Replace("Utilization", "").Replace("%", "").Trim();
 
-                    if (decimal.TryParse(kwString, out currentWattage) &&
-                        double.TryParse(utilizationString, out utilizedPower))
+                    if (decimal.TryParse(kwString, out currentWattage))
                     {
                         return true;
                     }

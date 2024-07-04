@@ -41,6 +41,7 @@ namespace solarmhc.Models.Background_Services
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
+                    await FetchAndServeDataAsync(Constants.DataUrls.Huawei, stoppingToken, EScraper.Live);
                     await FetchAndServeDataAsync(Constants.DataUrls.Fronius, stoppingToken, EScraper.Live);
                     await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken); // Adjust the delay as needed
                 }
@@ -50,10 +51,10 @@ namespace solarmhc.Models.Background_Services
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    //await _emissionSaved.EmissionCalculation(Constants.Names.SolarEdge, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees);
-                    //await _emissionSaved.EmissionCalculation(Constants.Names.Sunny, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees);
-                    //await _emissionSaved.EmissionCalculation(Constants.Names.APS, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees);
-                    //await _emissionSaved.EmissionCalculation(Constants.Names.Huawei, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees);
+                    await _emissionSaved.EmissionCalculation(Constants.Names.SolarEdge, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees);
+                    await _emissionSaved.EmissionCalculation(Constants.Names.Sunny, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees);
+                    await _emissionSaved.EmissionCalculation(Constants.Names.APS, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees);
+                    await _emissionSaved.EmissionCalculation(Constants.Names.Huawei, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees);
                     await _emissionSaved.EmissionCalculation(Constants.Names.Fronius, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees);
                     await Task.Delay(TimeSpan.FromMinutes(intervalInMinutes), stoppingToken); // Adjust the delay as needed
                 }
@@ -63,6 +64,7 @@ namespace solarmhc.Models.Background_Services
             {
                 _logger.LogInformation("Database filler service ran at: {time}", DateTimeOffset.Now);
 
+                await FetchAndServeDataAsync(Constants.DataUrls.Huawei, null, EScraper.Data);
                 await FetchAndServeDataAsync(Constants.DataUrls.Fronius, null, EScraper.Data);
 
                 await Task.Delay(TimeSpan.FromMinutes(intervalInMinutes), stoppingToken);

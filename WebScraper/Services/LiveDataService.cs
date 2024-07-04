@@ -21,10 +21,10 @@ namespace solarmhc.Models.Services
             return (0, 0);
         }
 
-        public void SetCurrentPower(string dashboardId, double utilizationPercentage, decimal currentWattage)
+        public void SetCurrentPower(string dashboardId, decimal currentWattage)
         {
             var data = _dashboardData.GetOrAdd(dashboardId, new DashboardData());
-            data.UtilizationPercentage = utilizationPercentage;
+            data.UtilizationPercentage = ((double)currentWattage / 25) * 100;
             data.CurrentWattage = currentWattage;
             NotifyStateChanged();
         }
@@ -61,9 +61,9 @@ namespace solarmhc.Models.Services
             NotifyStateChanged();
         }
 
-        public async Task UpdateCurrentPowerAsync(string dashboardId, double utilizationPercentage, decimal currentWattage)
+        public async Task UpdateCurrentPowerAsync(string dashboardId, decimal currentWattage)
         {
-            SetCurrentPower(dashboardId, utilizationPercentage, currentWattage);
+            SetCurrentPower(dashboardId, currentWattage);
             await Task.CompletedTask;
         }
 

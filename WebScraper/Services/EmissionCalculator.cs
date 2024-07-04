@@ -24,13 +24,14 @@ namespace solarmhc.Models.Services
             _serviceProvider = serviceProvider;
 
         }
-        private double EnergyCalculation()
+        private double EnergyCalculation(string dashboardId)
         {
             using (var scope = _serviceProvider.CreateScope())
             {
                 double totalEnergy = 0;
                 var dbContext = scope.ServiceProvider.GetService<SolarMHCDbContext>();
-                List<PowerIntake> readings = dbContext.PowerIntakes.ToListAsync().Result;
+                SolarSegment seg = dbContext.SolarSegments.FirstOrDefault(x => x.Name == dashboardId);
+                List<PowerIntake> readings = dbContext.PowerIntakes.Where(pi => pi.SolarSegmentId == seg.Id).ToListAsync().Result;
 
                 for (int i = 1; i < readings.Count; i++)
                 {
@@ -45,9 +46,9 @@ namespace solarmhc.Models.Services
             }
         }
 
-        public double CalculateEnvironmentalImpact(decimal factor)
+        public double CalculateEnvironmentalImpact(string dashboardId, decimal factor)
         {
-            var totalEnergy = EnergyCalculation();
+            var totalEnergy = EnergyCalculation(dashboardId);
 
             if (factor == Constants.Environmental.Canada.CO2Factor)
             {

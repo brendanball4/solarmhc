@@ -19,6 +19,7 @@ namespace solarmhc.Models
             options.AddArgument("--no-sandbox"); // Example: Disable sandboxing (useful for certain environments)
             options.AddArgument("--disable-gpu"); // Example: Disable GPU usage
             options.AddArgument("--disable-dev-shm-usage"); // Example: Overcome limited resource problems
+            options.AddArgument("--ignore-certificate-errors");
 
             // Add the extension to the Chrome driver
             //options.AddArguments("load-extension=C:\\Users\\Brendan.Ball\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\ofpnikijgfhlmmjlpkfaifhhdonchhoi\\1.0.3_1");

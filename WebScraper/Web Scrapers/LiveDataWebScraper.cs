@@ -30,7 +30,7 @@ namespace solarmhc.Models.Services.Web_Scrapers
             throw new NotImplementedException();
         }
 
-        public async Task<(double utilizationPercentage, decimal currentWattage)> FroniusStartFetchingPowerDataAsync(string dataUrl)
+        public async Task FroniusStartFetchingPowerDataAsync(string dataUrl)
         {
             using (var scope = _serviceProvider.CreateScope())
             {
@@ -49,25 +49,23 @@ namespace solarmhc.Models.Services.Web_Scrapers
                     var currentPower = powerElement.Text;
 
                     // Parse the data and enter the information into the database
-                    var result = _webScraperHelperService.TryParseData(currentPower, out double utilizationPercentage, out decimal currentWattage);
+                    var result = _webScraperHelperService.TryParseData(currentPower, out decimal currentWattage);
+                    double utilizationPercentage = ((double)currentWattage / 25) * 100;
 
                     if (result)
                     {
                         // Return the utilizationPercentage & currentWattage values
-                        await _liveDataService.UpdateCurrentPowerAsync(Constants.Names.Fronius, utilizationPercentage, currentWattage);
-                        return (utilizationPercentage, currentWattage);
+                        await _liveDataService.UpdateCurrentPowerAsync(Constants.Names.Fronius, currentWattage);
                     }
                     else
                     {
                         _logger.LogError("An error occurred while parsing the data.");
-                        return (0, 0);
                     }
                 }
                 catch (Exception ex)
                 {
                     // Log or handle exceptions as necessary
                     Console.WriteLine($"Error: {ex.Message}");
-                    return (0, 0);
                 }
                 finally
                 {
@@ -76,9 +74,59 @@ namespace solarmhc.Models.Services.Web_Scrapers
             }
         }
 
-        public async Task<string> HuaweiStartFetchingPowerDataAsync(string dataUrl)
+        public async Task HuaweiStartFetchingPowerDataAsync(string dataUrl)
         {
-            throw new NotImplementedException();
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var driver = scope.ServiceProvider.GetService<ChromeDriver>();
+                try
+                {
+                    #region login
+                    // Navigate to the data URL
+                    driver.Navigate().GoToUrl(dataUrl);
+
+                    // Wait for the element with the id 'loginForm' to load
+                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                    wait.Until(ExpectedConditions.ElementIsVisible(By.Id(Constants.TargetedElements.Huawei.Auth.loginForm)));
+
+                    // Find the username, password, and login fields
+                    var usernameField = driver.FindElement(By.Id(Constants.TargetedElements.Huawei.Auth.username));
+                    var passwordField = driver.FindElement(By.Id(Constants.TargetedElements.Huawei.Auth.password));
+                    var loginButton = driver.FindElement(By.CssSelector(Constants.TargetedElements.Huawei.Auth.loginButton));
+
+                    string username = Environment.GetEnvironmentVariable("MY_APP_HUA_USERNAME"); // setx <name> <data>
+                    string password = Environment.GetEnvironmentVariable("MY_APP_HUA_PASSWORD");
+
+                    // Enter the username and password
+                    usernameField.SendKeys(username);
+                    passwordField.SendKeys(password);
+
+                    // Click the login button
+                    loginButton.Click();
+                    #endregion
+
+                    #region Data scraping
+                    // Wait for the iframe to load
+                    wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(By.CssSelector("iframe#main_iframe_center"))); // TODO: Change to constant
+
+                    // Find the element with the data
+                    var powerElement = driver.FindElement(By.CssSelector("span#pvSystemOverviewPower"));  // TODO: Change to constant
+                    var currentPower = decimal.Parse(powerElement.Text);
+
+                    await _liveDataService.UpdateCurrentPowerAsync(Constants.Names.Huawei, currentPower);
+                    #endregion
+                }
+                catch (Exception ex)
+                {
+                    // Log or handle exceptions as necessary
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+                finally
+                {
+                    driver.Close();
+                    scope.Dispose();
+                }
+            }
         }
 
         public async Task<string> SolarEdgeStartFetchingPowerDataAsync(string dataUrl)
