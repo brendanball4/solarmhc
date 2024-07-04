@@ -20,24 +20,36 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Fronius/Components/CO2Savings.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRnJvbml1c1xDb21wb25lbnRzXENPMlNhdmluZ3MucmF6b3I=
+[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/APSystems/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQVBTeXN0ZW1zXERhc2hib2FyZC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Fronius/Components/CurrentPower.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRnJvbml1c1xDb21wb25lbnRzXEN1cnJlbnRQb3dlci5yYXpvcg==
+[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Components/CO2Savings.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50c1xDTzJTYXZpbmdzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Fronius/Components/EnergyBalance.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRnJvbml1c1xDb21wb25lbnRzXEVuZXJneUJhbGFuY2UucmF6b3I=
+[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Components/CurrentPower.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50c1xDdXJyZW50UG93ZXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Fronius/Dashboard.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRnJvbml1c1xEYXNoYm9hcmQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Huawei/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSHVhd2VpXERhc2hib2FyZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/SolarEdge/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU29sYXJFZGdlXERhc2hib2FyZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Sunny/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VubnlcRGFzaGJvYXJkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Brendan/github/solarmhc/solarmhc/_Imports.razor]

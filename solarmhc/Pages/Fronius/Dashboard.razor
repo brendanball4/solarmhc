@@ -1,13 +1,35 @@
 ﻿@using WebScraper;
-@using solarmhc.Web.Pages.Fronius.Components
+@using solarmhc.Models.Services;
+@using solarmhc.Models;
+@using solarmhc.Web.Pages.Components
+@inject LiveDataService liveDataService;
 @page "/fronius/dashboard"
 
 <MudGrid>
     @* Current Power Widget *@
     <MudItem>
-        <CurrentPower />
+        <CurrentPower DashboardName="@DashboardName" />
     </MudItem>
     <MudItem>
-        <CO2Savings />
+        <CO2Savings SavedEmissions="@liveDataService.GetSavedEmissions(DashboardName)" SavedTrees="@liveDataService.GetSavedTrees(DashboardName)" />
     </MudItem>
 </MudGrid>
+
+@code {
+    public string DashboardName { get; set; } = Constants.Names.Fronius;
+
+    protected override void OnInitialized()
+    {
+        liveDataService.OnChange += UpdateLiveData;
+    }
+
+    private void UpdateLiveData()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        liveDataService.OnChange -= UpdateLiveData;
+    }
+}

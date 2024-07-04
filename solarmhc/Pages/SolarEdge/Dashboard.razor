@@ -1,0 +1,18 @@
+﻿@using WebScraper;
+@using solarmhc.Models;
+@using solarmhc.Web.Pages.Components
+@page "/solaredge/dashboard"
+
+<MudGrid>
+    @* Current Power Widget *@
+    <MudItem>
+        <CurrentPower DashboardName="@DashboardName" />
+    </MudItem>
+    <MudItem>
+        <CO2Savings />
+    </MudItem>
+</MudGrid>
+
+@code {
+    public string DashboardName { get; set; } = Constants.Names.SolarEdge;
+}

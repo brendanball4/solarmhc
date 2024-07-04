@@ -54,7 +54,7 @@ namespace solarmhc.Models.Services.Web_Scrapers
                     if (result)
                     {
                         // Return the utilizationPercentage & currentWattage values
-                        await _liveDataService.UpdateCurrentPowerAsync(utilizationPercentage, currentWattage);
+                        await _liveDataService.UpdateCurrentPowerAsync(Constants.Names.Fronius, utilizationPercentage, currentWattage);
                         return (utilizationPercentage, currentWattage);
                     }
                     else

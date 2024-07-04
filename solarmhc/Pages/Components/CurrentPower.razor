@@ -1,5 +1,6 @@
 ﻿@using ApexCharts
 @using solarmhc.Models.Services
+@using solarmhc.Models;
 @implements IDisposable
 @inject LiveDataService liveDataService
 
@@ -25,14 +26,16 @@
             </ApexChart>
             <MudDivider Style="border-color: black;" />
             <div class="text-center mt-3">
-                <MudText>@liveDataService.CurrentPower.utilizationPercentage.ToString("F2")% Utilization</MudText>
-                <MudText>@liveDataService.CurrentPower.currentWattage kWh</MudText>
+                <MudText>@liveDataService.GetCurrentPower(DashboardName).utilizationPercentage.ToString("F2")% Utilization</MudText>
+                <MudText>@liveDataService.GetCurrentPower(DashboardName).currentWattage kWh</MudText>
             </div>
         </MudCardContent>
     </MudCard>
 </MudPaper>
 
 @code {
+    [Parameter]
+    public string DashboardName { get; set; }
     private ApexChart<ChartDataPoint> chart;
     private List<ChartDataPoint> dataPoints = new List<ChartDataPoint>();
 
@@ -73,12 +76,12 @@
 
     private async void UpdateLiveData()
     {
-      if (liveDataService.CurrentPower.utilizationPercentage > 0 && liveDataService.CurrentPower.currentWattage > 0)
+        if (liveDataService.GetCurrentPower(DashboardName).utilizationPercentage > 0 && liveDataService.GetCurrentPower(DashboardName).currentWattage > 0)
         {
             dataPoints = new List<ChartDataPoint>
             {
-                new ChartDataPoint { Label = "Utilization", Value = liveDataService.CurrentPower.utilizationPercentage },
-                new ChartDataPoint { Label = "Capacity", Value = 100 - liveDataService.CurrentPower.utilizationPercentage }
+                new ChartDataPoint { Label = "Utilization", Value = liveDataService.GetCurrentPower(DashboardName).utilizationPercentage },
+                new ChartDataPoint { Label = "Capacity", Value = 100 - liveDataService.GetCurrentPower(DashboardName).utilizationPercentage }
             };
         }
 

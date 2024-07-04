@@ -1,5 +1,4 @@
 ﻿@using solarmhc.Models.Services;
-@inject LiveDataService liveDataService;
 
 <MudPaper Class="mt-3">
         <MudCard>
@@ -20,27 +19,13 @@
 </MudPaper>
 
 @code {
-    private double savedEmissions;
-    private double savedTrees;
+    [Parameter]
+    public double savedEmissions { get; set; }
+    [Parameter]
+    public double savedTrees { get; set; }
 
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
-        liveDataService.OnChange += UpdateLiveData;
-        savedEmissions = liveDataService.SavedEmissions;
-    }
-
-    private void UpdateLiveData()
-    {
-        InvokeAsync(() =>
-        {
-            savedEmissions = liveDataService.SavedEmissions;
-            savedTrees = liveDataService.SavedTrees;
-            StateHasChanged();
-        });
-    }
-
-    public void Dispose()
-    {
-        liveDataService.OnChange -= UpdateLiveData;
+        StateHasChanged();
     }
 }
