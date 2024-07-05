@@ -129,14 +129,78 @@ namespace solarmhc.Models.Services.Web_Scrapers
             }
         }
 
-        public async Task<string> SolarEdgeStartFetchingPowerDataAsync(string dataUrl)
+        public async Task SolarEdgeStartFetchingPowerDataAsync(string dataUrl)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<string> SunnyStartFetchingPowerDataAsync(string dataUrl)
+        public async Task SunnyStartFetchingPowerDataAsync(string dataUrl)
         {
-            throw new NotImplementedException();
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var driver = scope.ServiceProvider.GetService<ChromeDriver>();
+                try
+                {
+                    #region login
+                    // Navigate to the data URL
+                    driver.Navigate().GoToUrl(dataUrl);
+
+                    var cookiePopup = driver.FindElement(By.CssSelector(Constants.TargetedElements.Sunny.Auth.cookiePopup));
+                    cookiePopup.Click();
+
+                    // Wait for the element with the id 'loginForm' to load
+                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                    wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(Constants.TargetedElements.Sunny.Auth.loginForm)));
+
+                    // Find the username, password, and login fields
+                    var usernameField = driver.FindElement(By.CssSelector(Constants.TargetedElements.Sunny.Auth.username));
+                    var passwordField = driver.FindElement(By.CssSelector(Constants.TargetedElements.Sunny.Auth.password));
+                    var loginButton = driver.FindElement(By.CssSelector(Constants.TargetedElements.Sunny.Auth.loginButton));
+
+                    string username = Environment.GetEnvironmentVariable("MY_APP_SUNNY_USERNAME"); // setx <name> <data>
+                    string password = Environment.GetEnvironmentVariable("MY_APP_SUNNY_PASSWORD");
+
+                    // Enter the username and password
+                    usernameField.SendKeys(username);
+                    passwordField.SendKeys(password);
+
+                    // Click the login button
+                    loginButton.Click();
+                    #endregion
+
+                    #region Data scraping
+                    // Wait for the element with the id 'loginForm' to load
+                    wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(Constants.TargetedElements.Sunny.Data.kwId)));
+
+                    // Find the element with the data
+                    var powerElement = driver.FindElement(By.CssSelector(Constants.TargetedElements.Sunny.Data.kwId));  // TODO: Change to constant
+                    var currentPower = powerElement.Text;
+
+                    var result = _webScraperHelperService.TryParseData(currentPower, out decimal currentWattage);
+                    double utilizationPercentage = ((double)currentWattage / 25) * 100;
+
+                    if (result)
+                    {
+                        // Return the utilizationPercentage & currentWattage values
+                        await _liveDataService.UpdateCurrentPowerAsync(Constants.Names.Sunny, currentWattage);
+                    }
+                    else
+                    {
+                        _logger.LogError("An error occurred while parsing the data.");
+                    }
+                    #endregion
+                }
+                catch (Exception ex)
+                {
+                    // Log or handle exceptions as necessary
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+                finally
+                {
+                    driver.Close();
+                    scope.Dispose();
+                }
+            }
         }
     }
 }

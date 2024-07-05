@@ -28,7 +28,7 @@ namespace solarmhc.Models.Services
             try
             {
                 var lines = data.Split('\n');
-                if (lines.Length >= 2)
+                if (lines.Length >= 1)
                 {
                     // Clean and parse the W value
                     if (data.Contains("kW"))

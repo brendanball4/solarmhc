@@ -15,7 +15,7 @@ namespace solarmhc.Models
             var options = new ChromeOptions();
 
             // Add any desired ChromeOptions here
-            options.AddArgument("--headless"); // Example: Run in headless mode
+            //options.AddArgument("--headless"); // Example: Run in headless mode
             options.AddArgument("--no-sandbox"); // Example: Disable sandboxing (useful for certain environments)
             options.AddArgument("--disable-gpu"); // Example: Disable GPU usage
             options.AddArgument("--disable-dev-shm-usage"); // Example: Overcome limited resource problems

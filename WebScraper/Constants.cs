@@ -38,8 +38,6 @@ namespace solarmhc.Models
 
         public static class TargetedElements
         {
-            public const string SolarEdge = "";
-            public const string Sunny = "";
             public const string APS = "";
             public const string Fronius = "div.js-status-bar-text";
 
@@ -56,6 +54,23 @@ namespace solarmhc.Models
                     public const string username = "userName";
                     public const string password = "password";
                     public const string loginButton = "a[href='javascript:void(0)']";
+                }
+            }
+
+            public static class Sunny
+            {
+                public static class Data
+                {
+                    public const string kwId = "[data-testid='actual-power-value-label']";
+                }
+
+                public static class Auth
+                {
+                    public const string cookiePopup = "button#onetrust-reject-all-handler";
+                    public const string loginForm = "[data-testid='login']";
+                    public const string username = "input#mat-input-0";
+                    public const string password = "input#mat-input-1";
+                    public const string loginButton = "[data-testid='button-primary']";
                 }
             }
         }
