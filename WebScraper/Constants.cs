@@ -18,6 +18,20 @@ namespace solarmhc.Models
             public const string Fronius = "Fronius";
         }
 
+        public static class EnvironmentVars
+        {
+            public static class EnvironmentNames
+            {
+                public const string Sunny = "MY_APP_SUNNY_USERNAME";
+                public const string Huawei = "MY_APP_HUA_USERNAME";
+            }
+            public static class EnvironmentPass
+            {
+                public const string Sunny = "MY_APP_SUNNY_PASSWORD";
+                public const string Huawei = "MY_APP_HUA_PASSWORD";
+            }
+        }
+
         public static class DataUrls
         {
             public const string SolarEdge = "https://monitoring.solaredge.com/solaredge-web/p/login";
@@ -38,14 +52,27 @@ namespace solarmhc.Models
 
         public static class TargetedElements
         {
-            public const string APS = "";
-            public const string Fronius = "div.js-status-bar-text";
+            public static class Fronius
+            {
+                public static class Data
+                {
+                    public const string kwId = "div.js-status-bar-text";
+                }
+            }
+
+            public static class APS
+            {
+                public static class Data
+                {
+                    public const string kwId = "";
+                }
+            }
 
             public static class Huawei
             {
                 public static class Data
                 {
-                    public const string kwId = "pvSystemOverviewPower";
+                    public const string kwId = "span#pvSystemOverviewPower";
                 }
 
                 public static class Auth
@@ -61,15 +88,15 @@ namespace solarmhc.Models
             {
                 public static class Data
                 {
-                    public const string kwId = "[data-testid='actual-power-value-label']";
+                    public const string kwId = "span.sma-value-label";
                 }
 
                 public static class Auth
                 {
                     public const string cookiePopup = "button#onetrust-reject-all-handler";
                     public const string loginForm = "[data-testid='login']";
-                    public const string username = "input#mat-input-0";
-                    public const string password = "input#mat-input-1";
+                    public const string username = "mat-input-0";
+                    public const string password = "mat-input-1";
                     public const string loginButton = "[data-testid='button-primary']";
                 }
             }

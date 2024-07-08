@@ -39,6 +39,9 @@ namespace solarmhc.Models.Services
                     {
                         currentWattage /= 1000;
                         kwString = lines[0].Replace("W", "").Replace("\r", "").Trim();
+                    } else
+                    {
+                        kwString = lines[0];
                     }
 
                     if (decimal.TryParse(kwString, out currentWattage))

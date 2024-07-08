@@ -4,138 +4,112 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using solarmhc.Models.Services;
+using System;
+using System.Threading.Tasks;
+using WebScraper;
 using WebScraper.Data;
 using WebScraper.Models;
 
-namespace solarmhc.Models.Services
+namespace solarmhc.Models.Services.Web_Scrapers
 {
     public class DataWebScraper
     {
-        private readonly ILogger<DataWebScraper> _logger;
+        private readonly ILogger _logger;
+        private readonly WebScraperHelperService _webScraperHelperService;
         private readonly IServiceProvider _serviceProvider;
-        private readonly WebScraperHelperService _webScraperHelper;
+        private readonly LiveDataService _liveDataService;
 
-        public DataWebScraper(IServiceProvider serviceProvider, WebScraperHelperService webScraperHelper)
+        public DataWebScraper(WebScraperHelperService webScraperHelperService, IServiceProvider serviceProvider, LiveDataService liveDataService)
         {
-            // Inject the service provider
+            _webScraperHelperService = webScraperHelperService;
             _serviceProvider = serviceProvider;
-            _webScraperHelper = webScraperHelper;
+            _liveDataService = liveDataService;
         }
 
-        #region DB Data Scrapers
-        public async Task FroniusStartFetchingPowerDataAsync(string dataUrl)
+        public async Task GenericFetchPowerDataAsync(string dataUrl, string dashboardId, ScrapingSelectors selectedElements, EScraper eScraper, AuthSelectors? authSelectors, bool cookies, bool iframe)
         {
             using (var scope = _serviceProvider.CreateScope())
             {
-                var driver = scope.ServiceProvider.GetService<ChromeDriver>();
+                var driver = scope.ServiceProvider.GetRequiredService<ChromeDriver>();
                 try
                 {
-                    // Navigate to the data URL
-                    driver.Navigate().GoToUrl(dataUrl);
+                    // Navigate to the given URL
+                    await Task.Run(() => driver.Navigate().GoToUrl(dataUrl));
 
-                    // Wait for the element with the class "js-status-bar-text" to be visible
-                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-                    wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(Constants.TargetedElements.Fronius)));
+                    if (cookies)
+                    {
+                        await Task.Run(() =>
+                        {
+                            var cookiePopup = driver.FindElement(By.CssSelector(Constants.TargetedElements.Sunny.Auth.cookiePopup));
+                            cookiePopup.Click();
+                        });
+                    }
 
-                    // Find the element with the class "js-status-bar-text"
-                    var powerElement = driver.FindElement(By.CssSelector(Constants.TargetedElements.Fronius));
+                    await Task.Run(() =>
+                    {
+                        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+
+                        if (authSelectors != null)
+                        {
+                            wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(selectedElements.WaitConditionAuth)));
+
+                            var authResult = TryAuth(authSelectors, driver);
+                            if (!authResult)
+                            {
+                                _logger.LogError($"There was an error authenticating on {dashboardId}");
+                                return;
+                            }
+                        }
+
+                        if (iframe)
+                        {
+                            wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(By.CssSelector("iframe#main_iframe_center")));
+                        }
+
+                        wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(selectedElements.WaitCondition)));
+                    });
+
+                    var powerElement = driver.FindElement(By.CssSelector(selectedElements.PowerField));
                     var currentPower = powerElement.Text;
 
-                    // Parse the data and enter the information into the database
-                    var result = _webScraperHelper.TryParseData(currentPower, out decimal currentWattage);
-                    double utilizationPercentage = ((double)currentWattage / 25) * 100;
+                    var result = _webScraperHelperService.TryParseData(currentPower, out decimal currentWattage);
 
-                    if (result)
+                    if (eScraper == EScraper.Live)
                     {
-                        SubmitPowerIntakeData(Constants.Names.Fronius, utilizationPercentage, currentWattage);
-                        driver.Close();
+                        if (result)
+                        {
+                            await _liveDataService.UpdateCurrentPowerAsync(dashboardId, currentWattage);
+                        }
+                        else
+                        {
+                            _logger.LogError($"Error capturing and setting live data for {dashboardId}");
+                        }
                     }
-                    else
+                    else if (eScraper == EScraper.Data)
                     {
-                        _logger.LogError("An error occurred while parsing the data.");
+                        double utilizationPercentage = ((double)currentWattage / 25) * 100;
+
+                        if (result)
+                        {
+                            SubmitPowerIntakeData(dashboardId, utilizationPercentage, currentWattage);
+                            driver.Close();
+                        }
+                        else
+                        {
+                            _logger.LogError("An error occurred while parsing the data.");
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    // Log or handle exceptions as necessary
-                    Console.WriteLine($"Error: {ex.Message}");
-                }
-            }
-        }
-
-        public async Task APSStartFetchingPowerDataAsync(string dataUrl)
-        {
-
-        }
-
-        public async Task SolarEdgeStartFetchingPowerDataAsync(string dataUrl)
-        {
-        }
-
-        public async Task HuaweiStartFetchingPowerDataAsync(string dataUrl)
-        {
-            using (var scope = _serviceProvider.CreateScope())
-            {
-                var driver = scope.ServiceProvider.GetService<ChromeDriver>();
-                try
-                {
-                    #region login
-                    // Navigate to the data URL
-                    driver.Navigate().GoToUrl(dataUrl);
-
-                    // Wait for the element with the id 'loginForm' to load
-                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-                    wait.Until(ExpectedConditions.ElementIsVisible(By.Id(Constants.TargetedElements.Huawei.Auth.loginForm)));
-
-                    // Find the username, password, and login fields
-                    var usernameField = driver.FindElement(By.Id(Constants.TargetedElements.Huawei.Auth.username));
-                    var passwordField = driver.FindElement(By.Id(Constants.TargetedElements.Huawei.Auth.password));
-                    var loginButton = driver.FindElement(By.CssSelector(Constants.TargetedElements.Huawei.Auth.loginButton));
-
-                    string username = Environment.GetEnvironmentVariable("MY_APP_HUA_USERNAME"); // setx <name> <data>
-                    string password = Environment.GetEnvironmentVariable("MY_APP_HUA_PASSWORD");
-
-                    // Enter the username and password
-                    usernameField.SendKeys(username);
-                    passwordField.SendKeys(password);
-
-                    // Click the login button
-                    loginButton.Click();
-                    #endregion
-
-                    #region Data scraping
-                    // Wait for the iframe to load
-                    wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(By.CssSelector("iframe#main_iframe_center"))); // TODO: Change to constant
-
-                    // Find the element with the data
-                    var powerElement = driver.FindElement(By.CssSelector("span#pvSystemOverviewPower"));  // TODO: Change to constant
-                    var currentPower = decimal.Parse(powerElement.Text);
-
-                    // Parse the data and enter the information into the database
-                    double utilizationPercentage = ((double)currentPower / 25) * 100;
-
-                    SubmitPowerIntakeData(Constants.Names.Huawei, utilizationPercentage, currentPower);
-                    driver.Close();
-                    #endregion
-                }
-                catch (Exception ex)
-                {
-                    // Log or handle exceptions as necessary
-                    Console.WriteLine($"Error: {ex.Message}");
+                    _logger.LogError(ex, $"An error occurred while fetching data for {dashboardId}.");
                 }
                 finally
                 {
-                    driver.Close();
-                    scope.Dispose();
+                    driver.Quit();
                 }
             }
         }
-
-        public async Task SunnyStartFetchingPowerDataAsync(string dataUrl)
-        {
-        }
-        #endregion
 
         private void SubmitPowerIntakeData(string dashboardName, double utilizationPercentage, decimal currentWattage)
         {
@@ -166,6 +140,28 @@ namespace solarmhc.Models.Services
                 dbContext.PowerIntakes.Add(powerIntake);
                 dbContext.SaveChanges();
             }
+        }
+
+        private bool TryAuth(AuthSelectors authSelectors, ChromeDriver driver)
+        {
+            var usernameField = driver.FindElement(By.Id(authSelectors.UsernameField));
+            var passwordField = driver.FindElement(By.Id(authSelectors.PasswordField));
+            var loginButton = driver.FindElement(By.CssSelector(authSelectors.LoginButtonField));
+
+            string username = Environment.GetEnvironmentVariable(authSelectors.EnvUsername);
+            string password = Environment.GetEnvironmentVariable(authSelectors.EnvPassword);
+
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                _logger.LogError("Could not find username and password environment variables on this system.");
+                return false;
+            }
+
+            usernameField.SendKeys(username);
+            passwordField.SendKeys(password);
+            loginButton.Click();
+
+            return true;
         }
     }
 }

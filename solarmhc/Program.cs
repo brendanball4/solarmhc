@@ -5,6 +5,8 @@ using solarmhc.Models.Services;
 using solarmhc.Models.Services.Web_Scrapers;
 using solarmhc.Models.Background_Services;
 using solarmhc.Models;
+using OpenQA.Selenium.Chrome;
+using ApexCharts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,16 +14,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient<DataWebScraper>();
-builder.Services.AddHttpClient<LiveDataWebScraper>();
+builder.Services.AddHttpClient<DataWebScraper>();
 builder.Services.AddMudServices();
 builder.Services.AddSingleton<LiveDataService>();
 builder.Services.AddSingleton<WebScraperHelperService>();
 builder.Services.AddSingleton<EmissionCalculator>();
 builder.Services.AddSingleton<EmissionSaved>();
-builder.Services.AddHostedService<LiveDataWebScraperBackgroundService>();
+builder.Services.AddHostedService<DataWebScraperBackgroundService>();
 
-// Register ChromeDriver as a scoped service using the factory method
 builder.Services.AddScoped(sp => ChromeDriverFactory.CreateChromeDriver());
+builder.Services.AddScoped<DataWebScraper>();
 
 // Configure DbContext
 builder.Services.AddDbContext<SolarMHCDbContext>(options =>
