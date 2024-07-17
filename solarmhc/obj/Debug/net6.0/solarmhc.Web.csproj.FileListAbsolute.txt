@@ -81,7 +81,6 @@ C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\scopedcss\
 C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
 C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\scopedcss\bundle\solarmhc.Web.styles.css
 C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\scopedcss\projectbundle\solarmhc.Web.bundle.scp.css
-C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.Web.csproj.CopyComplete
 C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.Web.dll
 C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\refint\solarmhc.Web.dll
 C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.Web.pdb
@@ -294,3 +293,7 @@ C:\Users\Brendan\github\solarmhc\solarmhc\bin\Debug\net6.0\Blazor-ApexCharts.dll
 C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Blazor-ApexCharts.dll
 C:\Users\Brendan\github\solarmhc\solarmhc\obj\Debug\net6.0\scopedcss\Shared\AdminNavMenu.razor.rz.scp.css
 C:\Users\Brendan\github\solarmhc\solarmhc\obj\Debug\net6.0\scopedcss\Shared\AdminLayout.razor.rz.scp.css
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.Web.sourcelink.json
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\scopedcss\Shared\AdminLayout.razor.rz.scp.css
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\scopedcss\Shared\AdminNavMenu.razor.rz.scp.css
+C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.C4927B46.Up2Date

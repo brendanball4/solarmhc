@@ -17,12 +17,13 @@ namespace solarmhc.Models.Background_Services
         // Inject the services
         private readonly ILogger _logger;
         private readonly IServiceProvider _serviceProvider;
+        private readonly HttpClient _httpClient;
         private readonly WebScraperHelperService _webScraperHelper;
         private readonly LiveDataService _liveDataService;
         private readonly EmissionSaved _emissionSaved;
         private int intervalInMinutes = 5;
 
-        public DataWebScraperBackgroundService(ILogger<DataWebScraperBackgroundService> logger, IServiceProvider serviceProvider, WebScraperHelperService webScraperHelper, LiveDataService liveDataService, EmissionSaved emissionSaved)
+        public DataWebScraperBackgroundService(ILogger<DataWebScraperBackgroundService> logger, IServiceProvider serviceProvider, WebScraperHelperService webScraperHelper, LiveDataService liveDataService, EmissionSaved emissionSaved, HttpClient httpClient)
         {
             // Inject the services
             _logger = logger;
@@ -30,23 +31,25 @@ namespace solarmhc.Models.Background_Services
             _webScraperHelper = webScraperHelper;
             _liveDataService = liveDataService;
             _emissionSaved = emissionSaved;
+            _httpClient = httpClient;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _logger.LogInformation("Starting web scraper services.");
             stoppingToken.Register(() => _logger.LogInformation("Stopping web scraper services."));
 
+            // Calculate the emissions and trees planted for each dashboard
             _ = Task.Run(async () =>
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
                     var tasks = new List<Task>
                     {
-                        //_emissionSaved.EmissionCalculation(Constants.Names.SolarEdge, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees),
-                        //_emissionSaved.EmissionCalculation(Constants.Names.APS, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees),
-                         _emissionSaved.EmissionCalculation(Constants.Names.Sunny, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees),
-                         _emissionSaved.EmissionCalculation(Constants.Names.Huawei, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees),
-                         _emissionSaved.EmissionCalculation(Constants.Names.Fronius, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees)
+                        _emissionSaved.EmissionCalculation(Constants.Names.SolarEdge, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees),
+                        _emissionSaved.EmissionCalculation(Constants.Names.APS, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees),
+                        _emissionSaved.EmissionCalculation(Constants.Names.Sunny, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees),
+                        _emissionSaved.EmissionCalculation(Constants.Names.Huawei, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees),
+                        _emissionSaved.EmissionCalculation(Constants.Names.Fronius, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees)
                     };
 
                     await Task.WhenAll(tasks); // Starts tasks concurrently and waits for all to complete
@@ -54,14 +57,16 @@ namespace solarmhc.Models.Background_Services
                 }
             }, stoppingToken);
 
+            // Functions that collect data for the database, currently runs every 5 minutes
             _ = Task.Run(async () =>
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
                     var tasks = new List<Task>
                     {
-                        //FetchAndServeDataAsync(Constants.DataUrls.SolarEdge, Constants.Names.SolarEdge, EScraper.Data),
-                        //FetchAndServeDataAsync(Constants.DataUrls.APS, Constants.Names.APS, EScraper.Data),
+                        // This collects data for the database and live viewing for SolarEdge
+                        FetchAndServeDataAsync(Constants.DataUrls.SolarEdge, Constants.Names.SolarEdge, EScraper.Data),
+                        FetchAndServeDataAsync(Constants.DataUrls.APS, Constants.Names.APS, EScraper.Data),
                         FetchAndServeDataAsync(Constants.DataUrls.Sunny, Constants.Names.Sunny, EScraper.Data),
                         FetchAndServeDataAsync(Constants.DataUrls.Huawei, Constants.Names.Huawei, EScraper.Data),
                         FetchAndServeDataAsync(Constants.DataUrls.Fronius, Constants.Names.Fronius, EScraper.Data)
@@ -72,10 +77,12 @@ namespace solarmhc.Models.Background_Services
                 }
             }, stoppingToken);
 
+            // Live data for viewing on the website, currently runs every 30 seconds
             while (!stoppingToken.IsCancellationRequested)
             {
                 var tasks = new List<Task>
                 {
+                    FetchAndServeDataAsync(Constants.DataUrls.APS, Constants.Names.APS, EScraper.Live),
                     FetchAndServeDataAsync(Constants.DataUrls.Sunny, Constants.Names.Sunny, EScraper.Live),
                     FetchAndServeDataAsync(Constants.DataUrls.Huawei, Constants.Names.Huawei, EScraper.Live),
                     FetchAndServeDataAsync(Constants.DataUrls.Fronius, Constants.Names.Fronius, EScraper.Live)
@@ -93,69 +100,85 @@ namespace solarmhc.Models.Background_Services
         {
             try
             {
-                // Instantiate the DataWebScraper class
-                var dataScraper = new DataWebScraper(_webScraperHelper, _serviceProvider, _liveDataService);
-
-                var authSelectors = new AuthSelectors();
-                var selectors = new ScrapingSelectors();
-
-                switch (dataUrl)
+                using (var scope = _serviceProvider.CreateScope())
                 {
-                    case Constants.DataUrls.SolarEdge:
-                        //await liveWebScraper.GenericFetchPowerAsyncDataAsync();
-                        break;
-                    case Constants.DataUrls.Sunny:
-                        authSelectors = new AuthSelectors
-                        {
-                            UsernameField = Constants.TargetedElements.Sunny.Auth.username,
-                            PasswordField = Constants.TargetedElements.Sunny.Auth.password,
-                            LoginButtonField = Constants.TargetedElements.Sunny.Auth.loginButton,
-                            EnvUsername = Constants.EnvironmentVars.EnvironmentNames.Sunny,
-                            EnvPassword = Constants.EnvironmentVars.EnvironmentPass.Sunny
-                        };
-                        selectors = new ScrapingSelectors
-                        {
-                            WaitConditionAuth = Constants.TargetedElements.Sunny.Auth.loginButton,
-                            WaitCondition = Constants.TargetedElements.Sunny.Data.kwId,
-                            PowerField = Constants.TargetedElements.Sunny.Data.kwId
-                        };
-                        await dataScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, selectors, eScraper, authSelectors, true, false);
-                        break;
-                    case Constants.DataUrls.APS:
-                        selectors = new ScrapingSelectors
-                        {
-                            WaitCondition = Constants.TargetedElements.APS.Data.kwId,
-                            PowerField = Constants.TargetedElements.APS.Data.kwId
-                        };
-                        await dataScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, selectors, eScraper, null, false, false);
-                        break;
-                    case Constants.DataUrls.Huawei:
-                        authSelectors = new AuthSelectors
-                        {
-                            UsernameField = Constants.TargetedElements.Huawei.Auth.username,
-                            PasswordField = Constants.TargetedElements.Huawei.Auth.password,
-                            LoginButtonField = Constants.TargetedElements.Huawei.Auth.loginButton,
-                            EnvUsername = Constants.EnvironmentVars.EnvironmentNames.Huawei,
-                            EnvPassword = Constants.EnvironmentVars.EnvironmentPass.Huawei
-                        };
-                        selectors = new ScrapingSelectors
-                        {
-                            WaitConditionAuth = Constants.TargetedElements.Huawei.Auth.loginButton,
-                            WaitCondition = Constants.TargetedElements.Huawei.Data.kwId,
-                            PowerField = Constants.TargetedElements.Huawei.Data.kwId
-                        };
-                        await dataScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, selectors, eScraper, authSelectors, false, true);
-                        break;
-                    case Constants.DataUrls.Fronius:
-                        selectors = new ScrapingSelectors
-                        {
-                            WaitCondition = Constants.TargetedElements.Fronius.Data.kwId,
-                            PowerField = Constants.TargetedElements.Fronius.Data.kwId
-                        };
-                        await dataScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, selectors, eScraper, null, false, false);
-                        break;
-                    default:
-                        break;
+                    var dataWebScraper = scope.ServiceProvider.GetService<DataWebScraper>();
+
+                    if (dataWebScraper == null)
+                    {
+                        _logger.LogError("There was an error creating a data web scraper class scope.");
+                    }
+
+                    var authSelectors = new AuthSelectors();
+                    var selectors = new ScrapingSelectors();
+
+                    switch (dataUrl)
+                    {
+                        case Constants.DataUrls.SolarEdge:
+                            await dataWebScraper.FetchPowerDataSolarEdgeAPI();
+                            break;
+                        case Constants.DataUrls.Sunny:
+                            authSelectors = new AuthSelectors
+                            {
+                                UsernameField = Constants.TargetedElements.Sunny.Auth.username,
+                                PasswordField = Constants.TargetedElements.Sunny.Auth.password,
+                                LoginButtonField = Constants.TargetedElements.Sunny.Auth.loginButton,
+                                EnvUsername = Constants.EnvironmentVars.EnvironmentNames.Sunny,
+                                EnvPassword = Constants.EnvironmentVars.EnvironmentPass.Sunny
+                            };
+                            selectors = new ScrapingSelectors
+                            {
+                                WaitConditionAuth = Constants.TargetedElements.Sunny.Auth.loginButton,
+                                WaitCondition = Constants.TargetedElements.Sunny.Data.kwId,
+                                PowerField = Constants.TargetedElements.Sunny.Data.kwId
+                            };
+                            await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, selectors, eScraper, authSelectors, true, false);
+                            break;
+                        case Constants.DataUrls.APS:
+                            authSelectors = new AuthSelectors
+                            {
+                                UsernameField = Constants.TargetedElements.APS.Auth.username,
+                                PasswordField = Constants.TargetedElements.APS.Auth.password,
+                                LoginButtonField = Constants.TargetedElements.APS.Auth.loginButton,
+                                EnvUsername = Constants.EnvironmentVars.EnvironmentNames.APS,
+                                EnvPassword = Constants.EnvironmentVars.EnvironmentPass.APS
+                            };
+                            selectors = new ScrapingSelectors
+                            {
+                                WaitConditionAuth = Constants.TargetedElements.APS.Auth.loginButton,
+                                WaitCondition = Constants.TargetedElements.APS.Data.kwId,
+                                PowerField = Constants.TargetedElements.APS.Data.kwId
+                            };
+                            await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, selectors, eScraper, authSelectors, false, false);
+                            break;
+                        case Constants.DataUrls.Huawei:
+                            authSelectors = new AuthSelectors
+                            {
+                                UsernameField = Constants.TargetedElements.Huawei.Auth.username,
+                                PasswordField = Constants.TargetedElements.Huawei.Auth.password,
+                                LoginButtonField = Constants.TargetedElements.Huawei.Auth.loginButton,
+                                EnvUsername = Constants.EnvironmentVars.EnvironmentNames.Huawei,
+                                EnvPassword = Constants.EnvironmentVars.EnvironmentPass.Huawei
+                            };
+                            selectors = new ScrapingSelectors
+                            {
+                                WaitConditionAuth = Constants.TargetedElements.Huawei.Auth.loginButton,
+                                WaitCondition = Constants.TargetedElements.Huawei.Data.kwId,
+                                PowerField = Constants.TargetedElements.Huawei.Data.kwId
+                            };
+                            await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, selectors, eScraper, authSelectors, false, true);
+                            break;
+                        case Constants.DataUrls.Fronius:
+                            selectors = new ScrapingSelectors
+                            {
+                                WaitCondition = Constants.TargetedElements.Fronius.Data.kwId,
+                                PowerField = Constants.TargetedElements.Fronius.Data.kwId
+                            };
+                            await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, selectors, eScraper, null, false, false);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
             catch (Exception ex)

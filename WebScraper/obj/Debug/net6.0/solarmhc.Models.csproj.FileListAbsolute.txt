@@ -50,3 +50,4 @@ C:\Users\Wanatda\Source\Repos\solarmhc\WebScraper\bin\Debug\net6.0\solarmhc.Mode
 C:\Users\Wanatda\Source\Repos\solarmhc\WebScraper\bin\Debug\net6.0\solarmhc.Models.pdb
 C:\Users\Wanatda\Source\Repos\solarmhc\WebScraper\obj\Debug\net6.0\solarmhc.Models.genruntimeconfig.cache
 C:\Users\Wanatda\Source\Repos\solarmhc\WebScraper\obj\Debug\net6.0\ref\solarmhc.Models.dll
+C:\Users\Brendan.Ball\source\repos\solarmhc\WebScraper\obj\Debug\net6.0\solarmhc.Models.sourcelink.json

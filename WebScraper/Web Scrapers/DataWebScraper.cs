@@ -1,11 +1,16 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using WebScraper;
 using WebScraper.Data;
 using WebScraper.Models;
@@ -14,16 +19,19 @@ namespace solarmhc.Models.Services.Web_Scrapers
 {
     public class DataWebScraper
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<DataWebScraper> _logger;
         private readonly WebScraperHelperService _webScraperHelperService;
         private readonly IServiceProvider _serviceProvider;
         private readonly LiveDataService _liveDataService;
+        private readonly HttpClient _httpClient;
 
-        public DataWebScraper(WebScraperHelperService webScraperHelperService, IServiceProvider serviceProvider, LiveDataService liveDataService)
+        public DataWebScraper(WebScraperHelperService webScraperHelperService, IServiceProvider serviceProvider, LiveDataService liveDataService, HttpClient httpClient, ILogger<DataWebScraper> logger)
         {
             _webScraperHelperService = webScraperHelperService;
             _serviceProvider = serviceProvider;
             _liveDataService = liveDataService;
+            _httpClient = httpClient;
+            _logger = logger;
         }
 
         public async Task GenericFetchPowerDataAsync(string dataUrl, string dashboardId, ScrapingSelectors selectedElements, EScraper eScraper, AuthSelectors? authSelectors, bool cookies, bool iframe)
@@ -64,6 +72,12 @@ namespace solarmhc.Models.Services.Web_Scrapers
                         if (iframe)
                         {
                             wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(By.CssSelector("iframe#main_iframe_center")));
+                        }
+
+                        if (dashboardId == Constants.Names.APS)
+                        {
+                            FetchPowerDataAPS(driver, eScraper, dashboardId);
+                            return;
                         }
 
                         wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(selectedElements.WaitCondition)));
@@ -108,6 +122,97 @@ namespace solarmhc.Models.Services.Web_Scrapers
                 {
                     driver.Quit();
                 }
+            }
+        }
+
+        private void FetchPowerDataAPS(ChromeDriver driver, EScraper eScraper, string dashboardId)
+        {
+            driver.Navigate().GoToUrl("https://apsystemsema.com/ema/security/optsecondmenu/intoViewOptModule.action");
+
+            List<double> wattageValues = new List<double>();
+
+            // Adjust the range based on the number of panels
+            for (int i = 0; i <= 62; i++)
+            {
+                try
+                {
+                    // Locate the wattage element
+                    IWebElement wattageElement = driver.FindElement(By.Id($"module{i}"));
+
+                    // Parse the wattage value and add to the list
+                    if (double.TryParse(wattageElement.Text, out double wattage))
+                    {
+                        wattageValues.Add(wattage);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Could not parse wattage for panel {i}");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error fetching wattage for panel {i}: {e.Message}");
+                }
+            }
+
+            double currentKw = wattageValues.Sum();
+            currentKw = currentKw / 1000;
+            var currentUtilization = (currentKw / Constants.Capacities.APS) * 100;
+
+            if (eScraper == EScraper.Live)
+            {
+                _liveDataService.SetCurrentPower(dashboardId, (decimal)currentKw);
+            } else
+            {
+                SubmitPowerIntakeData(dashboardId, currentUtilization, (decimal)currentKw);
+            }
+        }
+
+        public async Task FetchPowerDataSolarEdgeAPI()
+        {
+            string apiKey = Environment.GetEnvironmentVariable(Constants.EnvironmentVars.EnvironmentNames.SolarEdgeApi);
+            string siteValue = Environment.GetEnvironmentVariable(Constants.EnvironmentVars.EnvironmentNames.SolarEdgeSite);
+
+            if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(siteValue))
+            {
+                _logger.LogError("There was an error with collecting the API key for Solar Edge. (Make sure environment variables are set properly)");
+            }
+
+            string solarEdgeApiUrl = $"https://monitoringapi.solaredge.com/site/{siteValue}/overview?api_key={apiKey}";
+
+            try
+            {
+                // Send the GET request
+                HttpResponseMessage response = await _httpClient.GetAsync(solarEdgeApiUrl);
+
+                // Check if the request was successful
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a string
+                    string content = await response.Content.ReadAsStringAsync();
+                    _logger.LogInformation("Response content: " + content);
+
+                    var jsonResponse = JObject.Parse(content);
+
+                    // Parse the JSON response
+                    var currentPower = jsonResponse["overview"]["currentPower"]["power"].Value<double>();
+                    var currentPowerKw = currentPower / 1000;
+                    var currentUtilization = currentPowerKw / Constants.Capacities.SolarEdge;
+
+                    // Collect data for live viewing, and saving to database
+                    await _liveDataService.UpdateCurrentPowerAsync(Constants.Names.SolarEdge, (decimal)currentPowerKw);
+                    SubmitPowerIntakeData(Constants.Names.SolarEdge, currentUtilization, (decimal)currentPowerKw);
+                }
+                else
+                {
+                    _logger.LogError($"Error: {response.StatusCode}");
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    _logger.LogError("Error content: " + errorContent);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An error occurred while fetching data from SolarEdge: {ex.Message}");
             }
         }
 

@@ -24,11 +24,15 @@ namespace solarmhc.Models
             {
                 public const string Sunny = "MY_APP_SUNNY_USERNAME";
                 public const string Huawei = "MY_APP_HUA_USERNAME";
+                public const string APS = "MY_APP_APS_USERNAME";
+                public const string SolarEdgeApi = "SE_API";
+                public const string SolarEdgeSite = "SE_SITE";
             }
             public static class EnvironmentPass
             {
                 public const string Sunny = "MY_APP_SUNNY_PASSWORD";
                 public const string Huawei = "MY_APP_HUA_PASSWORD";
+                public const string APS = "MY_APP_APS_PASSWORD";
             }
         }
 
@@ -64,7 +68,16 @@ namespace solarmhc.Models
             {
                 public static class Data
                 {
-                    public const string kwId = "";
+                    public const string kwId = "div.highcharts-tooltip";
+                    public const string graphElement = "highcharts-0";
+                }
+
+                public static class Auth
+                {
+                    public const string loginForm = "loginForm";
+                    public const string username = "username";
+                    public const string password = "password";
+                    public const string loginButton = "input#Login";
                 }
             }
 

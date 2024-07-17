@@ -14,7 +14,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient<DataWebScraper>();
-builder.Services.AddHttpClient<DataWebScraper>();
 builder.Services.AddMudServices();
 builder.Services.AddSingleton<LiveDataService>();
 builder.Services.AddSingleton<WebScraperHelperService>();
