@@ -1,0 +1,48 @@
+﻿@using solarmhc.Models.Services
+@inject LiveDataService liveDataService
+
+<MudPaper Class="mt-3">
+    <MudCard>
+        <MudCardHeader>
+            <MudGrid>
+                <MudItem xs="2"><img src="@weatherData?.IconUrl" alt="Weather Icon" /></MudItem>
+                <MudItem xs="10" Style="display: flex; justify-content: flex-end;"><MudText Typo="Typo.h4">@weatherData?.City</MudText></MudItem>
+                <MudItem xs="12" Style="display: flex; justify-content: flex-end; align-items: center;"><MudText Typo="Typo.subtitle1">@weatherData?.Condition</MudText></MudItem>
+            </MudGrid>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h2">@weatherData?.Temperature°</MudText>
+                </MudItem>
+            </MudGrid>
+            <MudGrid>
+                <MudItem xs="12" Style="display: flex; justify-content: flex-end;">
+                    <MudText Typo="Typo.caption">Last Updated: @weatherData?.LastUpdated.ToString("MMMM dd, yyyy") at @weatherData?.LastUpdated.ToString("h:mm tt")</MudText>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+</MudPaper>
+
+@code {
+    private WeatherData weatherData;
+
+    protected override void OnInitialized()
+    {
+        liveDataService.OnChange += UpdateLiveData;
+        weatherData = liveDataService.GetCurrentWeather();
+        UpdateLiveData();
+    }
+
+    private void UpdateLiveData()
+    {
+        weatherData = liveDataService.GetCurrentWeather();
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        liveDataService.OnChange -= UpdateLiveData;
+    }
+}

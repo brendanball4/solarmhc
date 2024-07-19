@@ -13,6 +13,9 @@
     <MudItem>
         <CO2Savings SavedEmissions="@liveDataService.GetSavedEmissions(DashboardName)" SavedTrees="@liveDataService.GetSavedTrees(DashboardName)" />
     </MudItem>
+    <MudItem>
+        <Weather />
+    </MudItem>
 </MudGrid>
 
 @code {

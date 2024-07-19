@@ -53,7 +53,7 @@ namespace solarmhc.Models.Services.Web_Scrapers
                         });
                     }
 
-                    await Task.Run(() =>
+                    var taskResult = await Task.Run(() =>
                     {
                         WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
 
@@ -65,7 +65,7 @@ namespace solarmhc.Models.Services.Web_Scrapers
                             if (!authResult)
                             {
                                 _logger.LogError($"There was an error authenticating on {dashboardId}");
-                                return;
+                                return false;
                             }
                         }
 
@@ -77,16 +77,28 @@ namespace solarmhc.Models.Services.Web_Scrapers
                         if (dashboardId == Constants.Names.APS)
                         {
                             FetchPowerDataAPS(driver, eScraper, dashboardId);
-                            return;
+                            return false;
                         }
 
                         wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(selectedElements.WaitCondition)));
+                        return true;
                     });
+
+                    if (!taskResult)
+                    {
+                        return; // Exit the method if any task inside the Task.Run block returns false
+                    }
 
                     var powerElement = driver.FindElement(By.CssSelector(selectedElements.PowerField));
                     var currentPower = powerElement.Text;
 
                     var result = _webScraperHelperService.TryParseData(currentPower, out decimal currentWattage);
+
+                    if (currentWattage > 25)
+                    {
+                        // Change from Watts to kW for systems that report watts at low utilization
+                        currentWattage /= 1000;
+                    }
 
                     if (eScraper == EScraper.Live)
                     {

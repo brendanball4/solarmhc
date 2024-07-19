@@ -15,7 +15,7 @@ namespace solarmhc.Models.Background_Services
     public class DataWebScraperBackgroundService : BackgroundService
     {
         // Inject the services
-        private readonly ILogger _logger;
+        private readonly ILogger<DataWebScraperBackgroundService> _logger;
         private readonly IServiceProvider _serviceProvider;
         private readonly HttpClient _httpClient;
         private readonly WebScraperHelperService _webScraperHelper;
@@ -45,11 +45,11 @@ namespace solarmhc.Models.Background_Services
                 {
                     var tasks = new List<Task>
                     {
-                        _emissionSaved.EmissionCalculation(Constants.Names.SolarEdge, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees),
-                        _emissionSaved.EmissionCalculation(Constants.Names.APS, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees),
-                        _emissionSaved.EmissionCalculation(Constants.Names.Sunny, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees),
-                        _emissionSaved.EmissionCalculation(Constants.Names.Huawei, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees),
-                        _emissionSaved.EmissionCalculation(Constants.Names.Fronius, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees)
+                        //_emissionSaved.EmissionCalculation(Constants.Names.SolarEdge, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees),
+                        //_emissionSaved.EmissionCalculation(Constants.Names.APS, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees),
+                        //_emissionSaved.EmissionCalculation(Constants.Names.Sunny, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees),
+                        //_emissionSaved.EmissionCalculation(Constants.Names.Huawei, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees),
+                        //_emissionSaved.EmissionCalculation(Constants.Names.Fronius, Constants.Environmental.Canada.CO2Factor, Constants.Environmental.Canada.Trees)
                     };
 
                     await Task.WhenAll(tasks); // Starts tasks concurrently and waits for all to complete
@@ -65,11 +65,11 @@ namespace solarmhc.Models.Background_Services
                     var tasks = new List<Task>
                     {
                         // This collects data for the database and live viewing for SolarEdge
-                        FetchAndServeDataAsync(Constants.DataUrls.SolarEdge, Constants.Names.SolarEdge, EScraper.Data),
-                        FetchAndServeDataAsync(Constants.DataUrls.APS, Constants.Names.APS, EScraper.Data),
-                        FetchAndServeDataAsync(Constants.DataUrls.Sunny, Constants.Names.Sunny, EScraper.Data),
-                        FetchAndServeDataAsync(Constants.DataUrls.Huawei, Constants.Names.Huawei, EScraper.Data),
-                        FetchAndServeDataAsync(Constants.DataUrls.Fronius, Constants.Names.Fronius, EScraper.Data)
+                        //FetchAndServeDataAsync(Constants.DataUrls.SolarEdge, Constants.Names.SolarEdge, EScraper.Data),
+                        //FetchAndServeDataAsync(Constants.DataUrls.APS, Constants.Names.APS, EScraper.Data),
+                        //FetchAndServeDataAsync(Constants.DataUrls.Sunny, Constants.Names.Sunny, EScraper.Data),
+                        //FetchAndServeDataAsync(Constants.DataUrls.Huawei, Constants.Names.Huawei, EScraper.Data),
+                        //FetchAndServeDataAsync(Constants.DataUrls.Fronius, Constants.Names.Fronius, EScraper.Data)
                     };
 
                     await Task.WhenAll(tasks); // Starts tasks concurrently and waits for all to complete
@@ -82,10 +82,10 @@ namespace solarmhc.Models.Background_Services
             {
                 var tasks = new List<Task>
                 {
-                    FetchAndServeDataAsync(Constants.DataUrls.APS, Constants.Names.APS, EScraper.Live),
-                    FetchAndServeDataAsync(Constants.DataUrls.Sunny, Constants.Names.Sunny, EScraper.Live),
-                    FetchAndServeDataAsync(Constants.DataUrls.Huawei, Constants.Names.Huawei, EScraper.Live),
-                    FetchAndServeDataAsync(Constants.DataUrls.Fronius, Constants.Names.Fronius, EScraper.Live)
+                    //FetchAndServeDataAsync(Constants.DataUrls.APS, Constants.Names.APS, EScraper.Live),
+                    //FetchAndServeDataAsync(Constants.DataUrls.Sunny, Constants.Names.Sunny, EScraper.Live),
+                    //FetchAndServeDataAsync(Constants.DataUrls.Huawei, Constants.Names.Huawei, EScraper.Live),
+                    //FetchAndServeDataAsync(Constants.DataUrls.Fronius, Constants.Names.Fronius, EScraper.Live)
                 };
 
                 await Task.WhenAll(tasks); // Starts tasks concurrently and waits for all to complete

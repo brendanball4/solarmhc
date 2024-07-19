@@ -9,7 +9,7 @@ namespace solarmhc.Models
             var chromeDriverService = ChromeDriverService.CreateDefaultService();
             var options = new ChromeOptions();
 
-            //options.AddArgument("--headless");
+            options.AddArgument("--headless");
             options.AddArgument("--window-size=1920,1080");
             options.AddArgument("--no-sandbox");
             options.AddArgument("--disable-gpu");

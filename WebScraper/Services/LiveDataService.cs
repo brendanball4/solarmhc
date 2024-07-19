@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using OpenQA.Selenium.DevTools.V123.Network;
+using System;
 using System.Collections.Concurrent;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Schema;
 
@@ -9,8 +12,15 @@ namespace solarmhc.Models.Services
     {
         private readonly ConcurrentDictionary<string, DashboardData> _dashboardData
             = new ConcurrentDictionary<string, DashboardData>();
+        private readonly HttpClient _httpClient;
+        private WeatherData _weatherData;
 
         public event Action OnChange;
+
+        public LiveDataService(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
 
         public (double utilizationPercentage, decimal currentWattage) GetCurrentPower(string dashboardId)
         {
@@ -26,6 +36,33 @@ namespace solarmhc.Models.Services
             var data = _dashboardData.GetOrAdd(dashboardId, new DashboardData());
             data.UtilizationPercentage = ((double)currentWattage / 25) * 100;
             data.CurrentWattage = currentWattage;
+            NotifyStateChanged();
+        }
+
+        public WeatherData GetCurrentWeather()
+        {
+            return _weatherData;
+        }
+
+        public async Task SetCurrentWeather(string city)
+        {
+            var apiKey = Environment.GetEnvironmentVariable(Constants.WeatherApi.apiKey);
+            var response = await _httpClient.GetAsync($"http://api.weatherapi.com/v1/current.json?key={apiKey}&q={city}&aqi=no");
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+            var jsonData = JObject.Parse(content);
+            var weatherData = new WeatherData()
+            {
+                City = jsonData["location"]["name"].Value<string>(),
+                Province = jsonData["location"]["region"].Value<string>(),
+                Country = jsonData["location"]["country"].Value<string>(),
+                Temperature = jsonData["current"]["temp_c"].Value<double>(),
+                Condition = jsonData["current"]["condition"]["text"].Value<string>(),
+                IconUrl = jsonData["current"]["condition"]["icon"].Value<string>(),
+                LastUpdated = jsonData["current"]["last_updated"].Value<DateTime>(),
+            };
+            _weatherData = weatherData;
             NotifyStateChanged();
         }
 
@@ -73,6 +110,12 @@ namespace solarmhc.Models.Services
             await Task.CompletedTask;
         }
 
+        public async Task UpdateWeather(string city)
+        {
+            await SetCurrentWeather(city);
+            await Task.CompletedTask;
+        }
+
         public async Task UpdateTreesAsync(string dashboardId, double savedTrees)
         {
             SetSavedTrees(dashboardId, savedTrees);
@@ -82,11 +125,22 @@ namespace solarmhc.Models.Services
         private void NotifyStateChanged() => OnChange?.Invoke();
     }
 
-    class DashboardData
+    public class DashboardData
     {
         public double UtilizationPercentage { get; set; }
         public decimal CurrentWattage { get; set; }
         public double TotalEmissions { get; set; }
         public double SavedTrees { get; set; }
+    }
+
+    public class WeatherData
+    {
+        public string City { get; set; }
+        public string Province { get; set; }
+        public string Country { get; set; }
+        public double Temperature { get; set; }
+        public string Condition { get; set; }
+        public string IconUrl { get; set; }
+        public DateTime LastUpdated { get; set; }
     }
 }

@@ -5,8 +5,6 @@ using solarmhc.Models.Services;
 using solarmhc.Models.Services.Web_Scrapers;
 using solarmhc.Models.Background_Services;
 using solarmhc.Models;
-using OpenQA.Selenium.Chrome;
-using ApexCharts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +17,8 @@ builder.Services.AddSingleton<LiveDataService>();
 builder.Services.AddSingleton<WebScraperHelperService>();
 builder.Services.AddSingleton<EmissionCalculator>();
 builder.Services.AddSingleton<EmissionSaved>();
+builder.Services.AddSingleton<WeatherService>();
+builder.Services.AddHostedService<WeatherBackgroundService>();
 builder.Services.AddHostedService<DataWebScraperBackgroundService>();
 
 builder.Services.AddScoped(sp => ChromeDriverFactory.CreateChromeDriver());

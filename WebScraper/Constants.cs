@@ -54,6 +54,11 @@ namespace solarmhc.Models
             public const double Fronius = 25;
         }
 
+        public static class WeatherApi
+        {
+            public const string apiKey = "WEATHER_API";
+        }
+
         public static class TargetedElements
         {
             public static class Fronius
@@ -68,8 +73,7 @@ namespace solarmhc.Models
             {
                 public static class Data
                 {
-                    public const string kwId = "div.highcharts-tooltip";
-                    public const string graphElement = "highcharts-0";
+                    public const string kwId = "a#today";
                 }
 
                 public static class Auth
