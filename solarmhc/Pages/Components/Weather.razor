@@ -1,29 +1,46 @@
 ﻿@using solarmhc.Models.Services
 @inject LiveDataService liveDataService
 
-<MudPaper Class="mt-3">
+<MudPaper Class="mt-3" Style="min-width: 440px;">
     <MudCard>
         <MudCardHeader>
             <MudGrid>
-                <MudItem xs="2"><img src="@weatherData?.IconUrl" alt="Weather Icon" /></MudItem>
-                <MudItem xs="10" Style="display: flex; justify-content: flex-end;"><MudText Typo="Typo.h4">@weatherData?.City</MudText></MudItem>
-                <MudItem xs="12" Style="display: flex; justify-content: flex-end; align-items: center;"><MudText Typo="Typo.subtitle1">@weatherData?.Condition</MudText></MudItem>
+                <MudItem xs="2">
+                    <img src="@weatherData?.IconUrl" alt="Weather Icon" />
+                </MudItem>
+                <MudItem xs="10">
+                    <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                        <MudText Typo="Typo.h6">@weatherData?.City, @weatherData?.Province</MudText>
+                        <MudText Typo="Typo.h4">@weatherData?.Condition</MudText>
+                    </div>
+                </MudItem>
             </MudGrid>
         </MudCardHeader>
         <MudCardContent>
             <MudGrid>
-                <MudItem xs="12">
-                    <MudText Typo="Typo.h2">@weatherData?.Temperature°</MudText>
+                <MudItem xs="5">
+                    <div style="display: flex; flex-direction: column; align-items: start;">
+                        <MudText Typo="Typo.h2">@((int)weatherData?.Temperature)°</MudText>
+                        <MudText Typo="Typo.subtitle1">H @((int)weatherData?.MaxTemperature)° / L @((int)weatherData?.MinTemperature)°</MudText>
+                    </div>
                 </MudItem>
-            </MudGrid>
-            <MudGrid>
-                <MudItem xs="12" Style="display: flex; justify-content: flex-end;">
-                    <MudText Typo="Typo.caption">Last Updated: @weatherData?.LastUpdated.ToString("MMMM dd, yyyy") at @weatherData?.LastUpdated.ToString("h:mm tt")</MudText>
+                <MudItem xs="7">
+                    <div style="display: flex; flex-direction: row; align-items: center; margin-right: 40px;">
+                        @foreach (var item in @weatherData?.ForecastData)
+                        {
+                            <div style="display: flex; flex-direction: column; align-items: center; padding: 0 10px;">
+                                <MudText Typo="Typo.subtitle2">@((int)item.Temp_C)°</MudText>
+                                <img src="@item.Condition.Icon" alt="Weather Icon" />
+                                <MudText Typo="Typo.subtitle2">@item.Time.ToString("h tt")</MudText>
+                            </div>
+                        }
+                    </div>
                 </MudItem>
             </MudGrid>
         </MudCardContent>
     </MudCard>
 </MudPaper>
+
 
 @code {
     private WeatherData weatherData;

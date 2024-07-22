@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.EntityFrameworkCore.Diagnostics;
+using Newtonsoft.Json.Linq;
 using OpenQA.Selenium.DevTools.V123.Network;
+using solarmhc.Models.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Net.Http;
@@ -12,14 +14,14 @@ namespace solarmhc.Models.Services
     {
         private readonly ConcurrentDictionary<string, DashboardData> _dashboardData
             = new ConcurrentDictionary<string, DashboardData>();
-        private readonly HttpClient _httpClient;
+        private readonly WeatherApiService _weatherApiService;
         private WeatherData _weatherData;
 
         public event Action OnChange;
 
-        public LiveDataService(HttpClient httpClient)
+        public LiveDataService(WeatherApiService weatherApiService)
         {
-            _httpClient = httpClient;
+            _weatherApiService = weatherApiService;
         }
 
         public (double utilizationPercentage, decimal currentWattage) GetCurrentPower(string dashboardId)
@@ -46,23 +48,34 @@ namespace solarmhc.Models.Services
 
         public async Task SetCurrentWeather(string city)
         {
-            var apiKey = Environment.GetEnvironmentVariable(Constants.WeatherApi.apiKey);
-            var response = await _httpClient.GetAsync($"http://api.weatherapi.com/v1/current.json?key={apiKey}&q={city}&aqi=no");
-            response.EnsureSuccessStatusCode();
+            WeatherResponse weather = await _weatherApiService.GetWeatherAsync(city);
+            List<HourlyForecast> forecastHours = new List<HourlyForecast>();
 
-            var content = await response.Content.ReadAsStringAsync();
-            var jsonData = JObject.Parse(content);
-            var weatherData = new WeatherData()
+            // I only want to show the next 3 hours of forecast.
+            foreach (var time in weather.Forecast.ForecastDay[0].Hour)
             {
-                City = jsonData["location"]["name"].Value<string>(),
-                Province = jsonData["location"]["region"].Value<string>(),
-                Country = jsonData["location"]["country"].Value<string>(),
-                Temperature = jsonData["current"]["temp_c"].Value<double>(),
-                Condition = jsonData["current"]["condition"]["text"].Value<string>(),
-                IconUrl = jsonData["current"]["condition"]["icon"].Value<string>(),
-                LastUpdated = jsonData["current"]["last_updated"].Value<DateTime>(),
+                if (time.Time.Hour <= DateTime.Now.Hour || time.Time.Hour > DateTime.Now.AddHours(3).Hour)
+                {
+                    continue;
+                }
+
+                forecastHours.Add(time);
+            }
+
+            _weatherData = new WeatherData
+            {
+                City = weather.Location.Name,
+                Province = weather.Location.Region,
+                Country = weather.Location.Country,
+                Temperature = weather.Current.Temp_C,
+                MaxTemperature = weather.Forecast.ForecastDay[0].Day.Maxtemp_C,
+                MinTemperature = weather.Forecast.ForecastDay[0].Day.Mintemp_C,
+                Condition = weather.Current.Condition.Text,
+                IconUrl = weather.Current.Condition.Icon,
+                LastUpdated = weather.Current.Last_Updated,
+                ForecastData = forecastHours
             };
-            _weatherData = weatherData;
+
             NotifyStateChanged();
         }
 
@@ -139,8 +152,11 @@ namespace solarmhc.Models.Services
         public string Province { get; set; }
         public string Country { get; set; }
         public double Temperature { get; set; }
+        public double MaxTemperature { get; set; }
+        public double MinTemperature { get; set; }
         public string Condition { get; set; }
         public string IconUrl { get; set; }
         public DateTime LastUpdated { get; set; }
+        public List<HourlyForecast> ForecastData { get; set; }
     }
 }
