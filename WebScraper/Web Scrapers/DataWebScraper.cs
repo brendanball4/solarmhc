@@ -132,6 +132,7 @@ namespace solarmhc.Models.Services.Web_Scrapers
                 }
                 finally
                 {
+                    driver.Close();
                     driver.Quit();
                 }
             }
