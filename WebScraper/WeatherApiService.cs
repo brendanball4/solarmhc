@@ -29,7 +29,7 @@ namespace solarmhc.Models
 
         public async Task<WeatherResponse> GetWeatherAsync(string city)
         {
-            var response = await _httpClient.GetAsync($"http://api.weatherapi.com/v1/forecast.json?key={_apiKey}&q={city}&days=1&aqi=no&alerts=no");
+            var response = await _httpClient.GetAsync($"http://api.weatherapi.com/v1/forecast.json?key={_apiKey}&q={city}&days=2&aqi=no&alerts=no");
             response.EnsureSuccessStatusCode();
 
             var content = await response.Content.ReadAsStringAsync();

@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net6.0": {
-      "Blazor-ApexCharts/3.3.0": {
+      "Blazor-ApexCharts/3.4.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Components": "6.0.25",
@@ -1182,17 +1182,17 @@
     }
   },
   "libraries": {
-    "Blazor-ApexCharts/3.3.0": {
-      "sha512": "fVvNIgC7IDtkKnwY7RhTYJ4kFrfqxxI3CuxU9x6NpI/xACRJSRWPDoeMWSgzGN4++HwdWLtzHEZzDXa873lBUA==",
+    "Blazor-ApexCharts/3.4.0": {
+      "sha512": "6kebpxkz3OY99Ghj+S5QdR7ElU4Cyv2VnP88JjPygmkuCe8SIvf4eaOVZa4K7MR6BRSgfDFhZS6TGqvBFroq6Q==",
       "type": "package",
-      "path": "blazor-apexcharts/3.3.0",
+      "path": "blazor-apexcharts/3.4.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE",
         "README.md",
         "apexchart_logo.png",
-        "blazor-apexcharts.3.3.0.nupkg.sha512",
+        "blazor-apexcharts.3.4.0.nupkg.sha512",
         "blazor-apexcharts.nuspec",
         "build/Blazor-ApexCharts.props",
         "build/Microsoft.AspNetCore.StaticWebAssets.props",
@@ -3042,7 +3042,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Blazor-ApexCharts >= 3.3.0",
+      "Blazor-ApexCharts >= 3.4.0",
       "HtmlAgilityPack >= 1.11.37",
       "HtmlAgilityPack.CssSelectors >= 1.0.2",
       "Microsoft.EntityFrameworkCore >= 6.0.0",
@@ -3054,23 +3054,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Brendan.Ball\\.nuget\\packages\\": {},
+    "C:\\Users\\Brendan\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\solarmhc.Web.csproj",
+      "projectUniqueName": "C:\\Users\\Brendan\\github\\solarmhc\\solarmhc\\solarmhc.Web.csproj",
       "projectName": "solarmhc.Web",
-      "projectPath": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\solarmhc.Web.csproj",
-      "packagesPath": "C:\\Users\\Brendan.Ball\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\solarmhc\\obj\\",
+      "projectPath": "C:\\Users\\Brendan\\github\\solarmhc\\solarmhc\\solarmhc.Web.csproj",
+      "packagesPath": "C:\\Users\\Brendan\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Brendan\\github\\solarmhc\\solarmhc\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Brendan.Ball\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Brendan\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3086,8 +3086,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\WebScraper\\solarmhc.Models.csproj": {
-              "projectPath": "C:\\Users\\Brendan.Ball\\source\\repos\\solarmhc\\WebScraper\\solarmhc.Models.csproj"
+            "C:\\Users\\Brendan\\github\\solarmhc\\WebScraper\\solarmhc.Models.csproj": {
+              "projectPath": "C:\\Users\\Brendan\\github\\solarmhc\\WebScraper\\solarmhc.Models.csproj"
             }
           }
         }
@@ -3096,11 +3096,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -3109,7 +3104,7 @@
         "dependencies": {
           "Blazor-ApexCharts": {
             "target": "Package",
-            "version": "[3.3.0, )"
+            "version": "[3.4.0, )"
           },
           "HtmlAgilityPack": {
             "target": "Package",
@@ -3161,7 +3156,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   },

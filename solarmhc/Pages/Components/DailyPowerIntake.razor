@@ -1,0 +1,70 @@
+﻿@using ApexCharts
+@using solarmhc.Models.Models
+@using solarmhc.Models.Services
+@inject LiveDataService liveDataService
+
+<ApexChart TItem="PowerData" Title="Daily Power Intake (kW)" Options="options" Width="@("100%")" Height="500">
+    <ApexPointSeries TItem="PowerData" Items="data" Name="kW" SeriesType="SeriesType.Area" XValue="@(e => e.Date)" YValue="@(e => e.Intake)" />
+</ApexChart>
+
+@code {
+    private List<PowerData> data = new List<PowerData>();
+    private ApexChart<PowerData> chart;
+    private ApexChartOptions<PowerData> options = new();
+
+    [Parameter]
+    public string DashboardName { get; set; }
+    [Parameter]
+    public double Capacity { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrEmpty(DashboardName))
+        {
+            data = await liveDataService.GetPowerData(DashboardName);
+            if (chart != null)
+            {
+                await chart.RenderAsync();
+            }
+        }
+
+        options = new ApexChartOptions<PowerData>
+            {
+                Xaxis = new XAxis
+                {
+                    Type = XAxisType.Datetime,
+                    Labels = new XAxisLabels
+                    {
+                        Format = "h:mm tt",
+                        DatetimeUTC = false
+                    }
+                },
+                Yaxis = new List<YAxis>
+                {
+                    new YAxis
+                    {
+                        Min = 0,
+                        Max = Capacity
+                    }
+                },
+                Fill = new Fill
+                {
+                    Colors = new List<string> { "#efc337" }, // Orange color for the area
+                    Opacity = 0.8
+                },
+                Colors = new List<string>
+                {
+                    "#efc337",
+                },
+                Tooltip = new Tooltip
+                {
+                    Enabled = true,
+                    X = new TooltipX
+                    {
+                        Format = "hh:mm tt"
+                    },
+                }
+            };
+
+    }
+}

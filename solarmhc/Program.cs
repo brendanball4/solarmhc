@@ -17,9 +17,10 @@ builder.Services.AddSingleton<LiveDataService>();
 builder.Services.AddSingleton<WebScraperHelperService>();
 builder.Services.AddSingleton<EmissionCalculator>();
 builder.Services.AddSingleton<EmissionSaved>();
+builder.Services.AddSingleton<PowerDataService>(); 
 builder.Services.AddSingleton<WeatherApiService>();
 builder.Services.AddHostedService<WeatherBackgroundService>();
-builder.Services.AddHostedService<DataWebScraperBackgroundService>();
+builder.Services.AddHostedService<DataBackgroundService>();
 
 builder.Services.AddScoped(sp => ChromeDriverFactory.CreateChromeDriver());
 builder.Services.AddScoped<DataWebScraper>();

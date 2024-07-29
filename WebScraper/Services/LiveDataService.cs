@@ -1,12 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Diagnostics;
-using Newtonsoft.Json.Linq;
-using OpenQA.Selenium.DevTools.V123.Network;
+﻿using Microsoft.VisualBasic;
 using solarmhc.Models.Models;
-using System;
 using System.Collections.Concurrent;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Xml.Schema;
 
 namespace solarmhc.Models.Services
 {
@@ -14,14 +8,18 @@ namespace solarmhc.Models.Services
     {
         private readonly ConcurrentDictionary<string, DashboardData> _dashboardData
             = new ConcurrentDictionary<string, DashboardData>();
+        private readonly ConcurrentDictionary<string, List<PowerData>> _powerData
+            = new ConcurrentDictionary<string, List<PowerData>>();
         private readonly WeatherApiService _weatherApiService;
+        private readonly PowerDataService _powerDataService;
         private WeatherData _weatherData;
 
         public event Action OnChange;
 
-        public LiveDataService(WeatherApiService weatherApiService)
+        public LiveDataService(WeatherApiService weatherApiService, PowerDataService powerDataService)
         {
             _weatherApiService = weatherApiService;
+            _powerDataService = powerDataService;
         }
 
         public (double utilizationPercentage, decimal currentWattage) GetCurrentPower(string dashboardId)
@@ -51,17 +49,6 @@ namespace solarmhc.Models.Services
             WeatherResponse weather = await _weatherApiService.GetWeatherAsync(city);
             List<HourlyForecast> forecastHours = new List<HourlyForecast>();
 
-            // I only want to show the next 3 hours of forecast.
-            foreach (var time in weather.Forecast.ForecastDay[0].Hour)
-            {
-                if (time.Time.Hour <= DateTime.Now.Hour || time.Time.Hour > DateTime.Now.AddHours(3).Hour)
-                {
-                    continue;
-                }
-
-                forecastHours.Add(time);
-            }
-
             _weatherData = new WeatherData
             {
                 City = weather.Location.Name,
@@ -76,8 +63,38 @@ namespace solarmhc.Models.Services
                 ForecastData = forecastHours
             };
 
+            int currentHour = DateTime.Now.Hour;
+            int hoursToShow = 3;
+            int endOfDayHour = 23;
+
+            if (currentHour + hoursToShow > endOfDayHour)
+            {
+                // Handle transition to the next day
+                int remainingHoursToday = endOfDayHour - currentHour;
+                int hoursFromNextDay = hoursToShow - remainingHoursToday;
+
+                for (int i = currentHour + 1; i <= endOfDayHour; i++)
+                {
+                    forecastHours.Add(weather.Forecast.ForecastDay[0].Hour[i]);
+                }
+
+                for (int i = 0; i < hoursFromNextDay; i++)
+                {
+                    forecastHours.Add(weather.Forecast.ForecastDay[1].Hour[i]);
+                }
+            }
+            else
+            {
+                // Only fetch hours from the current day
+                for (int i = currentHour + 1; i < currentHour + hoursToShow; i++)
+                {
+                    forecastHours.Add(weather.Forecast.ForecastDay[0].Hour[i]);
+                }
+            }
+
             NotifyStateChanged();
         }
+
 
         public double GetSavedEmissions(string dashboardId)
         {
@@ -111,6 +128,21 @@ namespace solarmhc.Models.Services
             NotifyStateChanged();
         }
 
+        public async Task<List<PowerData>> GetPowerData(string dashboardId)
+        {
+            if (_powerData.TryGetValue(dashboardId, out var data))
+            {
+                return data;
+            }
+            return new List<PowerData>();
+        }
+
+        public async Task SetPowerData(string dashboardId)
+        {
+            _powerData.GetOrAdd(dashboardId, await _powerDataService.GetPowerDataForDateAsync(dashboardId));
+            NotifyStateChanged();
+        }
+
         public async Task UpdateCurrentPowerAsync(string dashboardId, decimal currentWattage)
         {
             SetCurrentPower(dashboardId, currentWattage);
@@ -132,6 +164,12 @@ namespace solarmhc.Models.Services
         public async Task UpdateTreesAsync(string dashboardId, double savedTrees)
         {
             SetSavedTrees(dashboardId, savedTrees);
+            await Task.CompletedTask;
+        }
+
+        public async Task UpdatePowerDataAsync(string dashboardId)
+        {
+            await SetPowerData(dashboardId);
             await Task.CompletedTask;
         }
 

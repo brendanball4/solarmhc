@@ -1,37 +1,35 @@
 ﻿@using solarmhc.Models.Services;
 
-<MudPaper Class="mt-3" Style="min-width: 325px;">
-        <MudCard>
-        <MudCardHeader Class="pb-2">
-            <CardHeaderContent>
-                <MudText Typo="Typo.h5" Class="mb-3 text-center">Environmental Benefits</MudText>
-                <MudDivider Style="border-color: black;" />
-            </CardHeaderContent>
-        </MudCardHeader>
-        <MudCardContent>
-            <MudGrid Class="pt-0">
-                <MudItem xs="2" Style="display: flex; align-items: center; justify-content: center;" Class="pt-0 ps-4">
-                    <MudIcon Icon="@Icons.Material.Filled.LocationCity" Size="Size.Large" />
-                </MudItem>
-                <MudItem xs="10" Class="pt-0 pe-0 ps-0 pb-1">
-                    <MudText class="pe-3 ps-1 pb-0 pt-0 fw-bold">CO2 Emissions Saved</MudText>
-                    <MudText class="pe-3 ps-1 pb-4 pt-0 text-success fw-bold">Saved @savedEmissions.ToString("F1") kg of CO2 Emissions</MudText>
-                </MudItem>
-            </MudGrid>
-
+<MudCard Class="h-100">
+    <MudCardHeader Class="pb-2">
+        <CardHeaderContent>
+            <MudText Typo="Typo.h5" Class="mb-3 text-center">Environmental Benefits</MudText>
             <MudDivider Style="border-color: black;" />
-            <MudGrid>
-                <MudItem xs="2" Style="display: flex; align-items: center; justify-content: center;" Class="pt-5 ps-4">
-                    <MudIcon Icon="@Icons.Material.Filled.EnergySavingsLeaf" Size="Size.Large" />
-                </MudItem>
-                <MudItem xs="10" Class="pt-5 pe-0 ps-0 pb-1">
-                    <MudText class="fw-bold ps-1 pt-1">Equivalent Trees Planted</MudText>
-                    <MudText class="text-success fw-bold ps-1 pb-1">Planted equivalent of @savedTrees.ToString("F1") trees</MudText>
-                </MudItem>
-            </MudGrid>
-        </MudCardContent>
-    </MudCard>
-</MudPaper>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudGrid Class="pt-0">
+            <MudItem xs="2" Style="display: flex; align-items: center; justify-content: center;" Class="pt-0 ps-4">
+                <MudIcon Icon="@Icons.Material.Filled.LocationCity" Size="Size.Large" />
+            </MudItem>
+            <MudItem xs="10" Class="pt-0 pe-0 ps-0 pb-1">
+                <MudText class="pe-3 ps-1 pb-0 pt-0 fw-bold">CO2 Emissions Saved</MudText>
+                <MudText class="pe-3 ps-1 pb-4 pt-0 text-success fw-bold">Saved @savedEmissions.ToString("F1") kg of CO2 Emissions</MudText>
+            </MudItem>
+        </MudGrid>
+
+        <MudDivider Style="border-color: black;" />
+        <MudGrid>
+            <MudItem xs="2" Style="display: flex; align-items: center; justify-content: center;" Class="pt-5 ps-4">
+                <MudIcon Icon="@Icons.Material.Filled.EnergySavingsLeaf" Size="Size.Large" />
+            </MudItem>
+            <MudItem xs="10" Class="pt-5 pe-0 ps-0 pb-1">
+                <MudText class="fw-bold ps-1 pt-1">Equivalent Trees Planted</MudText>
+                <MudText class="text-success fw-bold ps-1 pb-1">Planted equivalent of @savedTrees.ToString("F1") trees</MudText>
+            </MudItem>
+        </MudGrid>
+    </MudCardContent>
+</MudCard>
 
 @code {
     [Parameter]

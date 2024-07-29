@@ -4,34 +4,25 @@
 @implements IDisposable
 @inject LiveDataService liveDataService
 
-<MudPaper Class="mt-3">
-    <MudCard>
-        <MudCardHeader>
-            <CardHeaderContent>
-                <MudText Typo="Typo.h5" Class="mb-3 text-center">Current Power</MudText>
-                <MudDivider Style="border-color: black;" />
-            </CardHeaderContent>
-        </MudCardHeader>
-        <MudCardContent>
-            <ApexChart TItem="ChartDataPoint"
-                       Width="300"
-                       Height="300"
-            @ref="chart">
-                <ApexPointSeries TItem="ChartDataPoint"
-                                 Items="dataPoints"
-                                 SeriesType="SeriesType.Donut"
-                                 Name="Utilization"
-                                 XValue="@(e => e.Label)"
-                                 YValue="@(e => (decimal)e.Value)" />
-            </ApexChart>
-            <MudDivider Style="border-color: black;" />
-            <div class="text-center mt-3">
-                <MudText>@liveDataService.GetCurrentPower(DashboardName).utilizationPercentage.ToString("F2")% Utilization</MudText>
-                <MudText>@liveDataService.GetCurrentPower(DashboardName).currentWattage kWh</MudText>
-            </div>
-        </MudCardContent>
-    </MudCard>
-</MudPaper>
+<MudCard Class="h-100">
+    <MudText Typo="Typo.h5" Class="pt-3 mb-3 text-center">Current Power</MudText>
+    <MudDivider Style="border-color: black;" />
+
+    <ApexChart TItem="ChartDataPoint"
+    @ref="chart">
+        <ApexPointSeries TItem="ChartDataPoint"
+                         Items="dataPoints"
+                         SeriesType="SeriesType.Donut"
+                         Name="Utilization"
+                         XValue="@(e => e.Label)"
+                         YValue="@(e => (decimal)e.Value)" />
+    </ApexChart>
+    <MudDivider Style="border-color: black;" />
+    <div class="text-center mt-3">
+        <MudText>@liveDataService.GetCurrentPower(DashboardName).utilizationPercentage.ToString("F1")% Utilization</MudText>
+        <MudText>@liveDataService.GetCurrentPower(DashboardName).currentWattage.ToString("F1") kWh</MudText>
+    </div>
+</MudCard>
 
 @code {
     [Parameter]
@@ -76,7 +67,7 @@
 
     private async void UpdateLiveData()
     {
-        if (liveDataService.GetCurrentPower(DashboardName).utilizationPercentage > 0 && liveDataService.GetCurrentPower(DashboardName).currentWattage > 0)
+        if (liveDataService.GetCurrentPower(DashboardName).utilizationPercentage >= 0 && liveDataService.GetCurrentPower(DashboardName).currentWattage >= 0)
         {
             dataPoints = new List<ChartDataPoint>
             {

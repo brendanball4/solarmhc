@@ -6,15 +6,26 @@
 @page "/solaredge/dashboard"
 
 <MudGrid>
-    @* Current Power Widget *@
-    <MudItem>
-        <CurrentPower DashboardName="@DashboardName" />
+    <!-- Current Power Widget -->
+    <MudItem xs="4">
+        <MudPaper Class="h-100">
+            <CurrentPower DashboardName="@DashboardName" />
+        </MudPaper>
     </MudItem>
-    <MudItem>
-        <CO2Savings SavedEmissions="@liveDataService.GetSavedEmissions(DashboardName)" SavedTrees="@liveDataService.GetSavedTrees(DashboardName)" />
+    <MudItem xs="4">
+        <MudPaper Class="h-100">
+            <DailyPowerIntake DashboardName="@DashboardName" Capacity="Constants.Capacities.SolarEdge" />
+        </MudPaper>
     </MudItem>
-    <MudItem>
-        <Weather />
+    <MudItem xs="4">
+        <div style="display: flex; flex-direction: column; height: 100%; min-width: 440px;">
+            <MudPaper Class="mb-2" Style="flex: 1;">
+                <CO2Savings SavedEmissions="@liveDataService.GetSavedEmissions(DashboardName)" SavedTrees="@liveDataService.GetSavedTrees(DashboardName)" />
+            </MudPaper>
+            <MudPaper Style="flex: 1;">
+                <Weather />
+            </MudPaper>
+        </div>
     </MudItem>
 </MudGrid>
 

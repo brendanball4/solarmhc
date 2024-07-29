@@ -1,0 +1,43 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using solarmhc.Models.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using WebScraper.Data;
+using WebScraper.Models;
+
+namespace solarmhc.Models.Services
+{
+    public class PowerDataService
+    {
+        private readonly IServiceProvider _serviceProvider;
+
+        public PowerDataService(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
+
+        public async Task<List<PowerData>> GetPowerDataForDateAsync(string dashboardId)
+        {
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var _context = scope.ServiceProvider.GetService<SolarMHCDbContext>();
+
+                SolarSegment seg = await _context.SolarSegments.Where(x => x.Name == dashboardId).FirstOrDefaultAsync();
+                List<PowerData> pData = await _context.PowerIntakes
+                    .Where(x => x.SolarSegmentId == seg.Id && x.TimeStamp.Date == DateTime.Now.Date)
+                    .Select(x => new PowerData
+                    {
+                        Date = x.TimeStamp,
+                        Intake = x.KW
+                    })
+                    .ToListAsync();
+
+                return pData;
+            }
+        }
+    }
+}
