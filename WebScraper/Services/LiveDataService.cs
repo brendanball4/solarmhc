@@ -86,7 +86,7 @@ namespace solarmhc.Models.Services
             else
             {
                 // Only fetch hours from the current day
-                for (int i = currentHour + 1; i < currentHour + hoursToShow; i++)
+                for (int i = currentHour + 1; i < (currentHour + hoursToShow) + 1; i++)
                 {
                     forecastHours.Add(weather.Forecast.ForecastDay[0].Hour[i]);
                 }
@@ -94,7 +94,6 @@ namespace solarmhc.Models.Services
 
             NotifyStateChanged();
         }
-
 
         public double GetSavedEmissions(string dashboardId)
         {

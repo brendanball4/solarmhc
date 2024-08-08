@@ -53,9 +53,9 @@ namespace solarmhc.Models.Services.Web_Scrapers
                         });
                     }
 
+                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
                     var taskResult = await Task.Run(() =>
                     {
-                        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
 
                         if (authSelectors != null)
                         {
@@ -74,15 +74,14 @@ namespace solarmhc.Models.Services.Web_Scrapers
                             wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(By.CssSelector("iframe#main_iframe_center")));
                         }
 
-                        if (dashboardId == Constants.Names.APS)
-                        {
-                            FetchPowerDataAPS(driver, eScraper, dashboardId);
-                            return false;
-                        }
-
-                        wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(selectedElements.WaitCondition)));
                         return true;
                     });
+                    if (dashboardId == Constants.Names.APS)
+                    {
+                        FetchPowerDataAPS(driver, eScraper, dashboardId, wait);
+                    }
+
+                    wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(selectedElements.WaitCondition)));
 
                     if (!taskResult)
                     {
@@ -138,48 +137,81 @@ namespace solarmhc.Models.Services.Web_Scrapers
             }
         }
 
-        private void FetchPowerDataAPS(ChromeDriver driver, EScraper eScraper, string dashboardId)
+        private async Task FetchPowerDataAPS(ChromeDriver driver, EScraper eScraper, string dashboardId, WebDriverWait wait)
         {
-            driver.Navigate().GoToUrl("https://apsystemsema.com/ema/security/optsecondmenu/intoViewOptModule.action");
-
-            List<double> wattageValues = new List<double>();
-
-            // Adjust the range based on the number of panels
-            for (int i = 0; i <= 62; i++)
+            try
             {
-                try
-                {
-                    // Locate the wattage element
-                    IWebElement wattageElement = driver.FindElement(By.Id($"module{i}"));
+                driver.Navigate().GoToUrl("https://apsystemsema.com/ema/security/optsecondmenu/intoViewOptModule.action");
 
-                    // Parse the wattage value and add to the list
-                    if (double.TryParse(wattageElement.Text, out double wattage))
+                // Ensure the driver session is still active
+                if (driver.SessionId == null)
+                {
+                    throw new WebDriverException("WebDriver session is invalid.");
+                }
+
+                await Task.Run(() => wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("div#module0"))));
+
+                List<double> wattageValues = new List<double>();
+
+                // Adjust the range based on the number of panels
+                for (int i = 0; i <= 62; i++)
+                {
+                    try
                     {
-                        wattageValues.Add(wattage);
+                        // Ensure the driver session is still active before each find
+                        if (driver.SessionId == null)
+                        {
+                            throw new WebDriverException("WebDriver session is invalid.");
+                        }
+
+                        // Locate the wattage element
+                        IWebElement wattageElement = driver.FindElement(By.Id($"module{i}"));
+
+                        // Parse the wattage value and add to the list
+                        if (double.TryParse(wattageElement.Text, out double wattage))
+                        {
+                            wattageValues.Add(wattage);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Could not parse wattage for panel {i}");
+                        }
                     }
-                    else
+                    catch (Exception e)
                     {
-                        Console.WriteLine($"Could not parse wattage for panel {i}");
+                        Console.WriteLine($"Error fetching wattage for panel {i}: {e.Message}");
                     }
                 }
-                catch (Exception e)
+
+                double currentKw = wattageValues.Sum() / 1000; // Convert to kW
+                var currentUtilization = (currentKw / Constants.Capacities.APS) * 100;
+
+                if (eScraper == EScraper.Live)
                 {
-                    Console.WriteLine($"Error fetching wattage for panel {i}: {e.Message}");
+                    _liveDataService.SetCurrentPower(dashboardId, (decimal)currentKw);
+                }
+                else
+                {
+                    SubmitPowerIntakeData(dashboardId, currentUtilization, (decimal)currentKw);
                 }
             }
-
-            double currentKw = wattageValues.Sum();
-            currentKw = currentKw / 1000;
-            var currentUtilization = (currentKw / Constants.Capacities.APS) * 100;
-
-            if (eScraper == EScraper.Live)
+            catch (WebDriverException ex)
             {
-                _liveDataService.SetCurrentPower(dashboardId, (decimal)currentKw);
-            } else
+                Console.WriteLine($"WebDriver exception: {ex.Message}");
+                // Handle the WebDriver exception (e.g., reinitialize the WebDriver session)
+            }
+            catch (Exception ex)
             {
-                SubmitPowerIntakeData(dashboardId, currentUtilization, (decimal)currentKw);
+                Console.WriteLine($"General exception: {ex.Message}");
+                // Handle other exceptions
+            }
+            finally
+            {
+                driver.Close();
+                driver.Quit();
             }
         }
+
 
         public async Task FetchPowerDataSolarEdgeAPI()
         {

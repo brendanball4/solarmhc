@@ -8,7 +8,7 @@
     <MudText Typo="Typo.h5" Class="pt-3 mb-3 text-center">Current Power</MudText>
     <MudDivider Style="border-color: black;" />
 
-    <ApexChart TItem="ChartDataPoint"
+    <ApexChart TItem="ChartDataPoint" Options="options"
     @ref="chart">
         <ApexPointSeries TItem="ChartDataPoint"
                          Items="dataPoints"
@@ -29,11 +29,22 @@
     public string DashboardName { get; set; }
     private ApexChart<ChartDataPoint> chart;
     private List<ChartDataPoint> dataPoints = new List<ChartDataPoint>();
+    private ApexChartOptions<ChartDataPoint> options = new();
 
     protected override void OnInitialized()
     {
         liveDataService.OnChange += UpdateLiveData;
         UpdateLiveData();
+
+        options = new ApexChartOptions<ChartDataPoint>
+            {
+                Legend = new Legend
+                {
+                    Position = LegendPosition.Bottom,
+                    HorizontalAlign = ApexCharts.Align.Center,
+                    FontSize = "16px"
+    },
+        };
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

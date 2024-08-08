@@ -4,12 +4,42 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 
+<style>
+
+    @@media (min-width: 826px) {
+        .branding-footer {
+            display: none;
+        }
+    }
+
+     @@media (max-width: 825px) {
+        .branding {
+            display: none;
+        }
+
+        .branding-footer {
+            display: block;
+        }
+
+        .img-size {
+            width: 160px;
+        }
+
+        .title-size {
+            font-size: 17px;
+        }
+    }
+</style>
+
 <MudLayout>
-    <MudAppBar Elevation="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudText Typo="Typo.h6" Class="ml-3">Solar MHC Monitoring</MudText>
+    <MudAppBar Elevation="1" Style="color: white; background-color: #efae4e;">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Style="margin-left: -20px;" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudImage Class="img-size" Src="images/logos/H_Black_MHClogo.png" Width="170" Style="margin-left: -20px;"></MudImage>
+        <MudText Class="title-size" Typo="Typo.h6" Style="margin-left: -10px;">Canopy Solar Monitoring</MudText>
         <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+        <MudImage Class="branding" Src="images/logos/H_colour_c4i_logo (1).png" Width="130" Style="margin-right: 30px;"></MudImage>
+        <MudImage Class="branding" Src="images/logos/cican-logo-horizontal-black-en.png" Width="195" Style="margin-right: 10px;"></MudImage>
+        @* <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" /> *@
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <NavMenu/>
@@ -19,6 +49,12 @@
             @Body
         </MudContainer>
     </MudMainContent>
+    <MudAppBar Class="branding-footer" Bottom="true" Fixed="true" Elevation="1" Dense="true" Style="background-color: #efae4e;">
+        <div style="display: flex; justify-content: center; width: 100%;">
+            <MudImage Class="branding-footer" Src="images/logos/H_colour_c4i_logo (1).png" Width="130" Style="margin-right: 30px;"></MudImage>
+            <MudImage Class="branding-footer" Src="images/logos/cican-logo-horizontal-black-en.png" Width="195" Style="margin-right: 10px;"></MudImage>
+        </div>
+    </MudAppBar>
 </MudLayout>
 @code {
     bool _drawerOpen = true;
