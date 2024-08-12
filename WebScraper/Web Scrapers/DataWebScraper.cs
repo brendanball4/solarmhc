@@ -117,6 +117,7 @@ namespace solarmhc.Models.Services.Web_Scrapers
                         if (result)
                         {
                             SubmitPowerIntakeData(dashboardId, utilizationPercentage, currentWattage);
+                            await _liveDataService.UpdatePowerDataAsync(dashboardId);
                             driver.Close();
                         }
                         else

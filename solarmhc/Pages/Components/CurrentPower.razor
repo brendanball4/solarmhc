@@ -5,8 +5,8 @@
 @inject LiveDataService liveDataService
 
 <MudCard Class="h-100">
-    <MudText Typo="Typo.h5" Class="pt-3 mb-3 text-center">Current Power</MudText>
-    <MudDivider Style="border-color: black;" />
+    <MudText Typo="Typo.h5" Class="pt-5 mb-5 text-center">Current Power</MudText>
+    <MudDivider Class="mb-5" Style="border-color: black;" />
 
     <ApexChart TItem="ChartDataPoint" Options="options"
     @ref="chart">
@@ -17,8 +17,8 @@
                          XValue="@(e => e.Label)"
                          YValue="@(e => (decimal)e.Value)" />
     </ApexChart>
-    <MudDivider Style="border-color: black;" />
-    <div class="text-center mt-3">
+    <MudDivider Class="mt-0 mt-lg-5" Style="border-color: black;" />
+    <div class="text-center  p-sm-3 p-3">
         <MudText>@liveDataService.GetCurrentPower(DashboardName).utilizationPercentage.ToString("F1")% Utilization</MudText>
         <MudText>@liveDataService.GetCurrentPower(DashboardName).currentWattage.ToString("F1") kWh</MudText>
     </div>
@@ -43,7 +43,7 @@
                     Position = LegendPosition.Bottom,
                     HorizontalAlign = ApexCharts.Align.Center,
                     FontSize = "16px"
-    },
+            },
         };
     }
 

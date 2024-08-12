@@ -138,7 +138,10 @@ namespace solarmhc.Models.Services
 
         public async Task SetPowerData(string dashboardId)
         {
-            _powerData.GetOrAdd(dashboardId, await _powerDataService.GetPowerDataForDateAsync(dashboardId));
+            var newData = await _powerDataService.GetPowerDataForDateAsync(dashboardId);
+
+            _powerData[dashboardId] = newData;
+
             NotifyStateChanged();
         }
 
@@ -151,12 +154,6 @@ namespace solarmhc.Models.Services
         public async Task UpdateCO2Async(string dashboardId, double totalEmissions)
         {
             SetSavedEmissions(dashboardId, totalEmissions);
-            await Task.CompletedTask;
-        }
-
-        public async Task UpdateWeather(string city)
-        {
-            await SetCurrentWeather(city);
             await Task.CompletedTask;
         }
 

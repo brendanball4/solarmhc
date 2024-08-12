@@ -4,7 +4,6 @@ using solarmhc.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WebScraper.Data;
 using WebScraper.Models;

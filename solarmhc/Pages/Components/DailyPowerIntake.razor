@@ -2,14 +2,15 @@
 @using solarmhc.Models.Models
 @using solarmhc.Models.Services
 @inject LiveDataService liveDataService
+@implements IDisposable
 
-<ApexChart TItem="PowerData" Title="Daily Power Intake (kW)" Options="options" Width="@("100%")" Height="500">
-    <ApexPointSeries TItem="PowerData" Items="data" Name="kW" SeriesType="SeriesType.Area" XValue="@(e => e.Date)" YValue="@(e => e.Intake)" />
+<ApexChart TItem="PowerData" @ref="chart" Title="Daily Power Intake (kW)" Options="options" Width="@("100%")" Height="500">
+    <ApexPointSeries TItem="PowerData" Items="@data" Name="kW" SeriesType="SeriesType.Area" XValue="@(e => e.Date)" YValue="@(e => e.Intake)" />
 </ApexChart>
 
 @code {
     private List<PowerData> data = new List<PowerData>();
-    private ApexChart<PowerData> chart;
+    private ApexChart<PowerData> chart; // Reference to the ApexChart component
     private ApexChartOptions<PowerData> options = new();
 
     [Parameter]
@@ -19,15 +20,24 @@
 
     protected override async Task OnInitializedAsync()
     {
+        // Subscribe to the LiveDataService's OnChange event
+        liveDataService.OnChange += OnChangeHandler;
+
+        await LoadInitialData();
+    }
+
+    private async Task LoadInitialData()
+    {
         if (!string.IsNullOrEmpty(DashboardName))
         {
             data = await liveDataService.GetPowerData(DashboardName);
-            if (chart != null)
-            {
-                await chart.RenderAsync();
-            }
+            SetupChartOptions();
+            await InvokeAsync(StateHasChanged);  // Ensure the chart updates with new data
         }
+    }
 
+    private void SetupChartOptions()
+    {
         options = new ApexChartOptions<PowerData>
             {
                 Xaxis = new XAxis
@@ -37,25 +47,25 @@
                     {
                         Format = "h:mm tt",
                         DatetimeUTC = false
-                    }
+                    },
                 },
                 Yaxis = new List<YAxis>
+            {
+                new YAxis
                 {
-                    new YAxis
-                    {
-                        Min = 0,
-                        Max = Capacity
-                    }
-                },
+                    Min = 0,
+                    Max = Capacity
+                }
+            },
                 Fill = new Fill
                 {
                     Colors = new List<string> { "#efc337" }, // Orange color for the area
                     Opacity = 0.8
                 },
                 Colors = new List<string>
-                {
-                    "#efc337",
-                },
+            {
+                "#efc337",
+            },
                 Tooltip = new Tooltip
                 {
                     Enabled = true,
@@ -65,6 +75,43 @@
                     },
                 }
             };
+    }
 
+    private void OnChangeHandler()
+    {
+        // This method will be called when LiveDataService triggers an update
+        InvokeAsync(AppendNewDataPoint);
+    }
+
+    private async Task AppendNewDataPoint()
+    {
+        if (!string.IsNullOrEmpty(DashboardName))
+        {
+            // Get the latest data point
+            var latestData = await liveDataService.GetPowerData(DashboardName);
+
+            if (latestData != null)
+            {
+                if (data[data.Count - 1].Date != latestData[latestData.Count - 1].Date)
+                {
+                    data.Add(latestData[latestData.Count - 1]);
+
+                    List<PowerData> newPoint = new List<PowerData>();
+                    newPoint.Add(latestData[latestData.Count - 1]);
+
+                    // Append the new data point to the chart without resetting it
+                    if (chart != null)
+                    {
+                        await chart.AppendDataAsync(newPoint); // Assuming `AppendDataAsync` is valid
+                    }
+                }
+            }
+        }
+    }
+
+    public void Dispose()
+    {
+        // Unsubscribe from the event when the component is disposed
+        liveDataService.OnChange -= OnChangeHandler;
     }
 }

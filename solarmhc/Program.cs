@@ -19,6 +19,7 @@ builder.Services.AddSingleton<EmissionCalculator>();
 builder.Services.AddSingleton<EmissionSaved>();
 builder.Services.AddSingleton<PowerDataService>(); 
 builder.Services.AddSingleton<WeatherApiService>();
+builder.Services.AddSingleton<Graphing>();
 builder.Services.AddHostedService<WeatherBackgroundService>();
 builder.Services.AddHostedService<DataBackgroundService>();
 

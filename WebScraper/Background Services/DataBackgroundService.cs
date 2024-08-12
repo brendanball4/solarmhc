@@ -19,15 +19,15 @@ namespace solarmhc.Models.Background_Services
         private readonly ILogger<DataBackgroundService> _logger;
         private readonly IServiceProvider _serviceProvider;
         private readonly EmissionSaved _emissionSaved;
-        private readonly LiveDataService _liveDataService;
+        private readonly Graphing _graphing;
 
-        public DataBackgroundService(ILogger<DataBackgroundService> logger, IServiceProvider serviceProvider, EmissionSaved emissionSaved, LiveDataService liveDataService)
+        public DataBackgroundService(ILogger<DataBackgroundService> logger, IServiceProvider serviceProvider, EmissionSaved emissionSaved, Graphing graphing)
         {
             // Inject the services
             _logger = logger;
             _serviceProvider = serviceProvider;
             _emissionSaved = emissionSaved;
-            _liveDataService = liveDataService;
+            _graphing = graphing;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -41,15 +41,15 @@ namespace solarmhc.Models.Background_Services
                 {
                     var tasks = new List<Task>
                     {
-                        _liveDataService.SetPowerData(Constants.Names.SolarEdge),
-                        _liveDataService.SetPowerData(Constants.Names.APS),
-                        _liveDataService.SetPowerData(Constants.Names.Sunny),
-                        _liveDataService.SetPowerData(Constants.Names.Huawei),
-                        _liveDataService.SetPowerData(Constants.Names.Fronius)
+                        _graphing.GetGraphValues(Constants.Names.SolarEdge),
+                        _graphing.GetGraphValues(Constants.Names.APS),
+                        _graphing.GetGraphValues(Constants.Names.Sunny),
+                        _graphing.GetGraphValues(Constants.Names.Huawei),
+                        _graphing.GetGraphValues(Constants.Names.Fronius),
                     };
 
                     await Task.WhenAll(tasks); // Starts tasks concurrently and waits for all to complete
-                    await Task.Delay(TimeSpan.FromMinutes(5), stoppingToken); // Adjust the delay as needed
+                    await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken); // Adjust the delay as needed
                 }
             }, stoppingToken);
 

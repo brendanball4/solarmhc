@@ -5,20 +5,34 @@
 @inject LiveDataService liveDataService;
 @page "/solaredge/dashboard"
 
+<style>
+    @@media (min-width: 826px) {
+        .screenscale {
+            margin-bottom: 0px;
+        }
+    }
+
+    @@media (max-width: 825px) {
+        .screenscale {
+            margin-bottom: 50px;
+        }
+    }
+</style>
+
 <MudGrid>
     <!-- Current Power Widget -->
-    <MudItem xs="12" sm="6" md="4">
+    <MudItem xs="12" sm="6" md="6" lg="4">
         <MudPaper Class="h-100">
             <CurrentPower DashboardName="@DashboardName" />
         </MudPaper>
     </MudItem>
-    <MudItem xs="12" sm="6" md="4">
+    <MudItem xs="12" sm="6" md="6" lg="4">
         <MudPaper Class="h-100">
             <DailyPowerIntake DashboardName="@DashboardName" Capacity="Constants.Capacities.SolarEdge" />
         </MudPaper>
     </MudItem>
-    <MudItem xs="12" sm="12" md="4">
-        <div style="display: flex; flex-direction: column; height: 100%; min-width: 440px;">
+    <MudItem xs="12" sm="12" md="6" lg="4" Class="screenscale">
+        <div style="display: flex; flex-direction: column; height: 100%;">
             <MudPaper Class="mb-2" Style="flex: 1;">
                 <CO2Savings SavedEmissions="@liveDataService.GetSavedEmissions(DashboardName)" SavedTrees="@liveDataService.GetSavedTrees(DashboardName)" />
             </MudPaper>

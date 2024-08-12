@@ -3,7 +3,7 @@
 
 <MudCard Class="h-100">
     <MudCardHeader>
-        <MudGrid>
+        <MudGrid Justify="Justify.FlexEnd">
             <MudItem xs="2">
                 <img src="@weatherData?.IconUrl" alt="Weather Icon" />
             </MudItem>
@@ -17,14 +17,14 @@
     </MudCardHeader>
     <MudCardContent>
         <MudGrid>
-            <MudItem xs="5">
+            <MudItem xs="3" sm="4">
                 <div style="display: flex; flex-direction: column; align-items: start;">
                     <MudText Typo="Typo.h2">@((int)weatherData?.Temperature)°</MudText>
                     <MudText Typo="Typo.subtitle1">H @((int)weatherData?.MaxTemperature)° / L @((int)weatherData?.MinTemperature)°</MudText>
                 </div>
             </MudItem>
-            <MudItem xs="7">
-                <div style="display: flex; flex-direction: row; align-items: center; margin-right: 40px;">
+            <MudItem xs="9" sm="8">
+                <div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: flex-end;">
                     @foreach (var item in @weatherData?.ForecastData)
                     {
                         <div style="display: flex; flex-direction: column; align-items: center; padding: 0 10px;">
@@ -38,7 +38,6 @@
         </MudGrid>
     </MudCardContent>
 </MudCard>
-
 
 @code {
     private WeatherData weatherData;
