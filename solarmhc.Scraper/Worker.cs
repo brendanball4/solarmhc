@@ -19,14 +19,30 @@ namespace solarmhc.Scraper
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            _ = Task.Run(async () =>
+            {
+                while (!stoppingToken.IsCancellationRequested)
+                {
+                    _logger.LogInformation("SolarEdge worker running at: {time}", DateTimeOffset.Now);
+
+                    // Create a function(s) to run on repeated tasks 
+                    var tasks = new List<Task>
+                    {
+                        FetchDataAsync(Constants.DataUrls.SolarEdge, Constants.Names.SolarEdge)
+                    };
+
+                    await Task.WhenAll(tasks);
+                    await Task.Delay(TimeSpan.FromMinutes(5), stoppingToken);
+                }
+            }, stoppingToken);
+
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                _logger.LogInformation("Main worker running at: {time}", DateTimeOffset.Now);
 
                 // Create a function(s) to run on repeated tasks 
                 var tasks = new List<Task>
                 {
-                    FetchDataAsync(Constants.DataUrls.SolarEdge, Constants.Names.SolarEdge),
                     FetchDataAsync(Constants.DataUrls.APS, Constants.Names.APS),
                     FetchDataAsync(Constants.DataUrls.Sunny, Constants.Names.Sunny),
                     FetchDataAsync(Constants.DataUrls.Huawei, Constants.Names.Huawei),

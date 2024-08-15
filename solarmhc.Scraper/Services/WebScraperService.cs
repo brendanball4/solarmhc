@@ -64,6 +64,12 @@ namespace solarmhc.Scraper.Services
                         loggedIn = true;
                     }
                     break;
+                case Constants.Names.Fronius:
+                    if (driver.Url.Contains("https://www.solarweb.com/PvSystems/PvSystem?pvSystemId="))
+                    {
+                        loggedIn = true;
+                    }
+                    break;
                 default:
                     break;
             }
@@ -165,10 +171,6 @@ namespace solarmhc.Scraper.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"An error occurred while fetching data for {dashboardId}.");
-            }
-            finally
-            {
-                //_driverManager.DisposeDrivers();
             }
         }
 
