@@ -1,10 +1,10 @@
 using MudBlazor.Services;
 using Microsoft.EntityFrameworkCore;
-using WebScraper.Data;
 using solarmhc.Models.Services;
 using solarmhc.Models.Services.Web_Scrapers;
 using solarmhc.Models.Background_Services;
 using solarmhc.Models;
+using solarmhc.Scraper.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

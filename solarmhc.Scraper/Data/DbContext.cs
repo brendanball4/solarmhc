@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using solarmhc.Models.Data;
-using WebScraper.Models;
+using solarmhc.Scraper.Data;
+using solarmhc.Scraper.Models;
 
 namespace solarmhc.Scraper.Data
 {

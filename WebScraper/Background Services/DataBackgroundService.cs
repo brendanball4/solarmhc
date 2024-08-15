@@ -81,10 +81,10 @@ namespace solarmhc.Models.Background_Services
                     {
                         // This collects data for the database and live viewing for SolarEdge
                         FetchAndServeDataAsync(Constants.DataUrls.SolarEdge, Constants.Names.SolarEdge, EScraper.Data),
-                        FetchAndServeDataAsync(Constants.DataUrls.APS, Constants.Names.APS, EScraper.Data),
-                        FetchAndServeDataAsync(Constants.DataUrls.Sunny, Constants.Names.Sunny, EScraper.Data),
-                        FetchAndServeDataAsync(Constants.DataUrls.Huawei, Constants.Names.Huawei, EScraper.Data),
-                        FetchAndServeDataAsync(Constants.DataUrls.Fronius, Constants.Names.Fronius, EScraper.Data)
+                        //FetchAndServeDataAsync(Constants.DataUrls.APS, Constants.Names.APS, EScraper.Data),
+                        //FetchAndServeDataAsync(Constants.DataUrls.Sunny, Constants.Names.Sunny, EScraper.Data),
+                        //FetchAndServeDataAsync(Constants.DataUrls.Huawei, Constants.Names.Huawei, EScraper.Data),
+                        //FetchAndServeDataAsync(Constants.DataUrls.Fronius, Constants.Names.Fronius, EScraper.Data)
                     };
 
                     await Task.WhenAll(tasks); // Starts tasks concurrently and waits for all to complete
@@ -97,7 +97,7 @@ namespace solarmhc.Models.Background_Services
             {
                 var tasks = new List<Task>
                 {
-                    FetchAndServeDataAsync(Constants.DataUrls.APS, Constants.Names.APS, EScraper.Live),
+                    //FetchAndServeDataAsync(Constants.DataUrls.APS, Constants.Names.APS, EScraper.Live),
                     FetchAndServeDataAsync(Constants.DataUrls.Sunny, Constants.Names.Sunny, EScraper.Live),
                     FetchAndServeDataAsync(Constants.DataUrls.Huawei, Constants.Names.Huawei, EScraper.Live),
                     FetchAndServeDataAsync(Constants.DataUrls.Fronius, Constants.Names.Fronius, EScraper.Live)

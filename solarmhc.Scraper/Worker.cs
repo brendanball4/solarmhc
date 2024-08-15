@@ -1,0 +1,142 @@
+using solarmhc.Scraper.Models;
+using solarmhc.Scraper.Services;
+using System.Threading.Tasks;
+
+namespace solarmhc.Scraper
+{
+    public class Worker : BackgroundService
+    {
+        private readonly ILogger<Worker> _logger;
+        private readonly IServiceProvider _serviceProvider;
+        private readonly ChromeDriverManager _chromedDriverManager;
+
+        public Worker(ILogger<Worker> logger, IServiceProvider serviceProvider, ChromeDriverManager chromedDriverManager)
+        {
+            _logger = logger;
+            _serviceProvider = serviceProvider;
+            _chromedDriverManager = chromedDriverManager;
+        }
+
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+
+                // Create a function(s) to run on repeated tasks 
+                var tasks = new List<Task>
+                {
+                    FetchDataAsync(Constants.DataUrls.SolarEdge, Constants.Names.SolarEdge),
+                    FetchDataAsync(Constants.DataUrls.APS, Constants.Names.APS),
+                    FetchDataAsync(Constants.DataUrls.Sunny, Constants.Names.Sunny),
+                    FetchDataAsync(Constants.DataUrls.Huawei, Constants.Names.Huawei),
+                    FetchDataAsync(Constants.DataUrls.Fronius, Constants.Names.Fronius)
+                };
+
+                await Task.WhenAll(tasks);
+                await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
+            }
+        }
+
+        private async Task FetchDataAsync(string dataUrl, string dashboardId)
+        {
+            try
+            {
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var dataWebScraper = scope.ServiceProvider.GetService<WebScraperService>();
+
+                    if (dataWebScraper == null)
+                    {
+                        _logger.LogError("There was an error creating a data web scraper class scope.");
+                    }
+
+                    var authSelectors = new AuthSelectors();
+                    var selectors = new ScrapingSelectors();
+
+                    switch (dataUrl)
+                    {
+                        case Constants.DataUrls.SolarEdge:
+                            _logger.LogInformation($"{dashboardId} Fetch Power Data function started successfully.");
+                            await dataWebScraper.FetchPowerDataSolarEdgeAPI();
+                            _logger.LogInformation($"{dashboardId} Fetch Power Data function ended successfully.");
+                            break;
+                        case Constants.DataUrls.Sunny:
+                            authSelectors = new AuthSelectors
+                            {
+                                UsernameField = Constants.TargetedElements.Sunny.Auth.username,
+                                PasswordField = Constants.TargetedElements.Sunny.Auth.password,
+                                LoginButtonField = Constants.TargetedElements.Sunny.Auth.loginButton,
+                                EnvUsername = Constants.EnvironmentVars.EnvironmentNames.Sunny,
+                                EnvPassword = Constants.EnvironmentVars.EnvironmentPass.Sunny
+                            };
+                            selectors = new ScrapingSelectors
+                            {
+                                WaitConditionAuth = Constants.TargetedElements.Sunny.Auth.loginButton,
+                                WaitCondition = Constants.TargetedElements.Sunny.Data.kwId,
+                                PowerField = Constants.TargetedElements.Sunny.Data.kwId
+                            };
+                            _logger.LogInformation($"{dashboardId} Fetch Power Data function started successfully.");
+                            await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, selectors, authSelectors, true, false);
+                            _logger.LogInformation($"{dashboardId} Fetch Power Data function ended successfully.");
+                            break;
+                        case Constants.DataUrls.APS:
+                            authSelectors = new AuthSelectors
+                            {
+                                UsernameField = Constants.TargetedElements.APS.Auth.username,
+                                PasswordField = Constants.TargetedElements.APS.Auth.password,
+                                LoginButtonField = Constants.TargetedElements.APS.Auth.loginButton,
+                                EnvUsername = Constants.EnvironmentVars.EnvironmentNames.APS,
+                                EnvPassword = Constants.EnvironmentVars.EnvironmentPass.APS
+                            };
+                            selectors = new ScrapingSelectors
+                            {
+                                WaitConditionAuth = Constants.TargetedElements.APS.Auth.loginButton,
+                                WaitCondition = Constants.TargetedElements.APS.Data.kwId,
+                                PowerField = Constants.TargetedElements.APS.Data.kwId
+                            };
+                            _logger.LogInformation($"{dashboardId} Fetch Power Data function started successfully.");
+                            await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, selectors, authSelectors, false, false);
+                            _logger.LogInformation($"{dashboardId} Fetch Power Data function ended successfully.");
+                            break;
+                        case Constants.DataUrls.Huawei:
+                            authSelectors = new AuthSelectors
+                            {
+                                UsernameField = Constants.TargetedElements.Huawei.Auth.username,
+                                PasswordField = Constants.TargetedElements.Huawei.Auth.password,
+                                LoginButtonField = Constants.TargetedElements.Huawei.Auth.loginButton,
+                                EnvUsername = Constants.EnvironmentVars.EnvironmentNames.Huawei,
+                                EnvPassword = Constants.EnvironmentVars.EnvironmentPass.Huawei
+                            };
+                            selectors = new ScrapingSelectors
+                            {
+                                WaitConditionAuth = Constants.TargetedElements.Huawei.Auth.loginButton,
+                                WaitCondition = Constants.TargetedElements.Huawei.Data.kwId,
+                                PowerField = Constants.TargetedElements.Huawei.Data.kwId
+                            };
+                            _logger.LogInformation($"{dashboardId} Fetch Power Data function started successfully.");
+                            await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, selectors, authSelectors, false, true);
+                            _logger.LogInformation($"{dashboardId} Fetch Power Data function ended successfully.");
+                            break;
+                        case Constants.DataUrls.Fronius:
+                            selectors = new ScrapingSelectors
+                            {
+                                WaitCondition = Constants.TargetedElements.Fronius.Data.kwId,
+                                PowerField = Constants.TargetedElements.Fronius.Data.kwId
+                            };
+                            _logger.LogInformation($"{dashboardId} Fetch Power Data function started successfully.");
+                            await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, selectors, null, false, false);
+                            _logger.LogInformation($"{dashboardId} Fetch Power Data function ended successfully.");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while fetching data.");
+            }
+        }
+    }
+}

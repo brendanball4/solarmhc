@@ -7,12 +7,12 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
+using solarmhc.Scraper.Data;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using WebScraper;
-using WebScraper.Data;
 using WebScraper.Models;
 
 namespace solarmhc.Models.Services.Web_Scrapers
@@ -53,13 +53,13 @@ namespace solarmhc.Models.Services.Web_Scrapers
                         });
                     }
 
-                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(90));
                     var taskResult = await Task.Run(() =>
                     {
 
                         if (authSelectors != null)
                         {
-                            wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(selectedElements.WaitConditionAuth)));
+                            //wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(selectedElements.WaitConditionAuth)));
 
                             var authResult = TryAuth(authSelectors, driver);
                             if (!authResult)
@@ -71,7 +71,7 @@ namespace solarmhc.Models.Services.Web_Scrapers
 
                         if (iframe)
                         {
-                            wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(By.CssSelector("iframe#main_iframe_center")));
+                            //wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(By.CssSelector("iframe#main_iframe_center")));
                         }
 
                         return true;
@@ -81,7 +81,7 @@ namespace solarmhc.Models.Services.Web_Scrapers
                         FetchPowerDataAPS(driver, eScraper, dashboardId, wait);
                     }
 
-                    wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(selectedElements.WaitCondition)));
+                    //wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(selectedElements.WaitCondition)));
 
                     if (!taskResult)
                     {
@@ -150,7 +150,7 @@ namespace solarmhc.Models.Services.Web_Scrapers
                     throw new WebDriverException("WebDriver session is invalid.");
                 }
 
-                await Task.Run(() => wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("div#module0"))));
+                //await Task.Run(() => wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("div#module0"))));
 
                 List<double> wattageValues = new List<double>();
 
