@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using solarmhc.Models.Data;
 using solarmhc.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebScraper.Data;
 using WebScraper.Models;
 
 namespace solarmhc.Models.Services

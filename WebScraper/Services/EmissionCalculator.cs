@@ -4,12 +4,12 @@ using Microsoft.Extensions.Logging;
 using OpenQA.Selenium.DevTools.V123.Animation;
 using OpenQA.Selenium.DevTools.V123.Runtime;
 using OpenQA.Selenium.Internal.Logging;
+using solarmhc.Models.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebScraper.Data;
 using WebScraper.Models;
 
 namespace solarmhc.Models.Services

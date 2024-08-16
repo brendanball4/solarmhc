@@ -25,7 +25,6 @@ namespace solarmhc.Scraper.Services
         private readonly IServiceProvider _serviceProvider;
         private readonly WebScraperHelperService _webScraperHelperService;
         private readonly HttpClient _httpClient;
-        private Dictionary<string, bool> _sessionCache = new Dictionary<string, bool>();
 
         public WebScraperService(IServiceProvider serviceProvider, HttpClient httpClient, ILogger<WebScraperService> logger, ChromeDriverManager chromeDriverManager, WebScraperHelperService webScraperHelperService)
         {
@@ -49,12 +48,14 @@ namespace solarmhc.Scraper.Services
                 case Constants.Names.APS:
                     if (driver.Url == "https://apsystemsema.com/ema/security/optsecondmenu/intoViewOptModule.action")
                     {
+                        driver.Navigate().Refresh();
                         loggedIn = true;
                     }
                     break;
                 case Constants.Names.Sunny:
                     if (driver.Url == "https://ennexos.sunnyportal.com/11382962/dashboard")
                     {
+                        driver.Navigate().Refresh();
                         loggedIn = true;
                     }
                     break;
@@ -270,7 +271,7 @@ namespace solarmhc.Scraper.Services
                     // Parse the JSON response
                     var currentPower = jsonResponse["overview"]["currentPower"]["power"].Value<double>();
                     var currentPowerKw = currentPower / 1000;
-                    var currentUtilization = currentPowerKw / Constants.Capacities.SolarEdge;
+                    var currentUtilization = (currentPowerKw / Constants.Capacities.SolarEdge) * 100;
 
                     // Collect data for live viewing, and saving to database
                     SubmitPowerIntakeData(Constants.Names.SolarEdge, currentUtilization, (decimal)currentPowerKw);

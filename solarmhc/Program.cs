@@ -1,17 +1,15 @@
 using MudBlazor.Services;
 using Microsoft.EntityFrameworkCore;
 using solarmhc.Models.Services;
-using solarmhc.Models.Services.Web_Scrapers;
 using solarmhc.Models.Background_Services;
 using solarmhc.Models;
-using solarmhc.Scraper.Data;
+using solarmhc.Models.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddHttpClient<DataWebScraper>();
 builder.Services.AddMudServices();
 builder.Services.AddSingleton<LiveDataService>();
 builder.Services.AddSingleton<WebScraperHelperService>();
@@ -24,12 +22,12 @@ builder.Services.AddHostedService<WeatherBackgroundService>();
 builder.Services.AddHostedService<DataBackgroundService>();
 
 builder.Services.AddScoped(sp => ChromeDriverFactory.CreateChromeDriver());
-builder.Services.AddScoped<DataWebScraper>();
 
 // Configure DbContext
 builder.Services.AddDbContext<SolarMHCDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SolarMhcDatabase")));
 
+builder.Services.AddHttpClient();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

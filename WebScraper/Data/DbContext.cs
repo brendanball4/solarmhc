@@ -2,7 +2,7 @@
 using solarmhc.Models.Data;
 using WebScraper.Models;
 
-namespace solarmhc.Scraper.Data
+namespace solarmhc.Models.Data
 {
     public class SolarMHCDbContext : DbContext
     {

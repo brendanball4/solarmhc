@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OpenQA.Selenium.Chrome;
-using solarmhc.Models.Services.Web_Scrapers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
