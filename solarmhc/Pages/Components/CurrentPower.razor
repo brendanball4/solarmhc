@@ -5,7 +5,7 @@
 @inject LiveDataService liveDataService
 
 <MudCard Class="h-100">
-    <MudText Typo="Typo.h5" Class="pt-5 mb-5 text-center">@DashboardName</MudText>
+    <MudText Typo="Typo.h5" Class="pt-3 mb-3 text-center">@DashboardName</MudText>
     <MudDivider Class="mb-5" Style="border-color: black;" />
 
     <ApexChart TItem="DataItem" Options="chartOptions" @ref="chart">
@@ -15,12 +15,14 @@
         </ApexPointSeries>
     </ApexChart>
 
-    <MudDivider Class="mt-0 mt-lg-5" Style="border-color: black;" />
-
-    <div class="text-center p-sm-3 p-3">
-        <MudText>@liveDataService.GetCurrentPower(DashboardName).utilizationPercentage.ToString("F1")% Intake</MudText>
+    <div class="text-center pb-3">
         <MudText>@liveDataService.GetCurrentPower(DashboardName).currentWattage.ToString("F1") kWh / @Capacity kWh</MudText>
     </div>
+
+    @if (ShowLogo)
+    {
+        <C4iLogo />
+    }
 </MudCard>
 
 @code {
@@ -28,6 +30,8 @@
     public string DashboardName { get; set; }
     [Parameter]
     public double Capacity { get; set; }
+    [Parameter]
+    public bool ShowLogo { get; set; } = false;
 
     private ApexChart<DataItem> chart;
     private List<DataItem> data = new List<DataItem>();
@@ -46,7 +50,7 @@
                     Height = 350,
                     Toolbar = new Toolbar
                     {
-                        Show = true
+                        Show = false
                     }
                 },
                 PlotOptions = new PlotOptions
@@ -91,7 +95,7 @@
                             },
                             Value = new RadialBarDataLabelsValue
                             {
-                                Formatter = "function(val) { return parseInt(val); }",
+                                Formatter = "function(val) { return parseInt(val) + '%'; }", // Add the percentage sign
                                 Color = "#111",
                                 FontSize = "36px"
                             }
@@ -104,9 +108,9 @@
                     Gradient = new FillGradient
                     {
                         Shade = GradientShade.Dark,
-                        ShadeIntensity = 0.5,
+                        ShadeIntensity = 0.2,
                         Type = GradientType.Horizontal,
-                        GradientToColors = new List<string> { "#ABE5A1" },
+                        GradientToColors = new List<string> { "#e6b15a" },
                         InverseColors = true,
                         OpacityFrom = 1,
                         OpacityTo = 1,

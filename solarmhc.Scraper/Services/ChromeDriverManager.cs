@@ -23,6 +23,27 @@ namespace solarmhc.Scraper.Services
             _chromeDrivers[$"{Constants.Names.Huawei}"] = CreateChromeDriver();
             _chromeDrivers[$"{Constants.Names.Fronius}"] = CreateChromeDriver();
         }
+        
+        public void ReopenChromeDriver(string dashboardId)
+        {
+            switch (dashboardId)
+            {
+                case Constants.Names.Sunny:
+                    _chromeDrivers[$"{Constants.Names.Sunny}"] = CreateChromeDriver();
+                    break;
+                case Constants.Names.APS:
+                    _chromeDrivers[$"{Constants.Names.APS}"] = CreateChromeDriver();
+                    break;
+                case Constants.Names.Huawei:
+                    _chromeDrivers[$"{Constants.Names.Huawei}"] = CreateChromeDriver();
+                    break;
+                case Constants.Names.Fronius:
+                    _chromeDrivers[$"{Constants.Names.Fronius}"] = CreateChromeDriver();
+                    break;
+                default:
+                    break;
+            }
+        }
 
         private ChromeDriver CreateChromeDriver()
         {

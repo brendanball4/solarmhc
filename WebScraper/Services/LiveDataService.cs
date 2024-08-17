@@ -148,7 +148,7 @@ namespace solarmhc.Models.Services
                 {
                     foreach (var item in graphData)
                     {
-                        
+
                     }
 
                     return graphData;
@@ -160,6 +160,11 @@ namespace solarmhc.Models.Services
                 return data;
             }
             return new List<PowerData>();
+        }
+
+        public async Task<ConcurrentDictionary<string, List<PowerData>>> GetPowerDataOverview()
+        {
+            return _powerData;
         }
 
         public async Task SetPowerData(string dashboardId)

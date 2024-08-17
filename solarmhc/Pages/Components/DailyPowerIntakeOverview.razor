@@ -1,0 +1,164 @@
+﻿@using ApexCharts
+@using System.Collections.Concurrent;
+@using solarmhc.Models.Models
+@using solarmhc.Models.Services
+@inject LiveDataService liveDataService
+@implements IDisposable
+
+<MudSwitch @bind-Checked="showAverageData" ValueChanged="ToggleDataDisplay" Label="Show Average Data" T="bool" />
+
+<ApexChart TItem="PowerData" @ref="chart" Title="Daily Power Intake (kW)" Options="options" Width="@("100%")" Height="500">
+</ApexChart>
+
+@code {
+    private ConcurrentDictionary<string, List<PowerData>> dataDictionary = new ConcurrentDictionary<string, List<PowerData>>();
+    private List<PowerData> averageData = new List<PowerData>();
+    private ApexChart<PowerData> chart;
+    private ApexChartOptions<PowerData> options = new();
+    private bool showAverageData = true;
+    private bool isFirstRender = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        liveDataService.OnChange += OnChangeHandler;
+        await LoadInitialData();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            isFirstRender = false;
+            await UpdateChart();  // Ensure chart is updated after the first render
+        }
+    }
+
+    private async Task LoadInitialData()
+    {
+        dataDictionary = await liveDataService.GetPowerDataOverview();
+        CalculateAverageData();  // Calculate average data initially
+        SetupChartOptions();
+
+        // Do not update the chart here; it should be updated after the first render
+    }
+
+    private void SetupChartOptions()
+    {
+        options = new ApexChartOptions<PowerData>
+            {
+                Xaxis = new XAxis
+                {
+                    Type = XAxisType.Datetime,
+                    Labels = new XAxisLabels
+                    {
+                        Format = "h:mm tt",
+                        DatetimeUTC = false
+                    },
+                },
+                Yaxis = new List<YAxis>
+            {
+                new YAxis
+                {
+                    Min = 0,
+                    Max = 25
+                }
+            },
+                Tooltip = new Tooltip
+                {
+                    Enabled = true,
+                    X = new TooltipX
+                    {
+                        Format = "hh:mm tt"
+                    },
+                }
+            };
+    }
+
+    private void CalculateAverageData()
+    {
+        averageData = new List<PowerData>();
+
+        if (dataDictionary.Any())
+        {
+            var firstDashboard = dataDictionary.First().Value;
+
+            foreach (var entry in firstDashboard)
+            {
+                var date = entry.Date;
+                var averageIntake = dataDictionary.Values
+                    .Where(d => d.Any(e => e.Date == date))
+                    .Average(d => d.First(e => e.Date == date).Intake);
+
+                averageData.Add(new PowerData
+                    {
+                        Date = date,
+                        Intake = averageIntake
+                    });
+            }
+        }
+    }
+
+    private void OnChangeHandler()
+    {
+        InvokeAsync(UpdateData);
+    }
+
+    private async Task UpdateData()
+    {
+        dataDictionary = await liveDataService.GetPowerDataOverview();
+        CalculateAverageData();  // Recalculate average data after data changes
+
+        await UpdateChart();
+    }
+
+    private async Task UpdateChart()
+    {
+        // Only update the chart if it has been rendered (i.e., chart is not null)
+        if (chart != null)
+        {
+            // Clear the chart safely
+            chart.Series.Clear();
+
+            // Now add the new series
+            if (showAverageData)
+            {
+                chart.Series.Add(new ApexPointSeries<PowerData>
+                    {
+                        Chart = chart,
+                        Name = "Average",
+                        Items = averageData,
+                        XValue = (pd => pd.Date), // Map XValue to Date
+                        YValue = (pd => pd.Intake) // Map YValue to Intake
+                    });
+            }
+            else
+            {
+                foreach (var dashboardData in dataDictionary)
+                {
+                    chart.Series.Add(new ApexPointSeries<PowerData>
+                        {
+                            Chart = chart,
+                            Name = dashboardData.Key,
+                            Items = dashboardData.Value,
+                            XValue = (pd => pd.Date), // Map XValue to Date
+                            YValue = (pd => pd.Intake) // Map YValue to Intake
+                        });
+                }
+            }
+
+            // Update the chart with the new series
+            await chart.UpdateSeriesAsync();
+        }
+    }
+
+    private async Task ToggleDataDisplay(bool value)
+    {
+        showAverageData = value;
+        await UpdateChart(); // Refresh the chart with the new data
+    }
+
+    public void Dispose()
+    {
+        liveDataService.OnChange -= OnChangeHandler;
+    }
+}

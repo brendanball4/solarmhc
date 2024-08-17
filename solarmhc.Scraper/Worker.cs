@@ -1,3 +1,4 @@
+using OpenQA.Selenium;
 using solarmhc.Scraper.Models;
 using solarmhc.Scraper.Services;
 using System.Threading.Tasks;
@@ -147,6 +148,20 @@ namespace solarmhc.Scraper
                         default:
                             break;
                     }
+                }
+            }
+            catch (NoSuchWindowException ex)
+            {
+                _logger.LogError(ex, "Chrome instance was closed. Attempting to re-open.");
+                try
+                {
+                    _chromedDriverManager.ReopenChromeDriver(dashboardId);
+                    await FetchDataAsync(dataUrl, dashboardId);
+                }
+                catch (Exception ex1)
+                {
+                    _logger.LogError("Could not reopen the ChromeDriver windows." + ex1);
+                    throw;
                 }
             }
             catch (Exception ex)

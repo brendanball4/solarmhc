@@ -154,6 +154,12 @@ namespace solarmhc.Scraper.Services
                 var currentPower = powerElement.Text;
 
                 var result = _webScraperHelperService.TryParseData(currentPower, out decimal currentWattage);
+
+                if (!result)
+                {
+                    _logger.LogError($"{dashboardId}: System offline. currentPower = {currentPower}.");
+                }
+
                 _logger.LogInformation($"{dashboardId}: Current kW = {currentWattage}.");
 
                 if (currentWattage > 30)
@@ -171,6 +177,15 @@ namespace solarmhc.Scraper.Services
             }
             catch (Exception ex)
             {
+                if (ex is WebDriverTimeoutException) 
+                {
+                    if (dashboardId == Constants.Names.Sunny)
+                    {
+                        selectedElements.WaitCondition = "span.ennexos-message";
+                        selectedElements.PowerField = "span.ennexos-message";
+                        await GenericFetchPowerDataAsync(dataUrl, dashboardId, selectedElements, authSelectors, true, false);
+                    }
+                }
                 _logger.LogError(ex, $"An error occurred while fetching data for {dashboardId}.");
             }
         }

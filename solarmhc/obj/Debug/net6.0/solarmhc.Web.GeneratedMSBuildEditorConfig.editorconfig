@@ -52,6 +52,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50c1xEYWlseVBvd2VySW50YWtlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Components/DailyPowerIntakeOverview.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50c1xEYWlseVBvd2VySW50YWtlT3ZlcnZpZXcucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Components/Weather.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50c1xXZWF0aGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
