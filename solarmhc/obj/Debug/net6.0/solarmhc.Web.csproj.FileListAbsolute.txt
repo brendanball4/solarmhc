@@ -300,3 +300,4 @@ C:\Users\Brendan.Ball\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.C
 C:\Users\Wanatda\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Blazor-ApexCharts.dll
 C:\Users\Wanatda\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\scopedcss\Shared\AdminLayout.razor.rz.scp.css
 C:\Users\Wanatda\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\scopedcss\Shared\AdminNavMenu.razor.rz.scp.css
+C:\Users\Brendan\github\solarmhc\solarmhc\obj\Debug\net6.0\scopedcss\Shared\OverviewLayout.razor.rz.scp.css

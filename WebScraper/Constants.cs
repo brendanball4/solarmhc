@@ -16,6 +16,7 @@ namespace solarmhc.Models
             public const string APS = "APS";
             public const string Huawei = "Huawei";
             public const string Fronius = "Fronius";
+            public const string Total = "Total Intake";
         }
 
         public static class EnvironmentVars
@@ -52,6 +53,7 @@ namespace solarmhc.Models
             public const double APS = 25;
             public const double Huawei = 25;
             public const double Fronius = 25;
+            public const double TotalCapacity = 120;
         }
 
         public static class WeatherApi

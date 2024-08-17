@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "solarmhc.Web", "solarmhc\so
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "solarmhc.Models", "WebScraper\solarmhc.Models.csproj", "{ACB7992A-C03F-4E0D-BCB0-81E8CB08BE46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "solarmhc.Scraper", "solarmhc.Scraper\solarmhc.Scraper.csproj", "{F15B3A8B-D92B-48E2-8787-B6B2911BA397}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "solarmhc.Scraper", "solarmhc.Scraper\solarmhc.Scraper.csproj", "{F15B3A8B-D92B-48E2-8787-B6B2911BA397}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

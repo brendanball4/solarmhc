@@ -31,4 +31,10 @@
     <Folder Include="wwwroot\images\logos\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Shared\OverviewLayout.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
 </Project>

@@ -24,6 +24,19 @@ namespace solarmhc.Models.Services
 
         public (double utilizationPercentage, decimal currentWattage) GetCurrentPower(string dashboardId)
         {
+            if (dashboardId == Constants.Names.Total)
+            {
+                DashboardData count = new DashboardData();
+                foreach (var item in _dashboardData)
+                {
+                    _dashboardData.TryGetValue(item.Key, out var dataValues);
+
+                    count.CurrentWattage += dataValues.CurrentWattage;
+                }
+                count.UtilizationPercentage = ((double)count.CurrentWattage / Constants.Capacities.TotalCapacity) * 100;
+                return (count.UtilizationPercentage, count.CurrentWattage);
+            }
+
             if (_dashboardData.TryGetValue(dashboardId, out var data))
             {
                 return (data.UtilizationPercentage, data.CurrentWattage);
@@ -129,6 +142,19 @@ namespace solarmhc.Models.Services
 
         public async Task<List<PowerData>> GetPowerData(string dashboardId)
         {
+            if (dashboardId == Constants.Names.Total)
+            {
+                if (_powerData.TryGetValue(dashboardId, out var graphData))
+                {
+                    foreach (var item in graphData)
+                    {
+                        
+                    }
+
+                    return graphData;
+                }
+            }
+
             if (_powerData.TryGetValue(dashboardId, out var data))
             {
                 return data;

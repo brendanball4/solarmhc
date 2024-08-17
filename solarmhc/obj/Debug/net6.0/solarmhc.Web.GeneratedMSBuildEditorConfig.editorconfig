@@ -32,6 +32,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQVBTeXN0ZW1zXERhc2hib2FyZC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Components/C4iLogo.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50c1xDNGlMb2dvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Components/CanopyImage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50c1xDYW5vcHlJbWFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Components/CO2Savings.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50c1xDTzJTYXZpbmdzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -87,6 +95,10 @@ build_metadata.AdditionalFiles.CssScope = b-8r9ui67mun
 [C:/Users/Brendan/github/solarmhc/solarmhc/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-mz9aynqmnn
+
+[C:/Users/Brendan/github/solarmhc/solarmhc/Shared/OverviewLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE92ZXJ2aWV3TGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-bmdpupisk5
 
 [C:/Users/Brendan/github/solarmhc/solarmhc/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s

@@ -5,46 +5,120 @@
 @inject LiveDataService liveDataService
 
 <MudCard Class="h-100">
-    <MudText Typo="Typo.h5" Class="pt-5 mb-5 text-center">Current Power</MudText>
+    <MudText Typo="Typo.h5" Class="pt-5 mb-5 text-center">@DashboardName</MudText>
     <MudDivider Class="mb-5" Style="border-color: black;" />
 
-    <ApexChart TItem="ChartDataPoint" Options="options"
-    @ref="chart">
-        <ApexPointSeries TItem="ChartDataPoint"
-                         Items="dataPoints"
-                         SeriesType="SeriesType.Donut"
-                         Name="Utilization"
-                         XValue="@(e => e.Label)"
-                         YValue="@(e => (decimal)e.Value)" />
+    <ApexChart TItem="DataItem" Options="chartOptions" @ref="chart">
+        <ApexPointSeries TItem="DataItem" Items="data" SeriesType="SeriesType.RadialBar" Name="Intake"
+                         XValue="@(item => item.Label)"
+                         YValue="@(item => item.Value)">
+        </ApexPointSeries>
     </ApexChart>
+
     <MudDivider Class="mt-0 mt-lg-5" Style="border-color: black;" />
-    <div class="text-center  p-sm-3 p-3">
-        <MudText>@liveDataService.GetCurrentPower(DashboardName).utilizationPercentage.ToString("F1")% Utilization</MudText>
-        <MudText>@liveDataService.GetCurrentPower(DashboardName).currentWattage.ToString("F1") kWh</MudText>
+
+    <div class="text-center p-sm-3 p-3">
+        <MudText>@liveDataService.GetCurrentPower(DashboardName).utilizationPercentage.ToString("F1")% Intake</MudText>
+        <MudText>@liveDataService.GetCurrentPower(DashboardName).currentWattage.ToString("F1") kWh / @Capacity kWh</MudText>
     </div>
 </MudCard>
 
 @code {
     [Parameter]
     public string DashboardName { get; set; }
-    private ApexChart<ChartDataPoint> chart;
-    private List<ChartDataPoint> dataPoints = new List<ChartDataPoint>();
-    private ApexChartOptions<ChartDataPoint> options = new();
+    [Parameter]
+    public double Capacity { get; set; }
+
+    private ApexChart<DataItem> chart;
+    private List<DataItem> data = new List<DataItem>();
+    private ApexChartOptions<DataItem> chartOptions = new ApexChartOptions<DataItem>();
 
     protected override void OnInitialized()
     {
         liveDataService.OnChange += UpdateLiveData;
         UpdateLiveData();
 
-        options = new ApexChartOptions<ChartDataPoint>
+        chartOptions = new ApexChartOptions<DataItem>
             {
-                Legend = new Legend
+                Chart = new Chart
                 {
-                    Position = LegendPosition.Bottom,
-                    HorizontalAlign = ApexCharts.Align.Center,
-                    FontSize = "16px"
-            },
-        };
+                    Type = ApexCharts.ChartType.RadialBar,
+                    Height = 350,
+                    Toolbar = new Toolbar
+                    {
+                        Show = true
+                    }
+                },
+                PlotOptions = new PlotOptions
+                {
+                    RadialBar = new PlotOptionsRadialBar
+                    {
+                        StartAngle = -135,
+                        EndAngle = 225,
+                        Hollow = new Hollow
+                        {
+                            Margin = 0,
+                            Size = "70%",
+                            Background = "#fff",
+                            DropShadow = new DropShadow
+                            {
+                                Enabled = true,
+                                Top = 3,
+                                Blur = 4,
+                                Opacity = 0.24
+                            }
+                        },
+                        Track = new Track
+                        {
+                            Background = "#fff",
+                            StrokeWidth = "67%",
+                            DropShadow = new DropShadow
+                            {
+                                Enabled = true,
+                                Top = -3,
+                                Blur = 4,
+                                Opacity = 0.35
+                            }
+                        },
+                        DataLabels = new RadialBarDataLabels
+                        {
+                            Show = true,
+                            Name = new RadialBarDataLabelsName
+                            {
+                                OffsetY = -10,
+                                Color = "#888",
+                                FontSize = "17px"
+                            },
+                            Value = new RadialBarDataLabelsValue
+                            {
+                                Formatter = "function(val) { return parseInt(val); }",
+                                Color = "#111",
+                                FontSize = "36px"
+                            }
+                        }
+                    }
+                },
+                Fill = new Fill
+                {
+                    Type = FillType.Gradient,
+                    Gradient = new FillGradient
+                    {
+                        Shade = GradientShade.Dark,
+                        ShadeIntensity = 0.5,
+                        Type = GradientType.Horizontal,
+                        GradientToColors = new List<string> { "#ABE5A1" },
+                        InverseColors = true,
+                        OpacityFrom = 1,
+                        OpacityTo = 1,
+                        Stops = new List<double> { 0, 100 }
+                    }
+                },
+                Stroke = new Stroke
+                {
+                    LineCap = LineCap.Round
+                },
+                Labels = new List<string> { "Percent" }
+            };
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -65,12 +139,10 @@
             }
             catch (TaskCanceledException e)
             {
-                // Handle the cancellation specifically
                 Console.WriteLine("Update was cancelled: " + e.Message);
             }
             catch (Exception e)
             {
-                // Handle other exceptions
                 Console.WriteLine("Error updating chart: " + e.Message);
             }
         }
@@ -78,12 +150,13 @@
 
     private async void UpdateLiveData()
     {
-        if (liveDataService.GetCurrentPower(DashboardName).utilizationPercentage >= 0 && liveDataService.GetCurrentPower(DashboardName).currentWattage >= 0)
+        var currentPower = liveDataService.GetCurrentPower(DashboardName);
+
+        if (currentPower.utilizationPercentage >= 0 && currentPower.currentWattage >= 0)
         {
-            dataPoints = new List<ChartDataPoint>
+            data = new List<DataItem>
             {
-                new ChartDataPoint { Label = "Utilization", Value = liveDataService.GetCurrentPower(DashboardName).utilizationPercentage },
-                new ChartDataPoint { Label = "Capacity", Value = 100 - liveDataService.GetCurrentPower(DashboardName).utilizationPercentage }
+                new DataItem { Label = "Intake", Value = (decimal)currentPower.utilizationPercentage },
             };
         }
 
@@ -96,9 +169,9 @@
         liveDataService.OnChange -= UpdateLiveData;
     }
 
-    public class ChartDataPoint
+    public class DataItem
     {
         public string Label { get; set; }
-        public double Value { get; set; }
+        public decimal Value { get; set; }
     }
 }
