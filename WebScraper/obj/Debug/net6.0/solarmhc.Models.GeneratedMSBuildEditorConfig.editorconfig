@@ -8,4 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = solarmhc.Models
-build_property.ProjectDir = C:\Users\Brendan\github\solarmhc\WebScraper\
+build_property.ProjectDir = C:\Users\Wanatda\source\repos\solarmhc\WebScraper\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

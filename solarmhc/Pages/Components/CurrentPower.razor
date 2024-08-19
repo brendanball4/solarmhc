@@ -4,25 +4,29 @@
 @implements IDisposable
 @inject LiveDataService liveDataService
 
-<MudCard Class="h-100">
-    <MudText Typo="Typo.h5" Class="pt-3 mb-3 text-center">@DashboardName</MudText>
-    <MudDivider Class="mb-5" Style="border-color: black;" />
+<MudCard Style="height: 100%;">
+    <MudCardHeader Class="pb-0">
+        <CardHeaderContent>
+            <MudText Align="MudBlazor.Align.Center" Typo="Typo.h5" Class="pt-2 mb-2">@DashboardName</MudText>
+            <MudDivider Class="mb-0 pb-0" Style="border-color: black;" />
+        </CardHeaderContent>
+    </MudCardHeader>
 
-    <ApexChart TItem="DataItem" Options="chartOptions" @ref="chart">
-        <ApexPointSeries TItem="DataItem" Items="data" SeriesType="SeriesType.RadialBar" Name="Intake"
-                         XValue="@(item => item.Label)"
-                         YValue="@(item => item.Value)">
-        </ApexPointSeries>
-    </ApexChart>
+        <ApexChart TItem="DataItem" Options="chartOptions" @ref="chart">
+            <ApexPointSeries TItem="DataItem" Items="data" SeriesType="SeriesType.RadialBar" Name="Intake"
+                             XValue="@(item => item.Label)"
+                             YValue="@(item => item.Value)">
+            </ApexPointSeries>
+        </ApexChart>
 
-    <div class="text-center pb-3">
-        <MudText>@liveDataService.GetCurrentPower(DashboardName).currentWattage.ToString("F1") kWh / @Capacity kWh</MudText>
-    </div>
+        <div class="pb-3">
+            <MudText Align="MudBlazor.Align.Center">@liveDataService.GetCurrentPower(DashboardName).currentWattage.ToString("F1") kWh / @Capacity kWh</MudText>
+        </div>
 
-    @if (ShowLogo)
-    {
-        <C4iLogo />
-    }
+        @if (ShowLogo)
+        {
+            <C4iLogo />
+        }
 </MudCard>
 
 @code {

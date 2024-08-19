@@ -5,10 +5,14 @@
 @inject LiveDataService liveDataService
 @implements IDisposable
 
-<MudSwitch @bind-Checked="showAverageData" ValueChanged="ToggleDataDisplay" Label="Show Average Data" T="bool" />
+<MudCard Style="height: 100%;">
+    <MudCardContent Style="height: 91%;">
+        <MudSwitch @bind-Checked="showAverageData" ValueChanged="ToggleDataDisplay" Label="Show Average Data" T="bool" />
 
-<ApexChart TItem="PowerData" @ref="chart" Title="Daily Power Intake (kW)" Options="options" Width="@("100%")" Height="500">
-</ApexChart>
+        <ApexChart TItem="PowerData" @ref="chart" Title="Daily Power Intake (kW)" Options="options" Width="@("100%")" Height="@("100%")">
+        </ApexChart>
+    </MudCardContent>
+</MudCard>
 
 @code {
     private ConcurrentDictionary<string, List<PowerData>> dataDictionary = new ConcurrentDictionary<string, List<PowerData>>();
@@ -38,8 +42,6 @@
         dataDictionary = await liveDataService.GetPowerDataOverview();
         CalculateAverageData();  // Calculate average data initially
         SetupChartOptions();
-
-        // Do not update the chart here; it should be updated after the first render
     }
 
     private void SetupChartOptions()
@@ -56,13 +58,13 @@
                     },
                 },
                 Yaxis = new List<YAxis>
-            {
-                new YAxis
                 {
-                    Min = 0,
-                    Max = 25
-                }
-            },
+                    new YAxis
+                    {
+                        Min = 0,
+                        Max = 25
+                    }
+                },
                 Tooltip = new Tooltip
                 {
                     Enabled = true,
@@ -70,6 +72,10 @@
                     {
                         Format = "hh:mm tt"
                     },
+                },
+                Colors = new List<string>
+                {
+                    "#efc337", "#4d4d4d", "#2b4e89", "#ff3333", "#0064bd"
                 }
             };
     }
@@ -90,10 +96,10 @@
                     .Average(d => d.First(e => e.Date == date).Intake);
 
                 averageData.Add(new PowerData
-                    {
-                        Date = date,
-                        Intake = averageIntake
-                    });
+                {
+                    Date = date,
+                    Intake = averageIntake
+                });
             }
         }
     }
@@ -133,7 +139,7 @@
             }
             else
             {
-                foreach (var dashboardData in dataDictionary)
+                foreach (var dashboardData in dataDictionary.OrderBy(x => x.Key))
                 {
                     chart.Series.Add(new ApexPointSeries<PowerData>
                         {
@@ -154,6 +160,22 @@
     private async Task ToggleDataDisplay(bool value)
     {
         showAverageData = value;
+
+        if (value)
+        {
+            chart.Options.Colors = new List<string>
+            {
+                "#efc337", "#4d4d4d", "#2b4e89", "#ff3333", "#0064bd"
+            };
+        } else
+        {
+            chart.Options.Colors = new List<string>
+            {
+                "#fd8204", "#4d4d4d", "#2b4e89", "#ff3333", "#0064bd"
+            };
+        }
+
+        await chart.UpdateOptionsAsync(false, true, false);
         await UpdateChart(); // Refresh the chart with the new data
     }
 

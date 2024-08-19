@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("solarmhc.Models")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0db444be4903919f37807110191845c9e4ad2652")]
 [assembly: System.Reflection.AssemblyProductAttribute("solarmhc.Models")]
 [assembly: System.Reflection.AssemblyTitleAttribute("solarmhc.Models")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

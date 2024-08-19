@@ -142,19 +142,6 @@ namespace solarmhc.Models.Services
 
         public async Task<List<PowerData>> GetPowerData(string dashboardId)
         {
-            if (dashboardId == Constants.Names.Total)
-            {
-                if (_powerData.TryGetValue(dashboardId, out var graphData))
-                {
-                    foreach (var item in graphData)
-                    {
-
-                    }
-
-                    return graphData;
-                }
-            }
-
             if (_powerData.TryGetValue(dashboardId, out var data))
             {
                 return data;

@@ -4,16 +4,18 @@
 @using solarmhc.Web.Pages.Components
 
 @* row1: Canopy/Total Intake/Graph row2: 5 gauges for the dashboards row3: Weather/C4i logo *@
-<MudGrid Justify="Justify.SpaceBetween" Spacing="2">
-    <MudItem xs="12" sm="12" md="6" lg="4">
+<MudGrid Justify="Justify.Center" Spacing="2">
+    <MudItem xs="12" sm="12" md="6" lg="4" xl="4" xxl="5">
         <DailyPowerIntakeOverview />
     </MudItem>
-    <MudItem xs="12" sm="6" md="6" lg="3">
+    <MudItem xs="12" sm="6" md="6" lg="3" xl="2" xxl="3">
         <CurrentPower DashboardName="@Constants.Names.Total" Capacity="Constants.Capacities.TotalCapacity" ShowLogo="true" />
     </MudItem>
-    <MudItem xs="12" sm="6" md="6" lg="4">
+    <MudItem xs="12" sm="6" md="6" lg="4" xl="3" xxl="4">
         <CanopyImage />
     </MudItem>
+</MudGrid>
+<MudGrid Justify="Justify.Center" Spacing="2">
     <MudItem xs="12" sm="4" md="4" lg="2">
         <CurrentPower DashboardName="@Constants.Names.SolarEdge" Capacity="Constants.Capacities.SolarEdge" />
     </MudItem>
