@@ -23,11 +23,32 @@ builder.Services.AddHostedService<DataBackgroundService>();
 
 builder.Services.AddScoped(sp => ChromeDriverFactory.CreateChromeDriver());
 
-// Configure DbContext
-builder.Services.AddDbContext<SolarMHCDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SolarMhcDatabase")));
-
 builder.Services.AddHttpClient();
+
+string connectionString;
+
+if (builder.Environment.IsDevelopment())
+{
+    var username = Environment.GetEnvironmentVariable("SQLSERVER_USERNAME");
+    var password = Environment.GetEnvironmentVariable("SQLSERVER_PASSWORD");
+    connectionString = $"Server=DESKTOP-CVG4ADF\\SQLEXPRESS;Database=solarmhc;User ID={username};Password={password};Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+}
+else
+{
+    connectionString = builder.Configuration.GetConnectionString("DevSolarMhcDatabase");
+}
+
+
+if (!string.IsNullOrEmpty(connectionString))
+{
+    // Configure DbContext with the appropriate connection string
+    builder.Services.AddDbContext<SolarMHCDbContext>(options =>
+        options.UseSqlServer(connectionString));
+} else
+{
+    string test = "";
+}
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

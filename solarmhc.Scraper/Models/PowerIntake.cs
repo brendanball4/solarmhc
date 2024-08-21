@@ -16,6 +16,7 @@ namespace solarmhc.Scraper.Models
         public decimal KW { get; set; }
         public double Utilization { get; set; }
         public DateTime TimeStamp { get; set; }
+        public bool Status { get; set; }
         [NotMapped]
         public decimal Watts => KW * 1000;
     }

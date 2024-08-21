@@ -30,7 +30,6 @@ namespace solarmhc.Scraper
                     var tasks = new List<Task>
                     {
                         FetchDataAsync(Constants.DataUrls.SolarEdge, Constants.Names.SolarEdge),
-                        FetchDataAsync(Constants.DataUrls.APS, Constants.Names.APS)
                     };
 
                     await Task.WhenAll(tasks);
@@ -45,6 +44,7 @@ namespace solarmhc.Scraper
                 // Create a function(s) to run on repeated tasks 
                 var tasks = new List<Task>
                 {
+                    FetchDataAsync(Constants.DataUrls.APS, Constants.Names.APS),
                     FetchDataAsync(Constants.DataUrls.Sunny, Constants.Names.Sunny),
                     FetchDataAsync(Constants.DataUrls.Huawei, Constants.Names.Huawei),
                     FetchDataAsync(Constants.DataUrls.Fronius, Constants.Names.Fronius)
