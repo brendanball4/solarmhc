@@ -10,10 +10,12 @@ namespace solarmhc.Scraper.Services
     public class ChromeDriverManager
     {
         private Dictionary<string, ChromeDriver> _chromeDrivers = new Dictionary<string, ChromeDriver>();
+        private readonly ILogger<ChromeDriverManager> _logger;
 
-        public ChromeDriverManager()
+        public ChromeDriverManager(ILogger<ChromeDriverManager> logger)
         {
             InitializeChromeDrivers();
+            _logger = logger;
         }
 
         private void InitializeChromeDrivers()
@@ -23,7 +25,7 @@ namespace solarmhc.Scraper.Services
             _chromeDrivers[$"{Constants.Names.Huawei}"] = CreateChromeDriver();
             _chromeDrivers[$"{Constants.Names.Fronius}"] = CreateChromeDriver();
         }
-        
+
         public void ReopenChromeDriver(string dashboardId)
         {
             switch (dashboardId)
@@ -61,10 +63,13 @@ namespace solarmhc.Scraper.Services
 
         public ChromeDriver GetDriver(string dashboardId)
         {
+            _logger.LogInformation($"{dashboardId}: Finding ChromeDriver.");
             if (_chromeDrivers.TryGetValue(dashboardId, out var driver))
             {
+                _logger.LogInformation($"{dashboardId}: Found ChromeDriver.");
                 return driver;
             }
+            _logger.LogError($"{dashboardId}: Not able to find a ChromeDriver instance.");
             throw new KeyNotFoundException($"No ChromeDriver instance found for dashboard: {dashboardId}");
         }
 

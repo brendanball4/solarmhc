@@ -11,6 +11,7 @@ namespace solarmhc.Models.Models
         public Location Location { get; set; }
         public CurrentWeather Current { get; set; }
         public Forecast Forecast { get; set; }
+        public bool Status { get; set; }
     }
 
     public class Location

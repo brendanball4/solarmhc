@@ -12,6 +12,8 @@
         </CardHeaderContent>
     </MudCardHeader>
 
+    @if (liveDataService.GetStatus(DashboardName))
+    {
         <ApexChart TItem="DataItem" Options="chartOptions" @ref="chart">
             <ApexPointSeries TItem="DataItem" Items="data" SeriesType="SeriesType.RadialBar" Name="Intake"
                              XValue="@(item => item.Label)"
@@ -22,11 +24,21 @@
         <div class="pb-3">
             <MudText Align="MudBlazor.Align.Center">@liveDataService.GetCurrentPower(DashboardName).currentWattage.ToString("F1") kWh / @Capacity kWh</MudText>
         </div>
+    }
+    else
+    {
+        <ApexChart TItem="DataItem" Options="offlineChartOptions" @ref="chart">
+            <ApexPointSeries TItem="DataItem" Items="data" SeriesType="SeriesType.RadialBar" Name="Intake"
+                             XValue="@(item => item.Label)"
+                             YValue="@(item => item.Value)">
+            </ApexPointSeries>
+        </ApexChart>
+    }
 
-        @if (ShowLogo)
-        {
-            <C4iLogo />
-        }
+    @if (ShowLogo)
+    {
+        <C4iLogo />
+    }
 </MudCard>
 
 @code {
@@ -40,6 +52,7 @@
     private ApexChart<DataItem> chart;
     private List<DataItem> data = new List<DataItem>();
     private ApexChartOptions<DataItem> chartOptions = new ApexChartOptions<DataItem>();
+    private ApexChartOptions<DataItem> offlineChartOptions = new ApexChartOptions<DataItem>();
 
     protected override void OnInitialized()
     {
@@ -99,7 +112,7 @@
                             },
                             Value = new RadialBarDataLabelsValue
                             {
-                                Formatter = "function(val) { return parseInt(val) + '%'; }", // Add the percentage sign
+                                Formatter = "function(val) { return parseInt(val) + '%'; }",
                                 Color = "#111",
                                 FontSize = "36px"
                             }
@@ -126,6 +139,78 @@
                     LineCap = LineCap.Round
                 },
                 Labels = new List<string> { "Percent" }
+            };
+
+        offlineChartOptions = new ApexChartOptions<DataItem>
+            {
+                Chart = new Chart
+                {
+                    Type = ApexCharts.ChartType.RadialBar,
+                    Height = 350,
+                    Toolbar = new Toolbar
+                    {
+                        Show = false
+                    }
+                },
+                PlotOptions = new PlotOptions
+                {
+                    RadialBar = new PlotOptionsRadialBar
+                    {
+                        StartAngle = -135,
+                        EndAngle = 225,
+                        Hollow = new Hollow
+                        {
+                            Margin = 0,
+                            Size = "70%",
+                            Background = "#fff",
+                            DropShadow = new DropShadow
+                            {
+                                Enabled = true,
+                                Top = 3,
+                                Blur = 4,
+                                Opacity = 0.24
+                            }
+                        },
+                        Track = new Track
+                        {
+                            Background = "#fff",
+                            StrokeWidth = "67%",
+                            DropShadow = new DropShadow
+                            {
+                                Enabled = true,
+                                Top = -3,
+                                Blur = 4,
+                                Opacity = 0.35
+                            }
+                        },
+                        DataLabels = new RadialBarDataLabels
+                        {
+                            Show = true,
+                            Name = new RadialBarDataLabelsName
+                            {
+                                OffsetY = -10,
+                                Color = "#888",
+                                FontSize = "17px"
+                            },
+                            Value = new RadialBarDataLabelsValue
+                            {
+                                Formatter = "function(val) { return 'Offline'; }", // Display "Offline"
+                                Color = "#FF0000", // Red color for offline
+                                FontSize = "36px"
+                            }
+                        }
+                    }
+                },
+                Fill = new Fill
+                {
+                    Type = FillType.Solid,
+                    Colors = new List<string> { "#FF0000" } // Solid red color
+                },
+                Stroke = new Stroke
+                {
+                    LineCap = LineCap.Round
+                },
+                Labels = new List<string> { "Status" }
             };
     }
 
@@ -160,11 +245,18 @@
     {
         var currentPower = liveDataService.GetCurrentPower(DashboardName);
 
-        if (currentPower.utilizationPercentage >= 0 && currentPower.currentWattage >= 0)
+        if (liveDataService.GetStatus(DashboardName))
         {
             data = new List<DataItem>
             {
                 new DataItem { Label = "Intake", Value = (decimal)currentPower.utilizationPercentage },
+            };
+        }
+        else
+        {
+            data = new List<DataItem>
+            {
+                new DataItem { Label = "System", Value = 0 }, // Value doesn't matter, since formatter will display "Offline"
             };
         }
 

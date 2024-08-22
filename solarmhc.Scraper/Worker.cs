@@ -29,7 +29,7 @@ namespace solarmhc.Scraper
                     // Create a function(s) to run on repeated tasks 
                     var tasks = new List<Task>
                     {
-                        FetchDataAsync(Constants.DataUrls.SolarEdge, Constants.Names.SolarEdge),
+                        FetchDataAsync(Constants.DataUrls.LoginPages.SolarEdge, Constants.Names.SolarEdge),
                     };
 
                     await Task.WhenAll(tasks);
@@ -44,10 +44,10 @@ namespace solarmhc.Scraper
                 // Create a function(s) to run on repeated tasks 
                 var tasks = new List<Task>
                 {
-                    FetchDataAsync(Constants.DataUrls.APS, Constants.Names.APS),
-                    FetchDataAsync(Constants.DataUrls.Sunny, Constants.Names.Sunny),
-                    FetchDataAsync(Constants.DataUrls.Huawei, Constants.Names.Huawei),
-                    FetchDataAsync(Constants.DataUrls.Fronius, Constants.Names.Fronius)
+                    FetchDataAsync(Constants.DataUrls.LoginPages.APS, Constants.Names.APS),
+                    FetchDataAsync(Constants.DataUrls.LoginPages.Sunny, Constants.Names.Sunny),
+                    FetchDataAsync(Constants.DataUrls.LoginPages.Huawei, Constants.Names.Huawei),
+                    FetchDataAsync(Constants.DataUrls.LoginPages.Fronius, Constants.Names.Fronius)
                 };
 
                 await Task.WhenAll(tasks);
@@ -73,12 +73,12 @@ namespace solarmhc.Scraper
 
                     switch (dataUrl)
                     {
-                        case Constants.DataUrls.SolarEdge:
+                        case Constants.DataUrls.LoginPages.SolarEdge:
                             _logger.LogInformation($"{dashboardId} Fetch Power Data function started successfully.");
                             await dataWebScraper.FetchPowerDataSolarEdgeAPI();
                             _logger.LogInformation($"{dashboardId} Fetch Power Data function ended successfully.");
                             break;
-                        case Constants.DataUrls.Sunny:
+                        case Constants.DataUrls.LoginPages.Sunny:
                             authSelectors = new AuthSelectors
                             {
                                 UsernameField = Constants.TargetedElements.Sunny.Auth.username,
@@ -94,10 +94,10 @@ namespace solarmhc.Scraper
                                 PowerField = Constants.TargetedElements.Sunny.Data.kwId
                             };
                             _logger.LogInformation($"{dashboardId} Fetch Power Data function started successfully.");
-                            await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, selectors, authSelectors, true, false);
+                            await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, Constants.DataUrls.DataPages.Sunny, selectors, authSelectors, true, false);
                             _logger.LogInformation($"{dashboardId} Fetch Power Data function ended successfully.");
                             break;
-                        case Constants.DataUrls.APS:
+                        case Constants.DataUrls.LoginPages.APS:
                             authSelectors = new AuthSelectors
                             {
                                 UsernameField = Constants.TargetedElements.APS.Auth.username,
@@ -113,10 +113,10 @@ namespace solarmhc.Scraper
                                 PowerField = Constants.TargetedElements.APS.Data.kwId
                             };
                             _logger.LogInformation($"{dashboardId} Fetch Power Data function started successfully.");
-                            await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, selectors, authSelectors, false, false);
+                            await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, Constants.DataUrls.DataPages.APSData, selectors, authSelectors, false, false);
                             _logger.LogInformation($"{dashboardId} Fetch Power Data function ended successfully.");
                             break;
-                        case Constants.DataUrls.Huawei:
+                        case Constants.DataUrls.LoginPages.Huawei:
                             authSelectors = new AuthSelectors
                             {
                                 UsernameField = Constants.TargetedElements.Huawei.Auth.username,
@@ -132,17 +132,17 @@ namespace solarmhc.Scraper
                                 PowerField = Constants.TargetedElements.Huawei.Data.kwId
                             };
                             _logger.LogInformation($"{dashboardId} Fetch Power Data function started successfully.");
-                            await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, selectors, authSelectors, false, true);
+                            await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, Constants.DataUrls.DataPages.Huawei, selectors, authSelectors, false, true);
                             _logger.LogInformation($"{dashboardId} Fetch Power Data function ended successfully.");
                             break;
-                        case Constants.DataUrls.Fronius:
+                        case Constants.DataUrls.LoginPages.Fronius:
                             selectors = new ScrapingSelectors
                             {
                                 WaitCondition = Constants.TargetedElements.Fronius.Data.kwId,
                                 PowerField = Constants.TargetedElements.Fronius.Data.kwId
                             };
                             _logger.LogInformation($"{dashboardId} Fetch Power Data function started successfully.");
-                            await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, selectors, null, false, false);
+                            await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, null, selectors, null, false, false);
                             _logger.LogInformation($"{dashboardId} Fetch Power Data function ended successfully.");
                             break;
                         default:

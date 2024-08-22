@@ -3054,23 +3054,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ITEC\\.nuget\\packages\\": {},
+    "C:\\Users\\Brendan\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ITEC\\source\\repos\\solarmhc\\solarmhc\\solarmhc.Web.csproj",
+      "projectUniqueName": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\solarmhc.Web.csproj",
       "projectName": "solarmhc.Web",
-      "projectPath": "C:\\Users\\ITEC\\source\\repos\\solarmhc\\solarmhc\\solarmhc.Web.csproj",
-      "packagesPath": "C:\\Users\\ITEC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ITEC\\source\\repos\\solarmhc\\solarmhc\\obj\\",
+      "projectPath": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\solarmhc.Web.csproj",
+      "packagesPath": "C:\\Users\\Brendan\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\ITEC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Brendan\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3086,8 +3086,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\ITEC\\source\\repos\\solarmhc\\WebScraper\\solarmhc.Models.csproj": {
-              "projectPath": "C:\\Users\\ITEC\\source\\repos\\solarmhc\\WebScraper\\solarmhc.Models.csproj"
+            "C:\\Users\\Brendan\\Documents\\solarmhc\\WebScraper\\solarmhc.Models.csproj": {
+              "projectPath": "C:\\Users\\Brendan\\Documents\\solarmhc\\WebScraper\\solarmhc.Models.csproj"
             }
           }
         }
@@ -3096,11 +3096,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -3161,7 +3156,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   },

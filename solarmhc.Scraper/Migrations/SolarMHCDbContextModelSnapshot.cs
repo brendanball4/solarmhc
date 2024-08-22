@@ -216,6 +216,9 @@ namespace solarmhc.Scraper.Migrations
                     b.Property<int>("SolarSegmentId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime2");
 

@@ -2514,23 +2514,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ITEC\\.nuget\\packages\\": {},
+    "C:\\Users\\Brendan\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ITEC\\source\\repos\\solarmhc\\WebScraper\\solarmhc.Models.csproj",
+      "projectUniqueName": "C:\\Users\\Brendan\\Documents\\solarmhc\\WebScraper\\solarmhc.Models.csproj",
       "projectName": "solarmhc.Models",
-      "projectPath": "C:\\Users\\ITEC\\source\\repos\\solarmhc\\WebScraper\\solarmhc.Models.csproj",
-      "packagesPath": "C:\\Users\\ITEC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ITEC\\source\\repos\\solarmhc\\WebScraper\\obj\\",
+      "projectPath": "C:\\Users\\Brendan\\Documents\\solarmhc\\WebScraper\\solarmhc.Models.csproj",
+      "packagesPath": "C:\\Users\\Brendan\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Brendan\\Documents\\solarmhc\\WebScraper\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\ITEC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Brendan\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2552,11 +2552,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -2622,7 +2617,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   },

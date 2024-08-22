@@ -104,8 +104,7 @@ namespace solarmhc.Scraper.Migrations
                     SolarSegmentId = table.Column<int>(type: "int", nullable: false),
                     KW = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Utilization = table.Column<double>(type: "float", nullable: false),
-                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false)
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

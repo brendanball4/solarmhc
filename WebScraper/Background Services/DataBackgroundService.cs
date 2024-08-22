@@ -110,7 +110,7 @@ namespace solarmhc.Models.Background_Services
 
                 if (data != null)
                 {
-                    _liveDataService.SetCurrentPower(dashboardId, data.KW);
+                    _liveDataService.SetCurrentPower(dashboardId, data.KW, data.Status);
                 }
             }
         }

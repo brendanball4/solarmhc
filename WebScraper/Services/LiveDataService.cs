@@ -44,11 +44,22 @@ namespace solarmhc.Models.Services
             return (0, 0);
         }
 
-        public void SetCurrentPower(string dashboardId, decimal currentWattage)
+        public bool GetStatus(string dashboardId)
+        {
+            if (_dashboardData.TryGetValue(dashboardId, out var data))
+            {
+                return data.Status;
+            }
+
+            return true;
+        }
+
+        public void SetCurrentPower(string dashboardId, decimal currentWattage, bool status)
         {
             var data = _dashboardData.GetOrAdd(dashboardId, new DashboardData());
             data.UtilizationPercentage = ((double)currentWattage / 25) * 100;
             data.CurrentWattage = currentWattage;
+            data.Status = status;
             NotifyStateChanged();
         }
 
@@ -62,6 +73,18 @@ namespace solarmhc.Models.Services
             WeatherResponse weather = await _weatherApiService.GetWeatherAsync(city);
             List<HourlyForecast> forecastHours = new List<HourlyForecast>();
 
+            if (weather.Forecast != null)
+            {
+                weather.Status = true;
+            } else
+            {
+                _weatherData = new WeatherData
+                {
+                    Status = weather.Status
+                };
+                return;
+            }
+
             _weatherData = new WeatherData
             {
                 City = weather.Location.Name,
@@ -73,7 +96,8 @@ namespace solarmhc.Models.Services
                 Condition = weather.Current.Condition.Text,
                 IconUrl = weather.Current.Condition.Icon,
                 LastUpdated = weather.Current.Last_Updated,
-                ForecastData = forecastHours
+                ForecastData = forecastHours,
+                Status = weather.Status
             };
 
             int currentHour = DateTime.Now.Hour;
@@ -163,9 +187,9 @@ namespace solarmhc.Models.Services
             NotifyStateChanged();
         }
 
-        public async Task UpdateCurrentPowerAsync(string dashboardId, decimal currentWattage)
+        public async Task UpdateCurrentPowerAsync(string dashboardId, decimal currentWattage, bool status)
         {
-            SetCurrentPower(dashboardId, currentWattage);
+            SetCurrentPower(dashboardId, currentWattage, status);
             await Task.CompletedTask;
         }
 
@@ -196,6 +220,7 @@ namespace solarmhc.Models.Services
         public decimal CurrentWattage { get; set; }
         public double TotalEmissions { get; set; }
         public double SavedTrees { get; set; }
+        public bool Status { get; set; }
     }
 
     public class WeatherData
@@ -210,5 +235,6 @@ namespace solarmhc.Models.Services
         public string IconUrl { get; set; }
         public DateTime LastUpdated { get; set; }
         public List<HourlyForecast> ForecastData { get; set; }
+        public bool Status { get; set; }
     }
 }
