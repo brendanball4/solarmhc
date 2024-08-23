@@ -23,24 +23,24 @@ builder.Services.AddHostedService<DataBackgroundService>();
 
 builder.Services.AddHttpClient();
 
-// Configure DbContext with the appropriate connection string
+var connectionString = builder.Configuration.GetConnectionString("DevSolarMhcDatabase");
+
+// Configure the DbContext with MySQL connection
 builder.Services.AddDbContext<SolarMHCDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DevSolarMhcDatabase")));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
+    app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
-
 app.UseRouting();
 
 app.MapBlazorHub();

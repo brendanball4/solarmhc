@@ -5,10 +5,14 @@ using solarmhc.Scraper.Data;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .UseWindowsService()
+    .ConfigureAppConfiguration((hostingContext, config) =>
+    {
+        config.AddEnvironmentVariables();
+    })
     .ConfigureServices((context, services) =>
     {
         services.AddDbContext<SolarMHCDbContext>(options =>
-            options.UseSqlServer(context.Configuration.GetConnectionString("DevSolarMhcDatabase")));
+            options.UseMySql(context.Configuration.GetConnectionString("DevSolarMhcDatabase"), ServerVersion.AutoDetect(context.Configuration.GetConnectionString("DevSolarMhcDatabase"))));
 
         services.AddHostedService<Worker>();
         services.AddSingleton<ChromeDriverManager>();

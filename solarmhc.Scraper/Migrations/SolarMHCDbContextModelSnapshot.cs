@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using solarmhc.Scraper.Data;
 
@@ -18,9 +17,7 @@ namespace solarmhc.Scraper.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.33")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("solarmhc.Scraper.Models.Brand", b =>
                 {
@@ -28,11 +25,9 @@ namespace solarmhc.Scraper.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -77,8 +72,6 @@ namespace solarmhc.Scraper.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<int>("Location")
                         .HasColumnType("int");
 
@@ -86,7 +79,7 @@ namespace solarmhc.Scraper.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<decimal>("RatedCapacity")
                         .HasPrecision(18, 2)
@@ -102,7 +95,7 @@ namespace solarmhc.Scraper.Migrations
                         new
                         {
                             Id = 1,
-                            Location = 2,
+                            Location = 1,
                             ModelId = 2,
                             Notes = "SolarEdge",
                             RatedCapacity = 20000m
@@ -110,7 +103,7 @@ namespace solarmhc.Scraper.Migrations
                         new
                         {
                             Id = 2,
-                            Location = 2,
+                            Location = 1,
                             ModelId = 3,
                             Notes = "Sunny",
                             RatedCapacity = 24000m
@@ -118,7 +111,7 @@ namespace solarmhc.Scraper.Migrations
                         new
                         {
                             Id = 3,
-                            Location = 2,
+                            Location = 1,
                             ModelId = 4,
                             Notes = "APS",
                             RatedCapacity = 1000m
@@ -126,7 +119,7 @@ namespace solarmhc.Scraper.Migrations
                         new
                         {
                             Id = 4,
-                            Location = 2,
+                            Location = 1,
                             ModelId = 5,
                             Notes = "Huawei",
                             RatedCapacity = 24000m
@@ -134,7 +127,7 @@ namespace solarmhc.Scraper.Migrations
                         new
                         {
                             Id = 5,
-                            Location = 2,
+                            Location = 1,
                             ModelId = 6,
                             Notes = "Fronius",
                             RatedCapacity = 23955m
@@ -147,14 +140,12 @@ namespace solarmhc.Scraper.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<int>("BrandId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -207,8 +198,6 @@ namespace solarmhc.Scraper.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<decimal>("KW")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
@@ -217,13 +206,13 @@ namespace solarmhc.Scraper.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("Status")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<DateTime>("TimeStamp")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<double>("Utilization")
-                        .HasColumnType("float");
+                        .HasColumnType("double");
 
                     b.HasKey("Id");
 
@@ -238,10 +227,8 @@ namespace solarmhc.Scraper.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<DateTime?>("InstallationDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("InverterTypeId")
                         .HasColumnType("int");
@@ -254,10 +241,10 @@ namespace solarmhc.Scraper.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<decimal>("RatedCapacity")
                         .HasPrecision(18, 2)
