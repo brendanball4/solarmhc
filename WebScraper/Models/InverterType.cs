@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebScraper.Models
+namespace solarmhc.Models.Models
 {
     public class InverterType
     {

@@ -86,9 +86,6 @@ C:\Users\Brendan\Documents\solarmhc\solarmhc\WebScraper\obj\Debug\net6.0\refint\
 C:\Users\Brendan\Documents\solarmhc\solarmhc\WebScraper\obj\Debug\net6.0\solarmhc.Models.pdb
 C:\Users\Brendan\Documents\solarmhc\solarmhc\WebScraper\obj\Debug\net6.0\solarmhc.Models.genruntimeconfig.cache
 C:\Users\Brendan\Documents\solarmhc\solarmhc\WebScraper\obj\Debug\net6.0\ref\solarmhc.Models.dll
-C:\Users\Brendan\Documents\solarmhc\WebScraper\bin\Debug\net6.0\selenium-manager\linux\selenium-manager
-C:\Users\Brendan\Documents\solarmhc\WebScraper\bin\Debug\net6.0\selenium-manager\macos\selenium-manager
-C:\Users\Brendan\Documents\solarmhc\WebScraper\bin\Debug\net6.0\selenium-manager\windows\selenium-manager.exe
 C:\Users\Brendan\Documents\solarmhc\WebScraper\bin\Debug\net6.0\solarmhc.Models.deps.json
 C:\Users\Brendan\Documents\solarmhc\WebScraper\bin\Debug\net6.0\solarmhc.Models.runtimeconfig.json
 C:\Users\Brendan\Documents\solarmhc\WebScraper\bin\Debug\net6.0\solarmhc.Models.dll

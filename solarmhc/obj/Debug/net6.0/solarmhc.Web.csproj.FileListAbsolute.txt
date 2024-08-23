@@ -305,9 +305,6 @@ C:\Users\Brendan\Documents\solarmhc\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.
 C:\Users\Brendan\Documents\solarmhc\solarmhc\solarmhc\obj\Debug\net6.0\ref\solarmhc.Web.dll
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\appsettings.json
-C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\selenium-manager\linux\selenium-manager
-C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\selenium-manager\macos\selenium-manager
-C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\selenium-manager\windows\selenium-manager.exe
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\solarmhc.Web.staticwebassets.runtime.json
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\solarmhc.Web.exe
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\solarmhc.Web.deps.json
@@ -315,9 +312,6 @@ C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\solarmhc.Web.runti
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\solarmhc.Web.dll
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\solarmhc.Web.pdb
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\Blazor-ApexCharts.dll
-C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\SeleniumExtras.WaitHelpers.dll
-C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\HtmlAgilityPack.dll
-C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\HtmlAgilityPack.CssSelectors.dll
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\Humanizer.dll
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.AspNetCore.Authorization.dll
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.AspNetCore.Components.dll
@@ -351,8 +345,6 @@ C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.JSIntero
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\MudBlazor.dll
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\Newtonsoft.Json.dll
-C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\WebDriver.Support.dll
-C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\WebDriver.dll
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\System.Drawing.Common.dll
@@ -404,3 +396,5 @@ C:\Users\Brendan\Documents\solarmhc\solarmhc\obj\Debug\net6.0\refint\solarmhc.We
 C:\Users\Brendan\Documents\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.Web.pdb
 C:\Users\Brendan\Documents\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.Web.genruntimeconfig.cache
 C:\Users\Brendan\Documents\solarmhc\solarmhc\obj\Debug\net6.0\ref\solarmhc.Web.dll
+C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\MySqlConnector.dll
+C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll

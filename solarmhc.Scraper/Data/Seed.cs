@@ -34,11 +34,11 @@ namespace solarmhc.Scraper.Data
 
             // Seeding for InverterType model
             modelBuilder.Entity<InverterType>().HasData(
-                new InverterType { Id = 1, RatedCapacity = 20000, Location = ELocation.Canopy, Notes = "SolarEdge", ModelId = 2 },
-                new InverterType { Id = 2, RatedCapacity = 24000, Location = ELocation.Canopy, Notes = "Sunny", ModelId = 3 },
-                new InverterType { Id = 3, RatedCapacity = 1000, Location = ELocation.Canopy, Notes = "APS", ModelId = 4 },
-                new InverterType { Id = 4, RatedCapacity = 24000, Location = ELocation.Canopy, Notes = "Huawei", ModelId = 5 },
-                new InverterType { Id = 5, RatedCapacity = 23955, Location = ELocation.Canopy, Notes = "Fronius", ModelId = 6 }
+                new InverterType { Id = 1, RatedCapacity = 20000, Location = ELocation.CarportCanopy, Notes = "SolarEdge", ModelId = 2 },
+                new InverterType { Id = 2, RatedCapacity = 24000, Location = ELocation.CarportCanopy, Notes = "Sunny", ModelId = 3 },
+                new InverterType { Id = 3, RatedCapacity = 1000, Location = ELocation.CarportCanopy, Notes = "APS", ModelId = 4 },
+                new InverterType { Id = 4, RatedCapacity = 24000, Location = ELocation.CarportCanopy, Notes = "Huawei", ModelId = 5 },
+                new InverterType { Id = 5, RatedCapacity = 23955, Location = ELocation.CarportCanopy, Notes = "Fronius", ModelId = 6 }
             );
 
             // Seeding for SolarSegment model

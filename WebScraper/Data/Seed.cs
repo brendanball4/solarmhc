@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using solarmhc.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebScraper.Models;
 
 namespace solarmhc.Models.Data
 {
@@ -34,20 +34,20 @@ namespace solarmhc.Models.Data
 
             // Seeding for InverterType model
             modelBuilder.Entity<InverterType>().HasData(
-                new InverterType { Id = 1, RatedCapacity = 20000, Location = WebScraper.ELocation.Canopy, Notes = "SolarEdge", ModelId = 2 },
-                new InverterType { Id = 2, RatedCapacity = 24000, Location = WebScraper.ELocation.Canopy, Notes = "Sunny", ModelId = 3 },
-                new InverterType { Id = 3, RatedCapacity = 1000, Location = WebScraper.ELocation.Canopy, Notes = "APS", ModelId = 4 },
-                new InverterType { Id = 4, RatedCapacity = 24000, Location = WebScraper.ELocation.Canopy, Notes = "Huawei", ModelId = 5 },
-                new InverterType { Id = 5, RatedCapacity = 23955, Location = WebScraper.ELocation.Canopy, Notes = "Fronius", ModelId = 6 }
+                new InverterType { Id = 1, RatedCapacity = 20000, Location = ELocation.CarportCanopy, Notes = "SolarEdge", ModelId = 2 },
+                new InverterType { Id = 2, RatedCapacity = 24000, Location = ELocation.CarportCanopy, Notes = "Sunny", ModelId = 3 },
+                new InverterType { Id = 3, RatedCapacity = 1000, Location = ELocation.CarportCanopy, Notes = "APS", ModelId = 4 },
+                new InverterType { Id = 4, RatedCapacity = 24000, Location = ELocation.CarportCanopy, Notes = "Huawei", ModelId = 5 },
+                new InverterType { Id = 5, RatedCapacity = 23955, Location = ELocation.CarportCanopy, Notes = "Fronius", ModelId = 6 }
             );
 
             // Seeding for SolarSegment model
             modelBuilder.Entity<SolarSegment>().HasData(
-                new SolarSegment { Id = 1, Name = "SolarEdge", ModelId = 1, InstallationDate = null, Location = WebScraper.ELocation.CarportCanopy, InverterTypeId = 1, RatedCapacity = 385, Notes = "Field Segment 3" },
-                new SolarSegment { Id = 2, Name = "Sunny", ModelId = 1, InstallationDate = null, Location = WebScraper.ELocation.CarportCanopy, InverterTypeId = 2, RatedCapacity = 385, Notes = "Field Segment 4" },
-                new SolarSegment { Id = 3, Name = "APS", ModelId = 1, InstallationDate = null, Location = WebScraper.ELocation.CarportCanopy, InverterTypeId = 3, RatedCapacity = 385, Notes = "Field Segment 2" },
-                new SolarSegment { Id = 4, Name = "Huawei", ModelId = 1, InstallationDate = null, Location = WebScraper.ELocation.CarportCanopy, InverterTypeId = 4, RatedCapacity = 385, Notes = "Field Segment 1" },
-                new SolarSegment { Id = 5, Name = "Fronius", ModelId = 1, InstallationDate = null, Location = WebScraper.ELocation.CarportCanopy, InverterTypeId = 5, RatedCapacity = 385, Notes = "Field Segment 5" }
+                new SolarSegment { Id = 1, Name = "SolarEdge", ModelId = 2, InstallationDate = null, Location = ELocation.CarportCanopy, InverterTypeId = 1, RatedCapacity = 385, Notes = "Field Segment 3" },
+                new SolarSegment { Id = 2, Name = "Sunny", ModelId = 3, InstallationDate = null, Location = ELocation.CarportCanopy, InverterTypeId = 2, RatedCapacity = 385, Notes = "Field Segment 4" },
+                new SolarSegment { Id = 3, Name = "APS", ModelId = 4, InstallationDate = null, Location = ELocation.CarportCanopy, InverterTypeId = 3, RatedCapacity = 385, Notes = "Field Segment 2" },
+                new SolarSegment { Id = 4, Name = "Huawei", ModelId = 5, InstallationDate = null, Location = ELocation.CarportCanopy, InverterTypeId = 4, RatedCapacity = 385, Notes = "Field Segment 1" },
+                new SolarSegment { Id = 5, Name = "Fronius", ModelId = 6, InstallationDate = null, Location = ELocation.CarportCanopy, InverterTypeId = 5, RatedCapacity = 385, Notes = "Field Segment 5" }
             );
         }
     }

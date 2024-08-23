@@ -76,7 +76,7 @@ namespace solarmhc.Scraper
                         case Constants.DataUrls.LoginPages.SolarEdge:
                             _logger.LogInformation($"{dashboardId} Fetch Power Data function started successfully.");
                             await dataWebScraper.FetchPowerDataSolarEdgeAPI();
-                            _logger.LogInformation($"{dashboardId} Fetch Power Data function ended successfully.");
+                            _logger.LogInformation($"{dashboardId} Fetch Power Data function ended.");
                             break;
                         case Constants.DataUrls.LoginPages.Sunny:
                             authSelectors = new AuthSelectors
@@ -95,7 +95,7 @@ namespace solarmhc.Scraper
                             };
                             _logger.LogInformation($"{dashboardId} Fetch Power Data function started successfully.");
                             await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, Constants.DataUrls.DataPages.Sunny, selectors, authSelectors, true, false);
-                            _logger.LogInformation($"{dashboardId} Fetch Power Data function ended successfully.");
+                            _logger.LogInformation($"{dashboardId} Fetch Power Data function ended.");
                             break;
                         case Constants.DataUrls.LoginPages.APS:
                             authSelectors = new AuthSelectors
@@ -114,7 +114,7 @@ namespace solarmhc.Scraper
                             };
                             _logger.LogInformation($"{dashboardId} Fetch Power Data function started successfully.");
                             await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, Constants.DataUrls.DataPages.APSData, selectors, authSelectors, false, false);
-                            _logger.LogInformation($"{dashboardId} Fetch Power Data function ended successfully.");
+                            _logger.LogInformation($"{dashboardId} Fetch Power Data function ended.");
                             break;
                         case Constants.DataUrls.LoginPages.Huawei:
                             authSelectors = new AuthSelectors
@@ -133,7 +133,7 @@ namespace solarmhc.Scraper
                             };
                             _logger.LogInformation($"{dashboardId} Fetch Power Data function started successfully.");
                             await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, Constants.DataUrls.DataPages.Huawei, selectors, authSelectors, false, true);
-                            _logger.LogInformation($"{dashboardId} Fetch Power Data function ended successfully.");
+                            _logger.LogInformation($"{dashboardId} Fetch Power Data function ended.");
                             break;
                         case Constants.DataUrls.LoginPages.Fronius:
                             selectors = new ScrapingSelectors
@@ -143,7 +143,7 @@ namespace solarmhc.Scraper
                             };
                             _logger.LogInformation($"{dashboardId} Fetch Power Data function started successfully.");
                             await dataWebScraper.GenericFetchPowerDataAsync(dataUrl, dashboardId, null, selectors, null, false, false);
-                            _logger.LogInformation($"{dashboardId} Fetch Power Data function ended successfully.");
+                            _logger.LogInformation($"{dashboardId} Fetch Power Data function ended.");
                             break;
                         default:
                             break;

@@ -1,0 +1,26 @@
+services:
+  blazorapp:
+    build: .
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=database;Port=3306;Database=solarmhc;User=Nynx;Password=P@55W0rd1;
+    depends_on:
+      - database
+    expose:
+      - "5000"  # Internal communication
+
+  database:
+    image: mariadb:latest
+    environment:
+      MARIADB_ROOT_PASSWORD: P@55W0rd
+      MARIADB_DATABASE: solarmhc
+      MARIADB_USER: Nynx
+      MARIADB_PASSWORD: P@55W0rd1
+    ports:
+      - "3306:3306"
+    restart: always
+    volumes:
+      - ./db_data:/var/lib/mysql
+
+volumes:
+  db_data:

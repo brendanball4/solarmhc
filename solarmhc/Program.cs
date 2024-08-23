@@ -21,8 +21,6 @@ builder.Services.AddSingleton<Graphing>();
 builder.Services.AddHostedService<WeatherBackgroundService>();
 builder.Services.AddHostedService<DataBackgroundService>();
 
-builder.Services.AddScoped(sp => ChromeDriverFactory.CreateChromeDriver());
-
 builder.Services.AddHttpClient();
 
 // Configure DbContext with the appropriate connection string

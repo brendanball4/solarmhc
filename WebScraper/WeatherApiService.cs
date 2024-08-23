@@ -1,19 +1,7 @@
-﻿using HtmlAgilityPack;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using solarmhc.Models.Models;
-using solarmhc.Models.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 
 namespace solarmhc.Models
 {

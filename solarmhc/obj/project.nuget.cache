@@ -1,13 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "k/+FtAp7U74tkGS5mgfVAhVkHL7GHz7Fcva6TJsBiJxMCBI/BBvB7BR181lE4TXz09qxNWrwgXuD6W7GRhjdhg==",
+  "dgSpecHash": "0VK1v8Ns8Ih3tK47vmp65cJE3IaD2pxKuPUZ4NOQRBMO+4L6ePPOkpa4NBLIkZoprEs2LSSHmbseyz93IhXjhQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Brendan\\Documents\\solarmhc\\solarmhc\\solarmhc.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Brendan\\.nuget\\packages\\blazor-apexcharts\\3.4.0\\blazor-apexcharts.3.4.0.nupkg.sha512",
-    "C:\\Users\\Brendan\\.nuget\\packages\\dotnetseleniumextras.waithelpers\\3.11.0\\dotnetseleniumextras.waithelpers.3.11.0.nupkg.sha512",
-    "C:\\Users\\Brendan\\.nuget\\packages\\htmlagilitypack\\1.11.37\\htmlagilitypack.1.11.37.nupkg.sha512",
-    "C:\\Users\\Brendan\\.nuget\\packages\\htmlagilitypack.cssselectors\\1.0.2\\htmlagilitypack.cssselectors.1.0.2.nupkg.sha512",
     "C:\\Users\\Brendan\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Brendan\\.nuget\\packages\\microsoft.aspnetcore.authorization\\6.0.28\\microsoft.aspnetcore.authorization.6.0.28.nupkg.sha512",
     "C:\\Users\\Brendan\\.nuget\\packages\\microsoft.aspnetcore.components\\6.0.28\\microsoft.aspnetcore.components.6.0.28.nupkg.sha512",
@@ -51,10 +48,9 @@
     "C:\\Users\\Brendan\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\Brendan\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\Brendan\\.nuget\\packages\\mudblazor\\6.20.0\\mudblazor.6.20.0.nupkg.sha512",
+    "C:\\Users\\Brendan\\.nuget\\packages\\mysqlconnector\\2.0.0\\mysqlconnector.2.0.0.nupkg.sha512",
     "C:\\Users\\Brendan\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
-    "C:\\Users\\Brendan\\.nuget\\packages\\selenium.support\\4.21.0\\selenium.support.4.21.0.nupkg.sha512",
-    "C:\\Users\\Brendan\\.nuget\\packages\\selenium.webdriver\\4.21.0\\selenium.webdriver.4.21.0.nupkg.sha512",
-    "C:\\Users\\Brendan\\.nuget\\packages\\selenium.webdriver.chromedriver\\125.0.6422.14100\\selenium.webdriver.chromedriver.125.0.6422.14100.nupkg.sha512",
+    "C:\\Users\\Brendan\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\6.0.0\\pomelo.entityframeworkcore.mysql.6.0.0.nupkg.sha512",
     "C:\\Users\\Brendan\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
     "C:\\Users\\Brendan\\.nuget\\packages\\system.configuration.configurationmanager\\4.7.0\\system.configuration.configurationmanager.4.7.0.nupkg.sha512",
     "C:\\Users\\Brendan\\.nuget\\packages\\system.diagnostics.diagnosticsource\\8.0.0\\system.diagnostics.diagnosticsource.8.0.0.nupkg.sha512",
@@ -71,16 +67,5 @@
     "C:\\Users\\Brendan\\.nuget\\packages\\system.text.encoding.codepages\\4.7.0\\system.text.encoding.codepages.4.7.0.nupkg.sha512",
     "C:\\Users\\Brendan\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'HtmlAgilityPack.CssSelectors 1.0.2' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
-      "libraryId": "HtmlAgilityPack.CssSelectors",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    }
-  ]
+  "logs": []
 }

@@ -51,8 +51,18 @@ namespace solarmhc.Scraper.Services
             // Run login logic for the dashboards not logged in.
             if (!loggedIn)
             {
-                // Navigate to the given URL
-                await Task.Run(() => driver.Navigate().GoToUrl(dataUrl));
+                try
+                {
+                    // Navigate to the given URL
+                    await Task.Run(() => driver.Navigate().GoToUrl(dataUrl));
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"{dashboardId} | {CurrentDateTime()}: There was an error loading the page. Error = {ex}");
+                    // Mark system as offline
+                    SubmitPowerIntakeData(dashboardId, 0, 0, false);
+                    return;
+                }
 
                 // Confirm the driver is on the correct page
                 CheckCurrentPage(dashboardId, driver, dataUrl, out bool correctPage);

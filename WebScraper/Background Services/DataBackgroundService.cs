@@ -2,16 +2,14 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using OpenQA.Selenium.DevTools.V123.Network;
 using solarmhc.Models.Data;
+using solarmhc.Models.Models;
 using solarmhc.Models.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebScraper;
-using WebScraper.Models;
 
 namespace solarmhc.Models.Background_Services
 {

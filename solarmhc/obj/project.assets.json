@@ -25,53 +25,6 @@
           "buildMultiTargeting/Blazor-ApexCharts.props": {}
         }
       },
-      "DotNetSeleniumExtras.WaitHelpers/3.11.0": {
-        "type": "package",
-        "dependencies": {
-          "Selenium.WebDriver": "3.10.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/SeleniumExtras.WaitHelpers.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/SeleniumExtras.WaitHelpers.dll": {}
-        }
-      },
-      "HtmlAgilityPack/1.11.37": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/HtmlAgilityPack.dll": {
-            "related": ".deps.json;.pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/HtmlAgilityPack.dll": {
-            "related": ".deps.json;.pdb;.xml"
-          }
-        }
-      },
-      "HtmlAgilityPack.CssSelectors/1.0.2": {
-        "type": "package",
-        "dependencies": {
-          "HtmlAgilityPack": "1.4.9"
-        },
-        "compile": {
-          "lib/net45/HtmlAgilityPack.CssSelectors.dll": {
-            "related": ".pdb"
-          },
-          "lib/net45/HtmlAgilityPack.dll": {
-            "related": ".CssSelectors.pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net45/HtmlAgilityPack.CssSelectors.dll": {
-            "related": ".pdb"
-          },
-          "lib/net45/HtmlAgilityPack.dll": {
-            "related": ".CssSelectors.pdb;.xml"
-          }
-        }
-      },
       "Humanizer.Core/2.8.26": {
         "type": "package",
         "compile": {
@@ -810,6 +763,19 @@
           "buildMultiTargeting/MudBlazor.props": {}
         }
       },
+      "MySqlConnector/2.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/MySqlConnector.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/MySqlConnector.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Newtonsoft.Json/13.0.1": {
         "type": "package",
         "compile": {
@@ -823,45 +789,22 @@
           }
         }
       },
-      "Selenium.Support/4.21.0": {
+      "Pomelo.EntityFrameworkCore.MySql/6.0.0": {
         "type": "package",
         "dependencies": {
-          "Selenium.WebDriver": "4.21.0"
+          "Microsoft.EntityFrameworkCore.Relational": "[6.0.0, 7.0.0)",
+          "Microsoft.Extensions.DependencyInjection": "6.0.0",
+          "MySqlConnector": "2.0.0"
         },
         "compile": {
-          "lib/netstandard2.0/WebDriver.Support.dll": {
+          "lib/net6.0/Pomelo.EntityFrameworkCore.MySql.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/netstandard2.0/WebDriver.Support.dll": {
+          "lib/net6.0/Pomelo.EntityFrameworkCore.MySql.dll": {
             "related": ".xml"
           }
-        }
-      },
-      "Selenium.WebDriver/4.21.0": {
-        "type": "package",
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.1"
-        },
-        "compile": {
-          "lib/netstandard2.0/WebDriver.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/WebDriver.dll": {
-            "related": ".xml"
-          }
-        },
-        "build": {
-          "buildTransitive/Selenium.WebDriver.targets": {}
-        }
-      },
-      "Selenium.WebDriver.ChromeDriver/125.0.6422.14100": {
-        "type": "package",
-        "build": {
-          "build/_._": {}
         }
       },
       "System.Collections.Immutable/6.0.0": {
@@ -1162,15 +1105,11 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "DotNetSeleniumExtras.WaitHelpers": "3.11.0",
-          "HtmlAgilityPack": "1.11.37",
-          "HtmlAgilityPack.CssSelectors": "1.0.2",
           "Microsoft.EntityFrameworkCore": "6.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.0",
           "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
-          "Selenium.Support": "4.21.0",
-          "Selenium.WebDriver": "4.21.0",
-          "Selenium.WebDriver.ChromeDriver": "125.0.6422.14100"
+          "Newtonsoft.Json": "13.0.1",
+          "Pomelo.EntityFrameworkCore.MySql": "6.0.0"
         },
         "compile": {
           "bin/placeholder/solarmhc.Models.dll": {}
@@ -1207,84 +1146,6 @@
         "staticwebassets/css/apexcharts.css",
         "staticwebassets/js/apexcharts.esm.js",
         "staticwebassets/js/blazor-apexcharts.js"
-      ]
-    },
-    "DotNetSeleniumExtras.WaitHelpers/3.11.0": {
-      "sha512": "xc6jVVl5ymgk3ZNWnC/KHxkEup1QpnwYbrwF+NQoCOGERsD8YMlLwmsX4lGhLXCLo/YQTRTIwlKCN9E/doGUNg==",
-      "type": "package",
-      "path": "dotnetseleniumextras.waithelpers/3.11.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "dotnetseleniumextras.waithelpers.3.11.0.nupkg.sha512",
-        "dotnetseleniumextras.waithelpers.nuspec",
-        "lib/net35/SeleniumExtras.WaitHelpers.dll",
-        "lib/net40/SeleniumExtras.WaitHelpers.dll",
-        "lib/net45/SeleniumExtras.WaitHelpers.dll",
-        "lib/netstandard2.0/SeleniumExtras.WaitHelpers.dll"
-      ]
-    },
-    "HtmlAgilityPack/1.11.37": {
-      "sha512": "HioktZJuMHVW7QTwVayHDoBL8dPL68vGRLFdQXYNuSJkVfhxn6xihcocUgbR+B1Lm/YesigUvWrdH0JY+PZ+0g==",
-      "type": "package",
-      "path": "htmlagilitypack/1.11.37",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "htmlagilitypack.1.11.37.nupkg.sha512",
-        "htmlagilitypack.nuspec",
-        "lib/Net35/HtmlAgilityPack.dll",
-        "lib/Net35/HtmlAgilityPack.pdb",
-        "lib/Net35/HtmlAgilityPack.xml",
-        "lib/Net40-client/HtmlAgilityPack.dll",
-        "lib/Net40-client/HtmlAgilityPack.pdb",
-        "lib/Net40-client/HtmlAgilityPack.xml",
-        "lib/Net40/HtmlAgilityPack.XML",
-        "lib/Net40/HtmlAgilityPack.dll",
-        "lib/Net40/HtmlAgilityPack.pdb",
-        "lib/Net45/HtmlAgilityPack.XML",
-        "lib/Net45/HtmlAgilityPack.dll",
-        "lib/Net45/HtmlAgilityPack.pdb",
-        "lib/NetCore45/HtmlAgilityPack.XML",
-        "lib/NetCore45/HtmlAgilityPack.dll",
-        "lib/NetCore45/HtmlAgilityPack.pdb",
-        "lib/netstandard1.3/HtmlAgilityPack.deps.json",
-        "lib/netstandard1.3/HtmlAgilityPack.dll",
-        "lib/netstandard1.3/HtmlAgilityPack.pdb",
-        "lib/netstandard1.3/HtmlAgilityPack.xml",
-        "lib/netstandard1.6/HtmlAgilityPack.deps.json",
-        "lib/netstandard1.6/HtmlAgilityPack.dll",
-        "lib/netstandard1.6/HtmlAgilityPack.pdb",
-        "lib/netstandard1.6/HtmlAgilityPack.xml",
-        "lib/netstandard2.0/HtmlAgilityPack.deps.json",
-        "lib/netstandard2.0/HtmlAgilityPack.dll",
-        "lib/netstandard2.0/HtmlAgilityPack.pdb",
-        "lib/netstandard2.0/HtmlAgilityPack.xml",
-        "lib/portable-net45+netcore45+wp8+MonoAndroid+MonoTouch/HtmlAgilityPack.XML",
-        "lib/portable-net45+netcore45+wp8+MonoAndroid+MonoTouch/HtmlAgilityPack.dll",
-        "lib/portable-net45+netcore45+wp8+MonoAndroid+MonoTouch/HtmlAgilityPack.pdb",
-        "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch/HtmlAgilityPack.XML",
-        "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch/HtmlAgilityPack.dll",
-        "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch/HtmlAgilityPack.pdb",
-        "lib/uap10.0/HtmlAgilityPack.XML",
-        "lib/uap10.0/HtmlAgilityPack.dll",
-        "lib/uap10.0/HtmlAgilityPack.pdb",
-        "lib/uap10.0/HtmlAgilityPack.pri"
-      ]
-    },
-    "HtmlAgilityPack.CssSelectors/1.0.2": {
-      "sha512": "bB4FeVvcNROENPWQfFSmPQ6q99jGk8ru5QoBB3qnEeaP451fjnqQ0uPuMgmWHAOZIXUAoOQozv/5fEEVSDyIzA==",
-      "type": "package",
-      "path": "htmlagilitypack.cssselectors/1.0.2",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "htmlagilitypack.cssselectors.1.0.2.nupkg.sha512",
-        "htmlagilitypack.cssselectors.nuspec",
-        "lib/net45/HtmlAgilityPack.CssSelectors.dll",
-        "lib/net45/HtmlAgilityPack.CssSelectors.pdb",
-        "lib/net45/HtmlAgilityPack.dll",
-        "lib/net45/HtmlAgilityPack.xml"
       ]
     },
     "Humanizer.Core/2.8.26": {
@@ -2436,6 +2297,35 @@
         "staticwebassets/MudBlazor.min.js"
       ]
     },
+    "MySqlConnector/2.0.0": {
+      "sha512": "EY0KXqQas+QvdZQU0NPkqBSfJitWAl8IUCg0v/Qn0P7f/KApJTFJFm8czYWoDPyewUjPHrAnE/cSYzzSFGc8Ng==",
+      "type": "package",
+      "path": "mysqlconnector/2.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net45/MySqlConnector.dll",
+        "lib/net45/MySqlConnector.xml",
+        "lib/net461/MySqlConnector.dll",
+        "lib/net461/MySqlConnector.xml",
+        "lib/net471/MySqlConnector.dll",
+        "lib/net471/MySqlConnector.xml",
+        "lib/net5.0/MySqlConnector.dll",
+        "lib/net5.0/MySqlConnector.xml",
+        "lib/net6.0/MySqlConnector.dll",
+        "lib/net6.0/MySqlConnector.xml",
+        "lib/netcoreapp3.1/MySqlConnector.dll",
+        "lib/netcoreapp3.1/MySqlConnector.xml",
+        "lib/netstandard2.0/MySqlConnector.dll",
+        "lib/netstandard2.0/MySqlConnector.xml",
+        "lib/netstandard2.1/MySqlConnector.dll",
+        "lib/netstandard2.1/MySqlConnector.xml",
+        "logo.png",
+        "mysqlconnector.2.0.0.nupkg.sha512",
+        "mysqlconnector.nuspec"
+      ]
+    },
     "Newtonsoft.Json/13.0.1": {
       "sha512": "ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
       "type": "package",
@@ -2463,62 +2353,18 @@
         "packageIcon.png"
       ]
     },
-    "Selenium.Support/4.21.0": {
-      "sha512": "MiDIsB/5Ki1AWua/b9v/eGARtI6bxseAt4EOl2fgl7WsoXlV7Zzq5/gGJ7Zs9PLvJUQMbS6WSNWuMdeSr1SXdA==",
+    "Pomelo.EntityFrameworkCore.MySql/6.0.0": {
+      "sha512": "iWloXFjpN6BllZA9oPqZTW9mNtFV5Q6DFv0WwFyh1IuOJ71btS3ifTwpLmaFXSlXzuEU9o7Rul0dU0WiwkOq0Q==",
       "type": "package",
-      "path": "selenium.support/4.21.0",
+      "path": "pomelo.entityframeworkcore.mysql/6.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "icon.png",
-        "lib/netstandard2.0/WebDriver.Support.dll",
-        "lib/netstandard2.0/WebDriver.Support.xml",
-        "selenium.support.4.21.0.nupkg.sha512",
-        "selenium.support.nuspec"
-      ]
-    },
-    "Selenium.WebDriver/4.21.0": {
-      "sha512": "3xIx4CJunIoLEOROfDKILIzf76WfphTpQJYE98stG1GBVBKhFO5E6wXNfCqdiWt34iNlckcDr3z+qCD+RPfuUQ==",
-      "type": "package",
-      "path": "selenium.webdriver/4.21.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "README.md",
-        "build/Selenium.WebDriver.targets",
-        "buildTransitive/Selenium.WebDriver.targets",
-        "icon.png",
-        "lib/netstandard2.0/WebDriver.dll",
-        "lib/netstandard2.0/WebDriver.xml",
-        "manager/linux/selenium-manager",
-        "manager/macos/selenium-manager",
-        "manager/windows/selenium-manager.exe",
-        "selenium.webdriver.4.21.0.nupkg.sha512",
-        "selenium.webdriver.nuspec"
-      ]
-    },
-    "Selenium.WebDriver.ChromeDriver/125.0.6422.14100": {
-      "sha512": "se5xpD77XKBb3i+YUieBUORi1W7RZ2EfggyVxCGfWaJpw7gPWh1vwGnUZ2cq4ggr5shDelUrpgH0LSzh9Lbstg==",
-      "type": "package",
-      "path": "selenium.webdriver.chromedriver/125.0.6422.14100",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "LICENSE",
-        "README.md",
-        "build/DefinePropertiesChromeDriver.targets",
-        "build/Selenium.WebDriver.ChromeDriver.targets",
-        "driver/linux64/LICENSE.chromedriver",
-        "driver/linux64/chromedriver",
-        "driver/mac64/LICENSE.chromedriver",
-        "driver/mac64/chromedriver",
-        "driver/mac64arm/LICENSE.chromedriver",
-        "driver/mac64arm/chromedriver",
-        "driver/win32/LICENSE.chromedriver",
-        "driver/win32/chromedriver.exe",
-        "nupkg-icon.png",
-        "selenium.webdriver.chromedriver.125.0.6422.14100.nupkg.sha512",
-        "selenium.webdriver.chromedriver.nuspec"
+        "lib/net6.0/Pomelo.EntityFrameworkCore.MySql.dll",
+        "lib/net6.0/Pomelo.EntityFrameworkCore.MySql.xml",
+        "pomelo.entityframeworkcore.mysql.6.0.0.nupkg.sha512",
+        "pomelo.entityframeworkcore.mysql.nuspec"
       ]
     },
     "System.Collections.Immutable/6.0.0": {
@@ -3043,13 +2889,12 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "Blazor-ApexCharts >= 3.4.0",
-      "HtmlAgilityPack >= 1.11.37",
-      "HtmlAgilityPack.CssSelectors >= 1.0.2",
       "Microsoft.EntityFrameworkCore >= 6.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.0",
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.18.1",
       "MudBlazor >= 6.20.0",
+      "Pomelo.EntityFrameworkCore.MySql >= 6.0.0",
       "solarmhc.Models >= 1.0.0"
     ]
   },
@@ -3106,14 +2951,6 @@
             "target": "Package",
             "version": "[3.4.0, )"
           },
-          "HtmlAgilityPack": {
-            "target": "Package",
-            "version": "[1.11.37, )"
-          },
-          "HtmlAgilityPack.CssSelectors": {
-            "target": "Package",
-            "version": "[1.0.2, )"
-          },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
             "version": "[6.0.0, )"
@@ -3135,6 +2972,10 @@
           "MudBlazor": {
             "target": "Package",
             "version": "[6.20.0, )"
+          },
+          "Pomelo.EntityFrameworkCore.MySql": {
+            "target": "Package",
+            "version": "[6.0.0, )"
           }
         },
         "imports": [
@@ -3159,17 +3000,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'HtmlAgilityPack.CssSelectors 1.0.2' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
-      "libraryId": "HtmlAgilityPack.CssSelectors",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    }
-  ]
+  }
 }

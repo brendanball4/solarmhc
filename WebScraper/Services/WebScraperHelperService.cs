@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +11,10 @@ namespace solarmhc.Models.Services
     public class WebScraperHelperService
     {
         private readonly ILogger<WebScraperHelperService> _logger;
-        private readonly IServiceProvider _serviceProvider;
 
-        public WebScraperHelperService(ILogger<WebScraperHelperService> logger, IServiceProvider serviceProvider)
+        public WebScraperHelperService(ILogger<WebScraperHelperService> logger)
         {
             _logger = logger;
-            _serviceProvider = serviceProvider;
         }
 
         public bool TryParseData(string data, out decimal currentWattage)

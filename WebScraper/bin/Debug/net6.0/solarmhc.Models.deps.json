@@ -8,49 +8,15 @@
     ".NETCoreApp,Version=v6.0": {
       "solarmhc.Models/1.0.0": {
         "dependencies": {
-          "DotNetSeleniumExtras.WaitHelpers": "3.11.0",
-          "HtmlAgilityPack": "1.11.37",
-          "HtmlAgilityPack.CssSelectors": "1.0.2",
           "Microsoft.EntityFrameworkCore": "6.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.0",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.0",
           "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
-          "Selenium.Support": "4.21.0",
-          "Selenium.WebDriver": "4.21.0",
-          "Selenium.WebDriver.ChromeDriver": "125.0.6422.14100"
+          "Newtonsoft.Json": "13.0.1",
+          "Pomelo.EntityFrameworkCore.MySql": "6.0.0"
         },
         "runtime": {
           "solarmhc.Models.dll": {}
-        }
-      },
-      "DotNetSeleniumExtras.WaitHelpers/3.11.0": {
-        "dependencies": {
-          "Selenium.WebDriver": "4.21.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/SeleniumExtras.WaitHelpers.dll": {
-            "assemblyVersion": "3.11.0.0",
-            "fileVersion": "3.11.0.0"
-          }
-        }
-      },
-      "HtmlAgilityPack/1.11.37": {
-        "runtime": {
-          "lib/netstandard2.0/HtmlAgilityPack.dll": {
-            "assemblyVersion": "1.11.37.0",
-            "fileVersion": "1.11.37.0"
-          }
-        }
-      },
-      "HtmlAgilityPack.CssSelectors/1.0.2": {
-        "dependencies": {
-          "HtmlAgilityPack": "1.11.37"
-        },
-        "runtime": {
-          "lib/net45/HtmlAgilityPack.CssSelectors.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
         }
       },
       "Humanizer.Core/2.8.26": {
@@ -422,6 +388,14 @@
           }
         }
       },
+      "MySqlConnector/2.0.0": {
+        "runtime": {
+          "lib/net6.0/MySqlConnector.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        }
+      },
       "Newtonsoft.Json/13.0.1": {
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {
@@ -430,29 +404,19 @@
           }
         }
       },
-      "Selenium.Support/4.21.0": {
+      "Pomelo.EntityFrameworkCore.MySql/6.0.0": {
         "dependencies": {
-          "Selenium.WebDriver": "4.21.0"
+          "Microsoft.EntityFrameworkCore.Relational": "6.0.0",
+          "Microsoft.Extensions.DependencyInjection": "6.0.0",
+          "MySqlConnector": "2.0.0"
         },
         "runtime": {
-          "lib/netstandard2.0/WebDriver.Support.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.0.0"
+          "lib/net6.0/Pomelo.EntityFrameworkCore.MySql.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.0.0"
           }
         }
       },
-      "Selenium.WebDriver/4.21.0": {
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.1"
-        },
-        "runtime": {
-          "lib/netstandard2.0/WebDriver.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.0.0"
-          }
-        }
-      },
-      "Selenium.WebDriver.ChromeDriver/125.0.6422.14100": {},
       "System.Collections.Immutable/6.0.0": {
         "dependencies": {
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
@@ -606,27 +570,6 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
-    },
-    "DotNetSeleniumExtras.WaitHelpers/3.11.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-xc6jVVl5ymgk3ZNWnC/KHxkEup1QpnwYbrwF+NQoCOGERsD8YMlLwmsX4lGhLXCLo/YQTRTIwlKCN9E/doGUNg==",
-      "path": "dotnetseleniumextras.waithelpers/3.11.0",
-      "hashPath": "dotnetseleniumextras.waithelpers.3.11.0.nupkg.sha512"
-    },
-    "HtmlAgilityPack/1.11.37": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-HioktZJuMHVW7QTwVayHDoBL8dPL68vGRLFdQXYNuSJkVfhxn6xihcocUgbR+B1Lm/YesigUvWrdH0JY+PZ+0g==",
-      "path": "htmlagilitypack/1.11.37",
-      "hashPath": "htmlagilitypack.1.11.37.nupkg.sha512"
-    },
-    "HtmlAgilityPack.CssSelectors/1.0.2": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-bB4FeVvcNROENPWQfFSmPQ6q99jGk8ru5QoBB3qnEeaP451fjnqQ0uPuMgmWHAOZIXUAoOQozv/5fEEVSDyIzA==",
-      "path": "htmlagilitypack.cssselectors/1.0.2",
-      "hashPath": "htmlagilitypack.cssselectors.1.0.2.nupkg.sha512"
     },
     "Humanizer.Core/2.8.26": {
       "type": "package",
@@ -852,6 +795,13 @@
       "path": "microsoft.win32.systemevents/4.7.0",
       "hashPath": "microsoft.win32.systemevents.4.7.0.nupkg.sha512"
     },
+    "MySqlConnector/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-EY0KXqQas+QvdZQU0NPkqBSfJitWAl8IUCg0v/Qn0P7f/KApJTFJFm8czYWoDPyewUjPHrAnE/cSYzzSFGc8Ng==",
+      "path": "mysqlconnector/2.0.0",
+      "hashPath": "mysqlconnector.2.0.0.nupkg.sha512"
+    },
     "Newtonsoft.Json/13.0.1": {
       "type": "package",
       "serviceable": true,
@@ -859,26 +809,12 @@
       "path": "newtonsoft.json/13.0.1",
       "hashPath": "newtonsoft.json.13.0.1.nupkg.sha512"
     },
-    "Selenium.Support/4.21.0": {
+    "Pomelo.EntityFrameworkCore.MySql/6.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-MiDIsB/5Ki1AWua/b9v/eGARtI6bxseAt4EOl2fgl7WsoXlV7Zzq5/gGJ7Zs9PLvJUQMbS6WSNWuMdeSr1SXdA==",
-      "path": "selenium.support/4.21.0",
-      "hashPath": "selenium.support.4.21.0.nupkg.sha512"
-    },
-    "Selenium.WebDriver/4.21.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-3xIx4CJunIoLEOROfDKILIzf76WfphTpQJYE98stG1GBVBKhFO5E6wXNfCqdiWt34iNlckcDr3z+qCD+RPfuUQ==",
-      "path": "selenium.webdriver/4.21.0",
-      "hashPath": "selenium.webdriver.4.21.0.nupkg.sha512"
-    },
-    "Selenium.WebDriver.ChromeDriver/125.0.6422.14100": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-se5xpD77XKBb3i+YUieBUORi1W7RZ2EfggyVxCGfWaJpw7gPWh1vwGnUZ2cq4ggr5shDelUrpgH0LSzh9Lbstg==",
-      "path": "selenium.webdriver.chromedriver/125.0.6422.14100",
-      "hashPath": "selenium.webdriver.chromedriver.125.0.6422.14100.nupkg.sha512"
+      "sha512": "sha512-iWloXFjpN6BllZA9oPqZTW9mNtFV5Q6DFv0WwFyh1IuOJ71btS3ifTwpLmaFXSlXzuEU9o7Rul0dU0WiwkOq0Q==",
+      "path": "pomelo.entityframeworkcore.mysql/6.0.0",
+      "hashPath": "pomelo.entityframeworkcore.mysql.6.0.0.nupkg.sha512"
     },
     "System.Collections.Immutable/6.0.0": {
       "type": "package",

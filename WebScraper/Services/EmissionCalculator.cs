@@ -1,16 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using OpenQA.Selenium.DevTools.V123.Animation;
-using OpenQA.Selenium.DevTools.V123.Runtime;
-using OpenQA.Selenium.Internal.Logging;
 using solarmhc.Models.Data;
+using solarmhc.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebScraper.Models;
 
 namespace solarmhc.Models.Services
 {
