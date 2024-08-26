@@ -44,6 +44,7 @@ namespace solarmhc.Models.Services
                         Date = x.TimeStamp,
                         Intake = x.KW
                     })
+                    .OrderByDescending(x => x.Date)
                     .ToListAsync();
 
                 return pData;

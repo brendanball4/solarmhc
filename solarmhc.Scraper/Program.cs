@@ -12,7 +12,7 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
         services.AddDbContext<SolarMHCDbContext>(options =>
-            options.UseMySql(context.Configuration.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect(context.Configuration.GetConnectionString("DefaultConnection"))));
+            options.UseSqlServer(context.Configuration.GetConnectionString("DefaultConnection")));
 
         services.AddHostedService<Worker>();
         services.AddSingleton<ChromeDriverManager>();

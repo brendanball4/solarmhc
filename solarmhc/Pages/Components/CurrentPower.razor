@@ -15,20 +15,28 @@
     @if (liveDataService.GetStatus(DashboardName))
     {
         <ApexChart TItem="DataItem" Options="chartOptions" @ref="chart">
-            <ApexPointSeries TItem="DataItem" Items="data" SeriesType="SeriesType.RadialBar" Name="Intake"
+            <ApexPointSeries TItem="DataItem" Items="data" SeriesType="SeriesType.RadialBar" Name="Power"
                              XValue="@(item => item.Label)"
                              YValue="@(item => item.Value)">
             </ApexPointSeries>
         </ApexChart>
 
-        <div class="pb-3">
-            <MudText Align="MudBlazor.Align.Center">@liveDataService.GetCurrentPower(DashboardName).currentWattage.ToString("F1") kWh / @Capacity kWh</MudText>
-        </div>
+        @if (DashboardName == Constants.Names.Total)
+        {
+            <div class="pb-3">
+                <MudText Typo="Typo.h5" Align="MudBlazor.Align.Center">@liveDataService.GetCurrentPower(DashboardName).currentWattage.ToString("F1") kWh / @Capacity kWh</MudText>
+            </div>
+        } else
+        {
+            <div class="pb-3">
+                <MudText Typo="Typo.h6" Align="MudBlazor.Align.Center">@liveDataService.GetCurrentPower(DashboardName).currentWattage.ToString("F1") kWh / @Capacity kWh</MudText>
+            </div>
+        }
     }
     else
     {
         <ApexChart TItem="DataItem" Options="offlineChartOptions" @ref="chart">
-            <ApexPointSeries TItem="DataItem" Items="data" SeriesType="SeriesType.RadialBar" Name="Intake"
+            <ApexPointSeries TItem="DataItem" Items="data" SeriesType="SeriesType.RadialBar" Name="Power"
                              XValue="@(item => item.Label)"
                              YValue="@(item => item.Value)">
             </ApexPointSeries>
@@ -249,7 +257,7 @@
         {
             data = new List<DataItem>
             {
-                new DataItem { Label = "Intake", Value = (decimal)currentPower.utilizationPercentage },
+                new DataItem { Label = "Power", Value = (decimal)currentPower.utilizationPercentage },
             };
         }
         else

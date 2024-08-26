@@ -59,6 +59,7 @@ namespace solarmhc.Scraper.Services
                 catch (Exception ex)
                 {
                     _logger.LogError($"{dashboardId} | {CurrentDateTime()}: There was an error loading the page. Error = {ex}");
+                    _logger.LogError($"{dashboardId} | {CurrentDateTime()}: Currently having issues loading the page. The failing sserystem may be offline.");
                     // Mark system as offline
                     SubmitPowerIntakeData(dashboardId, 0, 0, false);
                     return;
@@ -70,7 +71,7 @@ namespace solarmhc.Scraper.Services
                 if (!correctPage)
                 {
                     // Let system know that the driver is NOT on the login page.
-                    _logger.LogInformation("Driver is currenty on the wrong page.");
+                    _logger.LogInformation($"{dashboardId} | {CurrentDateTime()}: Driver is currenty on the wrong page.");
 
                     for (int i = 0; i < maxAttempts; i++)
                     {

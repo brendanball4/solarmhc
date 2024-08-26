@@ -27,7 +27,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 // Configure the DbContext with MySQL connection
 builder.Services.AddDbContext<SolarMHCDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+    options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 

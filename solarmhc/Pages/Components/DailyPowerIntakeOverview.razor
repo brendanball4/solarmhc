@@ -9,7 +9,7 @@
     <MudCardContent Style="height: 91%;">
         <MudSwitch @bind-Checked="showAverageData" ValueChanged="ToggleDataDisplay" Label="Show Average Data" T="bool" />
 
-        <ApexChart TItem="PowerData" @ref="chart" Title="Daily Power Intake (kW)" Options="options" Width="@("100%")" Height="@("100%")">
+        <ApexChart TItem="PowerData" @ref="chart" Title="Daily Power (kW)" Options="options" Width="@("100%")" Height="@("100%")">
         </ApexChart>
     </MudCardContent>
 </MudCard>

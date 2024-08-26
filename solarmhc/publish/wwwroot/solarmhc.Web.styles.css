@@ -1,0 +1,339 @@
+/* _content/solarmhc.Web/Shared/AdminLayout.razor.rz.scp.css */
+.page[b-56020rh5g1] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+main[b-56020rh5g1] {
+    flex: 1;
+}
+
+.sidebar[b-56020rh5g1] {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+
+.top-row[b-56020rh5g1] {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+    .top-row[b-56020rh5g1]  a, .top-row .btn-link[b-56020rh5g1] {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+    }
+
+    .top-row a:first-child[b-56020rh5g1] {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+@media (max-width: 640.98px) {
+    .top-row:not(.auth)[b-56020rh5g1] {
+        display: none;
+    }
+
+    .top-row.auth[b-56020rh5g1] {
+        justify-content: space-between;
+    }
+
+    .top-row a[b-56020rh5g1], .top-row .btn-link[b-56020rh5g1] {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 641px) {
+    .page[b-56020rh5g1] {
+        flex-direction: row;
+    }
+
+    .sidebar[b-56020rh5g1] {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row[b-56020rh5g1] {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .top-row[b-56020rh5g1], article[b-56020rh5g1] {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}
+/* _content/solarmhc.Web/Shared/AdminNavMenu.razor.rz.scp.css */
+.navbar-toggler[b-oxt3zkqgg7] {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.top-row[b-oxt3zkqgg7] {
+    height: 3.5rem;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.navbar-brand[b-oxt3zkqgg7] {
+    font-size: 1.1rem;
+}
+
+.oi[b-oxt3zkqgg7] {
+    width: 2rem;
+    font-size: 1.1rem;
+    vertical-align: text-top;
+    top: -2px;
+}
+
+.nav-item[b-oxt3zkqgg7] {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+    .nav-item:first-of-type[b-oxt3zkqgg7] {
+        padding-top: 1rem;
+    }
+
+    .nav-item:last-of-type[b-oxt3zkqgg7] {
+        padding-bottom: 1rem;
+    }
+
+    .nav-item[b-oxt3zkqgg7]  a {
+        color: #d7d7d7;
+        border-radius: 4px;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        line-height: 3rem;
+    }
+
+.nav-item[b-oxt3zkqgg7]  a.active {
+    background-color: rgba(255,255,255,0.25);
+    color: white;
+}
+
+.nav-item[b-oxt3zkqgg7]  a:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+@media (min-width: 641px) {
+    .navbar-toggler[b-oxt3zkqgg7] {
+        display: none;
+    }
+
+    .collapse[b-oxt3zkqgg7] {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
+}
+/* _content/solarmhc.Web/Shared/MainLayout.razor.rz.scp.css */
+.page[b-8r9ui67mun] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+main[b-8r9ui67mun] {
+    flex: 1;
+}
+
+.sidebar[b-8r9ui67mun] {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+
+.top-row[b-8r9ui67mun] {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+    .top-row[b-8r9ui67mun]  a, .top-row .btn-link[b-8r9ui67mun] {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+    }
+
+    .top-row a:first-child[b-8r9ui67mun] {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+@media (max-width: 640.98px) {
+    .top-row:not(.auth)[b-8r9ui67mun] {
+        display: none;
+    }
+
+    .top-row.auth[b-8r9ui67mun] {
+        justify-content: space-between;
+    }
+
+    .top-row a[b-8r9ui67mun], .top-row .btn-link[b-8r9ui67mun] {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 641px) {
+    .page[b-8r9ui67mun] {
+        flex-direction: row;
+    }
+
+    .sidebar[b-8r9ui67mun] {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row[b-8r9ui67mun] {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .top-row[b-8r9ui67mun], article[b-8r9ui67mun] {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}
+/* _content/solarmhc.Web/Shared/NavMenu.razor.rz.scp.css */
+.navbar-toggler[b-mz9aynqmnn] {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.top-row[b-mz9aynqmnn] {
+    height: 3.5rem;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.navbar-brand[b-mz9aynqmnn] {
+    font-size: 1.1rem;
+}
+
+.oi[b-mz9aynqmnn] {
+    width: 2rem;
+    font-size: 1.1rem;
+    vertical-align: text-top;
+    top: -2px;
+}
+
+.nav-item[b-mz9aynqmnn] {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+    .nav-item:first-of-type[b-mz9aynqmnn] {
+        padding-top: 1rem;
+    }
+
+    .nav-item:last-of-type[b-mz9aynqmnn] {
+        padding-bottom: 1rem;
+    }
+
+    .nav-item[b-mz9aynqmnn]  a {
+        color: #d7d7d7;
+        border-radius: 4px;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        line-height: 3rem;
+    }
+
+.nav-item[b-mz9aynqmnn]  a.active {
+    background-color: rgba(255,255,255,0.25);
+    color: white;
+}
+
+.nav-item[b-mz9aynqmnn]  a:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+@media (min-width: 641px) {
+    .navbar-toggler[b-mz9aynqmnn] {
+        display: none;
+    }
+
+    .collapse[b-mz9aynqmnn] {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
+}
+/* _content/solarmhc.Web/Shared/OverviewLayout.razor.rz.scp.css */
+.page[b-bmdpupisk5] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+main[b-bmdpupisk5] {
+    flex: 1;
+}
+
+.sidebar[b-bmdpupisk5] {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+
+.top-row[b-bmdpupisk5] {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+    .top-row[b-bmdpupisk5]  a, .top-row .btn-link[b-bmdpupisk5] {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+    }
+
+    .top-row a:first-child[b-bmdpupisk5] {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+@media (max-width: 640.98px) {
+    .top-row:not(.auth)[b-bmdpupisk5] {
+        display: none;
+    }
+
+    .top-row.auth[b-bmdpupisk5] {
+        justify-content: space-between;
+    }
+
+    .top-row a[b-bmdpupisk5], .top-row .btn-link[b-bmdpupisk5] {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 641px) {
+    .page[b-bmdpupisk5] {
+        flex-direction: row;
+    }
+
+    .sidebar[b-bmdpupisk5] {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row[b-bmdpupisk5] {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .top-row[b-bmdpupisk5], article[b-bmdpupisk5] {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}

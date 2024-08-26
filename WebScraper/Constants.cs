@@ -16,7 +16,7 @@ namespace solarmhc.Models
             public const string APS = "APS";
             public const string Huawei = "Huawei";
             public const string Fronius = "Fronius";
-            public const string Total = "Total Intake";
+            public const string Total = "Total Power";
         }
 
         public static class EnvironmentVars
