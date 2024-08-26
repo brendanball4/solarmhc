@@ -1,26 +1,35 @@
+networks:
+  my_network:
+
 services:
   blazorapp:
     build: .
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=database;Port=3306;Database=solarmhc;User=Nynx;Password=P@55W0rd1;
+      - ConnectionStrings__DefaultConnection=Server=database;Database=solarmhc;User=root;Password=123456;
+      - WEATHER_API=${WEATHER_API}
     depends_on:
-      - database
-    expose:
-      - "5000"  # Internal communication
+      database:
+        condition: service_healthy
+    ports:
+      - 80:80
+    networks:
+      - my_network
+    restart: always
 
   database:
     image: mariadb:latest
     environment:
-      MARIADB_ROOT_PASSWORD: P@55W0rd
+      MARIADB_ROOT_PASSWORD: 123456
       MARIADB_DATABASE: solarmhc
-      MARIADB_USER: Nynx
-      MARIADB_PASSWORD: P@55W0rd1
     ports:
       - "3306:3306"
-    restart: always
     volumes:
       - ./db_data:/var/lib/mysql
-
-volumes:
-  db_data:
+    networks:
+      - my_network
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p123456 || exit 1"]
+      interval: 10s
+      retries: 5

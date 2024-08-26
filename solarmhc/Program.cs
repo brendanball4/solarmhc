@@ -23,7 +23,7 @@ builder.Services.AddHostedService<DataBackgroundService>();
 
 builder.Services.AddHttpClient();
 
-var connectionString = builder.Configuration.GetConnectionString("DevSolarMhcDatabase");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Configure the DbContext with MySQL connection
 builder.Services.AddDbContext<SolarMHCDbContext>(options =>

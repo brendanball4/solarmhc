@@ -15,7 +15,13 @@ namespace solarmhc.Models
         {
             _logger = logger;
             _httpClient = httpClient;
-            _apiKey = Environment.GetEnvironmentVariable(Constants.WeatherApi.apiKey, EnvironmentVariableTarget.Machine);
+            // Retrieve the environment variable (e.g., WEATHER_API) loaded by Docker
+            _apiKey = Environment.GetEnvironmentVariable(Constants.WeatherApi.apiKey);
+
+            if (string.IsNullOrEmpty(_apiKey))
+            {
+                throw new Exception("API key is not set properly.");
+            }
         }
 
         public async Task<WeatherResponse> GetWeatherAsync(string city)
