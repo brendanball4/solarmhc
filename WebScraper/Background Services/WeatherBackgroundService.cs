@@ -29,7 +29,7 @@ namespace solarmhc.Models.Background_Services
             // Live data for viewing on the website, currently runs every 30 seconds
             while (!stoppingToken.IsCancellationRequested)
             {
-                //await _liveDataService.SetCurrentWeather("Medicine Hat");
+                await _liveDataService.SetCurrentWeather("Medicine Hat");
                 await Task.Delay(TimeSpan.FromMinutes(10), stoppingToken); // Adjust the delay as needed
             }
 

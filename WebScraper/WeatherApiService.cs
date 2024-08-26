@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using solarmhc.Models.Models;
 using System.Net;
@@ -11,12 +12,12 @@ namespace solarmhc.Models
         private readonly HttpClient _httpClient;
         private readonly string _apiKey;
 
-        public WeatherApiService(ILogger<WeatherApiService> logger, HttpClient httpClient)
+        public WeatherApiService(ILogger<WeatherApiService> logger, HttpClient httpClient, IConfiguration configuration)
         {
             _logger = logger;
             _httpClient = httpClient;
             // Retrieve the environment variable (e.g., WEATHER_API) loaded by Docker
-            _apiKey = Environment.GetEnvironmentVariable(Constants.WeatherApi.apiKey);
+            _apiKey = configuration["WEATHER_API"];
 
             if (string.IsNullOrEmpty(_apiKey))
             {
