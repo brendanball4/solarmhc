@@ -392,3 +392,8 @@ C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\MySqlConnector.dll
 C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\ITEC\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\MySqlConnector.dll
 C:\Users\ITEC\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\publish\web.config
+C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\publish\appsettings.Development.json
+C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\publish\appsettings.json
+C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\publish\solarmhc.Web.deps.json
+C:\Users\Brendan\Documents\solarmhc\solarmhc\bin\Debug\net6.0\publish\solarmhc.Web.runtimeconfig.json
