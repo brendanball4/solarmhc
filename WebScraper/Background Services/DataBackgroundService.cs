@@ -130,6 +130,7 @@ namespace solarmhc.Models.Background_Services
                         Intake = x.KW,
                         Date = x.TimeStamp
                     })
+                    .OrderBy(x => x.Date)
                     .ToListAsync();
 
                 foreach (var item in pData)
@@ -140,7 +141,7 @@ namespace solarmhc.Models.Background_Services
 
                 if (pData != null && pData.Count > 0)
                 {
-                    await _liveDataService.UpdatePowerDataAsync(dashboardId, pData);
+                    _liveDataService.UpdatePowerDataAsync(dashboardId, pData);
                 }
                 else
                 {

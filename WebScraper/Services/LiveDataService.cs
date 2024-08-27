@@ -12,12 +12,14 @@ namespace solarmhc.Models.Services
             = new ConcurrentDictionary<string, List<PowerData>>();
         private readonly WeatherApiService _weatherApiService;
         private WeatherData _weatherData;
+        private readonly PowerDataService _powerDataService;
 
         public event Action OnChange;
 
-        public LiveDataService(WeatherApiService weatherApiService)
+        public LiveDataService(WeatherApiService weatherApiService, PowerDataService powerDataService)
         {
             _weatherApiService = weatherApiService;
+            _powerDataService = powerDataService;
         }
 
         public (double utilizationPercentage, decimal currentWattage) GetCurrentPower(string dashboardId)
@@ -178,9 +180,12 @@ namespace solarmhc.Models.Services
             return _powerData;
         }
 
-        public void SetPowerData(string dashboardId, List<PowerData> pData)
+        public async Task SetPowerData(string dashboardId, List<PowerData> pData)
         {
-            _powerData.GetOrAdd(dashboardId, pData);
+            var newData = await _powerDataService.GetPowerDataForDateAsync(dashboardId);
+
+            _powerData[dashboardId] = newData;
+            
             NotifyStateChanged();
         }
 

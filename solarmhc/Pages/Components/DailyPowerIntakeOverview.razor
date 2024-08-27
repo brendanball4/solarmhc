@@ -1,7 +1,7 @@
 ﻿@using ApexCharts
 @using System.Collections.Concurrent;
-@using solarmhc.Models.Models
-@using solarmhc.Models.Services
+@using solarmhc.Models.Models;
+@using solarmhc.Models.Services;
 @using solarmhc.Models;
 @inject LiveDataService liveDataService
 @implements IDisposable
@@ -9,17 +9,17 @@
 <MudCard Style="height: 100%;">
     <MudCardContent Style="height: 100%;">
         <ApexChart TItem="PowerData" @ref="chart" Title="Daily Power (kW)" Options="options" Width="@("100%")" Height="@("100%")">
-            <ApexPointSeries TItem="PowerData" Items="@(dataDictionary[Constants.Names.APS])" Name="kW" SeriesType="SeriesType.Area" YValue="@(e => e.Intake)" XValue="@(e => e.Date)" />
-            <ApexPointSeries TItem="PowerData" Items="@(dataDictionary[Constants.Names.Fronius])" Name="kW" SeriesType="SeriesType.Area" YValue="@(e => e.Intake)" XValue="@(e => e.Date)" />
-            <ApexPointSeries TItem="PowerData" Items="@(dataDictionary[Constants.Names.Huawei])" Name="kW" SeriesType="SeriesType.Area" YValue="@(e => e.Intake)" XValue="@(e => e.Date)" />
-            <ApexPointSeries TItem="PowerData" Items="@(dataDictionary[Constants.Names.SolarEdge])" Name="kW" SeriesType="SeriesType.Area" YValue="@(e => e.Intake)" XValue="@(e => e.Date)" />
-            <ApexPointSeries TItem="PowerData" Items="@(dataDictionary[Constants.Names.Sunny])" Name="kW" SeriesType="SeriesType.Area" YValue="@(e => e.Intake)" XValue="@(e => e.Date)" />
+            @foreach (var series in seriesDictionary)
+            {
+                <ApexPointSeries TItem="PowerData" Items="@series.Value.Items" Name="@series.Key" SeriesType="SeriesType.Area" YValue="@(e => e.Intake)" XValue="@(e => e.Date)" />
+            }
         </ApexChart>
     </MudCardContent>
 </MudCard>
 
 @code {
     private ConcurrentDictionary<string, List<PowerData>> dataDictionary = new ConcurrentDictionary<string, List<PowerData>>();
+    private Dictionary<string, ApexPointSeries<PowerData>> seriesDictionary = new Dictionary<string, ApexPointSeries<PowerData>>();
     private ApexChart<PowerData> chart;
     private ApexChartOptions<PowerData> options = new();
     private bool isFirstRender = true;
@@ -35,7 +35,7 @@
         if (firstRender)
         {
             isFirstRender = false;
-            await UpdateChart();  // Ensure chart is updated after the first render
+            await UpdateData();
         }
     }
 
@@ -53,22 +53,23 @@
         }
 
         SetupChartOptions();
+        InitializeSeries();
     }
 
     private void SetupChartOptions()
     {
         options = new ApexChartOptions<PowerData>
-        {
-            Xaxis = new XAxis
             {
-                Type = XAxisType.Datetime,
-                Labels = new XAxisLabels
+                Xaxis = new XAxis
                 {
-                    Format = "h:mm tt",
-                    DatetimeUTC = false
+                    Type = XAxisType.Datetime,
+                    Labels = new XAxisLabels
+                    {
+                        Format = "h:mm tt",
+                        DatetimeUTC = false
+                    },
                 },
-            },
-            Yaxis = new List<YAxis>
+                Yaxis = new List<YAxis>
             {
                 new YAxis
                 {
@@ -76,19 +77,34 @@
                     Max = 25
                 }
             },
-            Tooltip = new Tooltip
-            {
-                Enabled = true,
-                X = new TooltipX
+                Tooltip = new Tooltip
                 {
-                    Format = "hh:mm tt"
+                    Enabled = true,
+                    X = new TooltipX
+                    {
+                        Format = "hh:mm tt"
+                    },
                 },
-            },
-            Colors = new List<string>
+                Colors = new List<string>
             {
                 "#efc337", "#4d4d4d", "#2b4e89", "#ff3333", "#0064bd"
             }
-        };
+            };
+    }
+
+    private void InitializeSeries()
+    {
+        foreach (var dashboardData in dataDictionary.OrderBy(x => x.Key))
+        {
+            var series = new ApexPointSeries<PowerData>
+                {
+                    Name = dashboardData.Key,
+                    Items = dashboardData.Value,
+                    XValue = (pd => pd.Date),
+                    YValue = (pd => pd.Intake)
+                };
+            seriesDictionary[dashboardData.Key] = series;
+        }
     }
 
     private void OnChangeHandler()
@@ -97,13 +113,6 @@
     }
 
     private async Task UpdateData()
-    {
-        dataDictionary = await liveDataService.GetPowerDataOverview();
-
-        await UpdateChart();
-    }
-
-    private async Task UpdateChart()
     {
         // Only update the chart if it has been rendered (i.e., chart is not null)
         if (chart != null)
