@@ -121,9 +121,7 @@ namespace solarmhc.Models.Background_Services
                 var context = scope.ServiceProvider.GetRequiredService<SolarMHCDbContext>();
 
                 SolarSegment seg = await context.SolarSegments.Where(x => x.Name == dashboardId).FirstOrDefaultAsync();
-                DateTime today = DateTime.UtcNow;
-                TimeZoneInfo mountainTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time");
-                today = TimeZoneInfo.ConvertTimeFromUtc(today, mountainTimeZone);
+                DateTime today = DateTime.UtcNow.Date;
                 List<PowerData> pData = await context.PowerIntakes
                     .Where(x => x.SolarSegmentId == seg.Id)
                     .Where(x => x.TimeStamp >= today.Date && x.TimeStamp < today.Date.AddDays(1))
@@ -136,6 +134,7 @@ namespace solarmhc.Models.Background_Services
 
                 foreach (var item in pData)
                 {
+                    TimeZoneInfo mountainTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time");
                     item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date, mountainTimeZone);
                 }
 
