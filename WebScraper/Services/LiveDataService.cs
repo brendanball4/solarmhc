@@ -168,11 +168,6 @@ namespace solarmhc.Models.Services
         {
             if (_powerData.TryGetValue(dashboardId, out var data))
             {
-                foreach (var item in data)
-                {
-                    TimeZoneInfo mountainTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time");
-                    item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date, mountainTimeZone);
-                }
                 return data;
             }
             return new List<PowerData>();
@@ -180,14 +175,6 @@ namespace solarmhc.Models.Services
 
         public async Task<ConcurrentDictionary<string, List<PowerData>>> GetPowerDataOverview()
         {
-            foreach (var item in _powerData)
-            {
-                foreach (var data in item.Value)
-                {
-                    TimeZoneInfo mountainTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time");
-                    data.Date = TimeZoneInfo.ConvertTimeFromUtc(data.Date, mountainTimeZone);
-                }
-            }
             return _powerData;
         }
 
