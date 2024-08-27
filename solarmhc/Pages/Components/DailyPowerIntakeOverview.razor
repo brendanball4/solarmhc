@@ -1,5 +1,8 @@
 ﻿@using ApexCharts
-@using System.Collections.Concurrent
+@using System.Collections.Concurrent;
+@using solarmhc.Models.Models
+@using solarmhc.Models.Services
+@inject LiveDataService liveDataService
 @implements IDisposable
 
 <MudCard Style="height: 100%;">
@@ -19,9 +22,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // Replace live data with sample data for testing purposes
-        LoadSampleData();
-        SetupChartOptions();
+        liveDataService.OnChange += OnChangeHandler;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -30,56 +31,14 @@
         {
             isFirstRender = false;
             await UpdateChart();  // Ensure chart is updated after the first render
+            await LoadInitialData();
         }
     }
 
-    private void LoadSampleData()
+    private async Task LoadInitialData()
     {
-        // Add sample data for testing purposes
-        dataDictionary["SolarEdge"] = new List<PowerData>
-        {
-            new PowerData { Date = DateTime.Today.AddHours(1), Intake = 5 },
-            new PowerData { Date = DateTime.Today.AddHours(2), Intake = 10 },
-            new PowerData { Date = DateTime.Today.AddHours(3), Intake = 15 },
-            new PowerData { Date = DateTime.Today.AddHours(4), Intake = 20 },
-            new PowerData { Date = DateTime.Today.AddHours(5), Intake = 18 }
-        };
-
-        dataDictionary["Sunny"] = new List<PowerData>
-        {
-            new PowerData { Date = DateTime.Today.AddHours(1), Intake = 4 },
-            new PowerData { Date = DateTime.Today.AddHours(2), Intake = 9 },
-            new PowerData { Date = DateTime.Today.AddHours(3), Intake = 14 },
-            new PowerData { Date = DateTime.Today.AddHours(4), Intake = 19 },
-            new PowerData { Date = DateTime.Today.AddHours(5), Intake = 17 }
-        };
-
-        dataDictionary["APS"] = new List<PowerData>
-        {
-            new PowerData { Date = DateTime.Today.AddHours(1), Intake = 3 },
-            new PowerData { Date = DateTime.Today.AddHours(2), Intake = 8 },
-            new PowerData { Date = DateTime.Today.AddHours(3), Intake = 13 },
-            new PowerData { Date = DateTime.Today.AddHours(4), Intake = 18 },
-            new PowerData { Date = DateTime.Today.AddHours(5), Intake = 16 }
-        };
-
-        dataDictionary["Huawei"] = new List<PowerData>
-        {
-            new PowerData { Date = DateTime.Today.AddHours(1), Intake = 2 },
-            new PowerData { Date = DateTime.Today.AddHours(2), Intake = 7 },
-            new PowerData { Date = DateTime.Today.AddHours(3), Intake = 12 },
-            new PowerData { Date = DateTime.Today.AddHours(4), Intake = 17 },
-            new PowerData { Date = DateTime.Today.AddHours(5), Intake = 15 }
-        };
-
-        dataDictionary["Fronius"] = new List<PowerData>
-        {
-            new PowerData { Date = DateTime.Today.AddHours(1), Intake = 1 },
-            new PowerData { Date = DateTime.Today.AddHours(2), Intake = 6 },
-            new PowerData { Date = DateTime.Today.AddHours(3), Intake = 11 },
-            new PowerData { Date = DateTime.Today.AddHours(4), Intake = 16 },
-            new PowerData { Date = DateTime.Today.AddHours(5), Intake = 14 }
-        };
+        dataDictionary = await liveDataService.GetPowerDataOverview();
+        SetupChartOptions();
     }
 
     private void SetupChartOptions()
@@ -96,13 +55,13 @@
                     },
                 },
                 Yaxis = new List<YAxis>
-            {
-                new YAxis
                 {
-                    Min = 0,
-                    Max = 25
-                }
-            },
+                    new YAxis
+                    {
+                        Min = 0,
+                        Max = 25
+                    }
+                },
                 Tooltip = new Tooltip
                 {
                     Enabled = true,
@@ -112,16 +71,30 @@
                     },
                 },
                 Colors = new List<string>
-            {
-                "#efc337", "#4d4d4d", "#2b4e89", "#ff3333", "#0064bd"
-            }
+                {
+                    "#efc337", "#4d4d4d", "#2b4e89", "#ff3333", "#0064bd"
+                }
             };
+    }
+
+    private void OnChangeHandler()
+    {
+        InvokeAsync(UpdateData);
+    }
+
+    private async Task UpdateData()
+    {
+        dataDictionary = await liveDataService.GetPowerDataOverview();
+
+        await UpdateChart();
     }
 
     private async Task UpdateChart()
     {
+        // Only update the chart if it has been rendered (i.e., chart is not null)
         if (chart != null)
         {
+            // Clear the chart safely
             chart.Series.Clear();
 
             foreach (var dashboardData in dataDictionary.OrderBy(x => x.Key))
@@ -131,24 +104,18 @@
                         Chart = chart,
                         Name = dashboardData.Key,
                         Items = dashboardData.Value,
-                        XValue = (pd => pd.Date),  // Map XValue to Date
-                        YValue = (pd => (decimal)pd.Intake) // Map YValue to Intake
+                        XValue = (pd => pd.Date), // Map XValue to Date
+                        YValue = (pd => pd.Intake) // Map YValue to Intake
                     });
             }
 
+            // Update the chart with the new series
             await chart.UpdateSeriesAsync();
         }
     }
 
     public void Dispose()
     {
-        // No live data service to dispose
-    }
-
-    // Sample PowerData class
-    public class PowerData
-    {
-        public DateTime Date { get; set; }
-        public double Intake { get; set; }
+        liveDataService.OnChange -= OnChangeHandler;
     }
 }
