@@ -32,11 +32,7 @@
         if (!string.IsNullOrEmpty(DashboardName))
         {
             data = await liveDataService.GetPowerData(DashboardName);
-            foreach (var item in data)
-            {
-                TimeZoneInfo mountainTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time");
-                item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date, mountainTimeZone);
-            }
+
             SetupChartOptions();
             await InvokeAsync(StateHasChanged);  // Ensure the chart updates with new data
         }
@@ -96,12 +92,6 @@
         {
             // Get the latest data point
             var latestData = await liveDataService.GetPowerData(DashboardName);
-
-            foreach (var item in latestData)
-            {
-                TimeZoneInfo mountainTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time");
-                item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date, mountainTimeZone);
-            }
 
             if (latestData != null)
             {

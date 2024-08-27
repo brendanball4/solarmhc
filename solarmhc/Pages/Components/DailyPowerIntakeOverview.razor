@@ -2,19 +2,24 @@
 @using System.Collections.Concurrent;
 @using solarmhc.Models.Models
 @using solarmhc.Models.Services
+@using solarmhc.Models;
 @inject LiveDataService liveDataService
 @implements IDisposable
 
 <MudCard Style="height: 100%;">
     <MudCardContent Style="height: 100%;">
         <ApexChart TItem="PowerData" @ref="chart" Title="Daily Power (kW)" Options="options" Width="@("100%")" Height="@("100%")">
+            <ApexPointSeries TItem="PowerData" Items="@(dataDictionary[Constants.Names.APS])" Name="kW" SeriesType="SeriesType.Area" YValue="@(e => e.Intake)" XValue="@(e => e.Date)" />
+            <ApexPointSeries TItem="PowerData" Items="@(dataDictionary[Constants.Names.Fronius])" Name="kW" SeriesType="SeriesType.Area" YValue="@(e => e.Intake)" XValue="@(e => e.Date)" />
+            <ApexPointSeries TItem="PowerData" Items="@(dataDictionary[Constants.Names.Huawei])" Name="kW" SeriesType="SeriesType.Area" YValue="@(e => e.Intake)" XValue="@(e => e.Date)" />
+            <ApexPointSeries TItem="PowerData" Items="@(dataDictionary[Constants.Names.SolarEdge])" Name="kW" SeriesType="SeriesType.Area" YValue="@(e => e.Intake)" XValue="@(e => e.Date)" />
+            <ApexPointSeries TItem="PowerData" Items="@(dataDictionary[Constants.Names.Sunny])" Name="kW" SeriesType="SeriesType.Area" YValue="@(e => e.Intake)" XValue="@(e => e.Date)" />
         </ApexChart>
     </MudCardContent>
 </MudCard>
 
 @code {
     private ConcurrentDictionary<string, List<PowerData>> dataDictionary = new ConcurrentDictionary<string, List<PowerData>>();
-    private List<PowerData> averageData = new List<PowerData>();
     private ApexChart<PowerData> chart;
     private ApexChartOptions<PowerData> options = new();
     private bool isFirstRender = true;
@@ -37,6 +42,16 @@
     private async Task LoadInitialData()
     {
         dataDictionary = await liveDataService.GetPowerDataOverview();
+
+        if (dataDictionary.Count() != 5)
+        {
+            dataDictionary.GetOrAdd(Constants.Names.APS, new List<PowerData>());
+            dataDictionary.GetOrAdd(Constants.Names.Fronius, new List<PowerData>());
+            dataDictionary.GetOrAdd(Constants.Names.Huawei, new List<PowerData>());
+            dataDictionary.GetOrAdd(Constants.Names.SolarEdge, new List<PowerData>());
+            dataDictionary.GetOrAdd(Constants.Names.Sunny, new List<PowerData>());
+        }
+
         SetupChartOptions();
     }
 
