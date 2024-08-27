@@ -24,27 +24,4 @@
     <MudItem Style="min-height: 400px;" xs="12" sm="12" md="12" lg="4" xl="4" xxl="5">
         <DailyPowerIntakeOverview />
     </MudItem>
-    <MudItem xs="12" sm="6" md="6" lg="3" xl="2" xxl="3">
-        <CurrentPower DashboardName="@Constants.Names.Total" Capacity="Constants.Capacities.TotalCapacity" ShowLogo="true" />
-    </MudItem>
-    <MudItem xs="12" sm="6" md="6" lg="4" xl="3" xxl="4">
-        <CanopyImage />
-    </MudItem>
-</MudGrid>
-<MudGrid Justify="Justify.Center" Spacing="2">
-    <MudItem xs="12" sm="4" md="4" lg="2">
-        <CurrentPower DashboardName="@Constants.Names.SolarEdge" Capacity="Constants.Capacities.SolarEdge" />
-    </MudItem>
-    <MudItem xs="12" sm="4" md="4" lg="2">
-        <CurrentPower DashboardName="@Constants.Names.Sunny" Capacity="Constants.Capacities.Sunny" />
-    </MudItem>
-    <MudItem xs="12" sm="4" md="4" lg="2">
-        <CurrentPower DashboardName="@Constants.Names.APS" Capacity="Constants.Capacities.APS" />
-    </MudItem>
-    <MudItem Class="branding-margins branding-margins-huawei" xs="12" sm="4" md="4" lg="2">
-        <CurrentPower DashboardName="@Constants.Names.Huawei" Capacity="Constants.Capacities.Huawei" />
-    </MudItem>
-    <MudItem Class="branding-margins" xs="12" sm="4" md="4" lg="2">
-        <CurrentPower DashboardName="@Constants.Names.Fronius" Capacity="Constants.Capacities.Fronius" />
-    </MudItem>
 </MudGrid>
