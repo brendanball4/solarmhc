@@ -124,7 +124,7 @@ namespace solarmhc.Models.Background_Services
                 DateTime today = DateTime.UtcNow.Date;
                 List<PowerData> pData = await context.PowerIntakes
                     .Where(x => x.SolarSegmentId == seg.Id)
-                    .Where(x => x.TimeStamp >= today.Date && x.TimeStamp < today.Date.AddDays(1))
+                    .Where(x => x.TimeStamp >= today && x.TimeStamp < today.AddDays(1))
                     .Select(x => new PowerData
                     {
                         Intake = x.KW,
