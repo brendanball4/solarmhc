@@ -19,16 +19,14 @@ namespace solarmhc.Models.Background_Services
         private readonly ILogger<DataBackgroundService> _logger;
         private readonly IServiceProvider _serviceProvider;
         private readonly EmissionSaved _emissionSaved;
-        private readonly Graphing _graphing;
         private readonly LiveDataService _liveDataService;
 
-        public DataBackgroundService(ILogger<DataBackgroundService> logger, IServiceProvider serviceProvider, EmissionSaved emissionSaved, Graphing graphing, LiveDataService liveDataService)
+        public DataBackgroundService(ILogger<DataBackgroundService> logger, IServiceProvider serviceProvider, EmissionSaved emissionSaved, LiveDataService liveDataService)
         {
             // Inject the services
             _logger = logger;
             _serviceProvider = serviceProvider;
             _emissionSaved = emissionSaved;
-            _graphing = graphing;
             _liveDataService = liveDataService;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -94,7 +92,7 @@ namespace solarmhc.Models.Background_Services
 
                 if (data != null)
                 {
-                    _liveDataService.SetCurrentPower(dashboardId, data.KW, data.Status);
+                    await _liveDataService.UpdateCurrentPowerAsync(dashboardId, data.KW, data.Status);
                 }
             }
         }
@@ -108,28 +106,24 @@ namespace solarmhc.Models.Background_Services
 
                 SolarSegment seg = await context.SolarSegments.Where(x => x.Name == dashboardId).FirstOrDefaultAsync();
                 var today = DateTime.Now.Date; // or use DateTime.UtcNow.Date if your timestamps are in UTC
-                var pData = await context.PowerIntakes
+                List<PowerData> pData = await context.PowerIntakes
                     .Where(x => x.SolarSegmentId == seg.Id)
                     .Where(x => x.TimeStamp >= today && x.TimeStamp < today.AddDays(1))
+                    .Select(x => new PowerData
+                    {
+                        Intake = x.KW,
+                        Date = x.TimeStamp
+                    })
                     .ToListAsync();
 
-
-                List<PowerData> data = new List<PowerData>();
-
-                foreach (var item in pData)
+                if (pData != null && pData.Count > 0)
                 {
-                    PowerData newList = new PowerData
-                    {
-                        Intake = item.KW,
-                        Date = item.TimeStamp
-                    };
-
-                    data.Add(newList);
-                }
-
-                if (pData != null)
+                    await _liveDataService.UpdatePowerDataAsync(dashboardId, pData);
+                } 
+                else
                 {
-                    _liveDataService.SetPowerData(dashboardId, data);
+                    _logger.LogError($"{dashboardId}: No data found in power intakes table");
+                    return;
                 }
             }
         }

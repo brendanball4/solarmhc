@@ -12,12 +12,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
 builder.Services.AddSingleton<LiveDataService>();
-builder.Services.AddSingleton<WebScraperHelperService>();
 builder.Services.AddSingleton<EmissionCalculator>();
 builder.Services.AddSingleton<EmissionSaved>();
-builder.Services.AddSingleton<PowerDataService>();
 builder.Services.AddSingleton<WeatherApiService>();
-builder.Services.AddSingleton<Graphing>();
 builder.Services.AddHostedService<WeatherBackgroundService>();
 builder.Services.AddHostedService<DataBackgroundService>();
 

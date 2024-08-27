@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
 using solarmhc.Models.Models;
 using System.Collections.Concurrent;
 
@@ -12,17 +11,13 @@ namespace solarmhc.Models.Services
         private readonly ConcurrentDictionary<string, List<PowerData>> _powerData
             = new ConcurrentDictionary<string, List<PowerData>>();
         private readonly WeatherApiService _weatherApiService;
-        private readonly PowerDataService _powerDataService;
         private WeatherData _weatherData;
-        ILogger<LiveDataService> _logger;
 
         public event Action OnChange;
 
-        public LiveDataService(WeatherApiService weatherApiService, PowerDataService powerDataService, ILogger<LiveDataService> logger)
+        public LiveDataService(WeatherApiService weatherApiService)
         {
             _weatherApiService = weatherApiService;
-            _powerDataService = powerDataService;
-            _logger = logger;
         }
 
         public (double utilizationPercentage, decimal currentWattage) GetCurrentPower(string dashboardId)
@@ -103,17 +98,19 @@ namespace solarmhc.Models.Services
                 Status = weather.Status
             };
 
-            int currentHour = DateTime.Now.Hour;
+            DateTime currentTime = DateTime.UtcNow;
+            TimeZoneInfo mountainTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time");
+            currentTime = TimeZoneInfo.ConvertTimeFromUtc(currentTime, mountainTimeZone);
             int hoursToShow = 3;
             int endOfDayHour = 23;
 
-            if (currentHour + hoursToShow > endOfDayHour)
+            if (currentTime.Hour + hoursToShow > endOfDayHour)
             {
                 // Handle transition to the next day
                 int remainingHoursToday = endOfDayHour - currentHour;
                 int hoursFromNextDay = hoursToShow - remainingHoursToday;
 
-                for (int i = currentHour + 1; i <= endOfDayHour; i++)
+                for (int i = currentTime.Hour + 1; i <= endOfDayHour; i++)
                 {
                     forecastHours.Add(weather.Forecast.ForecastDay[0].Hour[i]);
                 }
@@ -126,7 +123,7 @@ namespace solarmhc.Models.Services
             else
             {
                 // Only fetch hours from the current day
-                for (int i = currentHour + 1; i < (currentHour + hoursToShow) + 1; i++)
+                for (int i = currentTime.Hour + 1; i < (currentTime.Hour + hoursToShow) + 1; i++)
                 {
                     forecastHours.Add(weather.Forecast.ForecastDay[0].Hour[i]);
                 }
@@ -171,6 +168,11 @@ namespace solarmhc.Models.Services
         {
             if (_powerData.TryGetValue(dashboardId, out var data))
             {
+                foreach (var item in data)
+                {
+                    TimeZoneInfo mountainTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time");
+                    item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date, mountainTimeZone);
+                }
                 return data;
             }
             return new List<PowerData>();
@@ -178,12 +180,20 @@ namespace solarmhc.Models.Services
 
         public async Task<ConcurrentDictionary<string, List<PowerData>>> GetPowerDataOverview()
         {
+            foreach (var item in _powerData)
+            {
+                foreach (var data in item.Value)
+                {
+                    TimeZoneInfo mountainTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time");
+                    data.Date = TimeZoneInfo.ConvertTimeFromUtc(data.Date, mountainTimeZone);
+                }
+            }
             return _powerData;
         }
 
-        public async Task SetPowerData(string dashboardId, List<PowerData> pData)
+        public void SetPowerData(string dashboardId, List<PowerData> pData)
         {
-            _powerData[dashboardId] = pData;
+            _powerData.GetOrAdd(dashboardId, pData);
             NotifyStateChanged();
         }
 
@@ -207,7 +217,7 @@ namespace solarmhc.Models.Services
 
         public async Task UpdatePowerDataAsync(string dashboardId, List<PowerData> pData)
         {
-            await SetPowerData(dashboardId, pData);
+            SetPowerData(dashboardId, pData);
             await Task.CompletedTask;
         }
 

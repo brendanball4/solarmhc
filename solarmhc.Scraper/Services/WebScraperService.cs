@@ -404,7 +404,7 @@ namespace solarmhc.Scraper.Services
                 // If the solar segment is not found, stop the service.
                 if (solarSegment == null)
                 {
-                    _logger.LogError("Solar segment with the name '" + dashboardId + "' was not found. Stopping service.");
+                    _logger.LogError($"Solar segment with the name {dashboardId} was not found. Stopping service.");
                     return;
                 }
 
@@ -415,7 +415,7 @@ namespace solarmhc.Scraper.Services
                     SolarSegment = solarSegment,
                     KW = Math.Round(currentWattage, 2),
                     Utilization = Math.Round(utilizationPercentage, 2),
-                    TimeStamp = DateTime.Now,
+                    TimeStamp = DateTime.UtcNow,
                     Status = status
                 };
                 _logger.LogInformation($"{dashboardId}: Created PowerIntake Object.");
