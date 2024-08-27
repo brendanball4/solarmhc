@@ -6,6 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>385a8cfc-8975-4e4c-b5af-cc52d49841dd</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+
+    <!-- Disable optimizations and linking (minification) -->
+    <BlazorWebAssemblyEnableLinking>false</BlazorWebAssemblyEnableLinking>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
   </PropertyGroup>
 
   <ItemGroup>

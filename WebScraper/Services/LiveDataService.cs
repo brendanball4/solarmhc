@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
 using solarmhc.Models.Models;
 using System.Collections.Concurrent;
 
@@ -13,13 +14,15 @@ namespace solarmhc.Models.Services
         private readonly WeatherApiService _weatherApiService;
         private readonly PowerDataService _powerDataService;
         private WeatherData _weatherData;
+        ILogger<LiveDataService> _logger;
 
         public event Action OnChange;
 
-        public LiveDataService(WeatherApiService weatherApiService, PowerDataService powerDataService)
+        public LiveDataService(WeatherApiService weatherApiService, PowerDataService powerDataService, ILogger<LiveDataService> logger)
         {
             _weatherApiService = weatherApiService;
             _powerDataService = powerDataService;
+            _logger = logger;
         }
 
         public (double utilizationPercentage, decimal currentWattage) GetCurrentPower(string dashboardId)
@@ -182,7 +185,9 @@ namespace solarmhc.Models.Services
         {
             var newData = await _powerDataService.GetPowerDataForDateAsync(dashboardId);
 
+            _logger.LogInformation($"{dashboardId}: There are {newData.Count()} records in newData.");
             _powerData[dashboardId] = newData;
+            _logger.LogInformation($"{dashboardId}: There are {_powerData.Count()} records in _powerData.");
 
             NotifyStateChanged();
         }

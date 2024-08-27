@@ -5,7 +5,7 @@
 @implements IDisposable
 
 <ApexChart TItem="PowerData" @ref="chart" Title="Daily Power (kW)" Options="options" Width="@("100%")" Height="500">
-    <ApexPointSeries TItem="PowerData" Items="@data" Name="kW" SeriesType="SeriesType.Area" XValue="@(e => e.Date)" YValue="@(e => e.Intake)" />
+    <ApexPointSeries TItem="PowerData" Items="@data" Name="kW" SeriesType="SeriesType.Area" XValue="@(e => e.Date)" YValue="@(e => e.Intake)"  />
 </ApexChart>
 
 @code {
@@ -42,36 +42,37 @@
             {
                 Xaxis = new XAxis
                 {
-                    Type = XAxisType.Datetime,
+                    Type = XAxisType.Datetime,              // Ensure the type is set to 'Datetime'
                     Labels = new XAxisLabels
                     {
-                        Format = "h:mm tt",
-                        DatetimeUTC = false
+                        Format = "h:mm tt",                 // Set the label format
+                        DatetimeUTC = false                 // Ensure timezone is respected
                     },
                 },
+
                 Yaxis = new List<YAxis>
                 {
                     new YAxis
                     {
                         Min = 0,
-                        Max = Capacity
+                        Max = Capacity  // Set the Y-axis range based on your data
                     }
                 },
                 Fill = new Fill
                 {
-                    Colors = new List<string> { "#efc337" }, // Orange color for the area
-                    Opacity = 0.8
+                    Colors = new List<string> { "#efc337" }, // Set area color
+                    Opacity = 0.8                           // Adjust opacity for visibility
                 },
                 Colors = new List<string>
                 {
-                    "#efc337",
+                    "#efc337", // Set color for the line
                 },
                 Tooltip = new Tooltip
                 {
                     Enabled = true,
                     X = new TooltipX
                     {
-                        Format = "hh:mm tt"
+                        Format = "hh:mm tt" // Tooltip format for datetime
                     },
                 }
             };

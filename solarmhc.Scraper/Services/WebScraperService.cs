@@ -59,7 +59,7 @@ namespace solarmhc.Scraper.Services
                 catch (Exception ex)
                 {
                     _logger.LogError($"{dashboardId} | {CurrentDateTime()}: There was an error loading the page. Error = {ex}");
-                    _logger.LogError($"{dashboardId} | {CurrentDateTime()}: Currently having issues loading the page. The failing sserystem may be offline.");
+                    _logger.LogError($"{dashboardId} | {CurrentDateTime()}: Currently having issues loading the page. The failing system may be offline.");
                     // Mark system as offline
                     SubmitPowerIntakeData(dashboardId, 0, 0, false);
                     return;
