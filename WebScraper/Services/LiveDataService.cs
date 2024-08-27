@@ -186,6 +186,7 @@ namespace solarmhc.Models.Services
                 _powerData[Constants.Names.Huawei] = await GetPowerData(Constants.Names.Huawei);
                 _powerData[Constants.Names.Fronius] = await GetPowerData(Constants.Names.Fronius);
             }
+
             return _powerData;
         }
 

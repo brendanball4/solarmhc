@@ -24,21 +24,9 @@ namespace solarmhc.Models.Services
             {
                 var _context = scope.ServiceProvider.GetService<SolarMHCDbContext>();
 
-                SolarSegment seg = await _context.SolarSegments
-                    .Where(x => x.Name == dashboardId)
-                    .FirstOrDefaultAsync();
-
-                if (seg == null)
-                {
-                    return new List<PowerData>(); // No segment found
-                }
-
-                // Get today's date at midnight
-                var today = DateTime.Now.Date;
-                var tomorrow = today.AddDays(1);
-
+                SolarSegment seg = await _context.SolarSegments.Where(x => x.Name == dashboardId).FirstOrDefaultAsync();
                 List<PowerData> pData = await _context.PowerIntakes
-                    .Where(x => x.SolarSegmentId == seg.Id && x.TimeStamp >= today && x.TimeStamp < tomorrow)
+                    .Where(x => x.SolarSegmentId == seg.Id && x.TimeStamp.Date == DateTime.Now.Date)
                     .Select(x => new PowerData
                     {
                         Date = x.TimeStamp,
