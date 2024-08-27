@@ -36,25 +36,6 @@ namespace solarmhc.Models.Background_Services
             _logger.LogInformation("Starting services.");
             stoppingToken.Register(() => _logger.LogInformation("Stopping services."));
 
-            // Calculate the power intake data for graphing
-            _ = Task.Run(async () =>
-            {
-                while (!stoppingToken.IsCancellationRequested)
-                {
-                    var tasks = new List<Task>
-                    {
-                        _graphing.GetGraphValues(Constants.Names.SolarEdge),
-                        _graphing.GetGraphValues(Constants.Names.APS),
-                        _graphing.GetGraphValues(Constants.Names.Sunny),
-                        _graphing.GetGraphValues(Constants.Names.Huawei),
-                        _graphing.GetGraphValues(Constants.Names.Fronius),
-                    };
-
-                    await Task.WhenAll(tasks); // Starts tasks concurrently and waits for all to complete
-                    await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken); // Adjust the delay as needed
-                }
-            }, stoppingToken);
-
             // Calculate the emissions and trees planted for each dashboard
             _ = Task.Run(async () =>
             {
@@ -83,7 +64,12 @@ namespace solarmhc.Models.Background_Services
                     FetchAndServeDataAsync(Constants.Names.APS),
                     FetchAndServeDataAsync(Constants.Names.Sunny),
                     FetchAndServeDataAsync(Constants.Names.Huawei),
-                    FetchAndServeDataAsync(Constants.Names.Fronius)
+                    FetchAndServeDataAsync(Constants.Names.Fronius),
+                    FetchAndServeGraphDataAsync(Constants.Names.SolarEdge),
+                    FetchAndServeGraphDataAsync(Constants.Names.APS),
+                    FetchAndServeGraphDataAsync(Constants.Names.Sunny),
+                    FetchAndServeGraphDataAsync(Constants.Names.Huawei),
+                    FetchAndServeGraphDataAsync(Constants.Names.Fronius)
                 };
 
                 await Task.WhenAll(tasks); // Starts tasks concurrently and waits for all to complete
@@ -109,6 +95,41 @@ namespace solarmhc.Models.Background_Services
                 if (data != null)
                 {
                     _liveDataService.SetCurrentPower(dashboardId, data.KW, data.Status);
+                }
+            }
+        }
+
+        private async Task FetchAndServeGraphDataAsync(string dashboardId)
+        {
+            // Grab the database values from the given dashboardId
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<SolarMHCDbContext>();
+
+                SolarSegment seg = await context.SolarSegments.Where(x => x.Name == dashboardId).FirstOrDefaultAsync();
+                var today = DateTime.Now.Date; // or use DateTime.UtcNow.Date if your timestamps are in UTC
+                var pData = await context.PowerIntakes
+                    .Where(x => x.SolarSegmentId == seg.Id)
+                    .Where(x => x.TimeStamp >= today && x.TimeStamp < today.AddDays(1))
+                    .ToListAsync();
+
+
+                List<PowerData> data = new List<PowerData>();
+
+                foreach (var item in pData)
+                {
+                    PowerData newList = new PowerData
+                    {
+                        Intake = item.KW,
+                        Date = item.TimeStamp
+                    };
+
+                    data.Add(newList);
+                }
+
+                if (pData != null)
+                {
+                    _liveDataService.SetPowerData(dashboardId, data);
                 }
             }
         }

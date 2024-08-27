@@ -1,4 +1,5 @@
-﻿using System;
+﻿using solarmhc.Models.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,9 @@ namespace solarmhc.Models.Services
         {
             _liveDataService = liveDataService;
         }
-        public async Task GetGraphValues(string dashboardId)
+        public async Task GetGraphValues(string dashboardId, List<PowerData> pData)
         {
-            await _liveDataService.UpdatePowerDataAsync(dashboardId);
+            await _liveDataService.UpdatePowerDataAsync(dashboardId, pData);
         }
     }
 }

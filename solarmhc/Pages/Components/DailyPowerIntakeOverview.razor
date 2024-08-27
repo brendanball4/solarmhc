@@ -23,7 +23,41 @@
     protected override async Task OnInitializedAsync()
     {
         liveDataService.OnChange += OnChangeHandler;
-        await LoadInitialData();
+        
+        dataDictionary = await liveDataService.GetPowerDataOverview();
+
+        options = new ApexChartOptions<PowerData>
+        {
+            Xaxis = new XAxis
+            {
+                Type = XAxisType.Datetime,
+                Labels = new XAxisLabels
+                {
+                    Format = "h:mm tt",
+                    DatetimeUTC = false
+                },
+            },
+            Yaxis = new List<YAxis>
+            {
+                new YAxis
+                {
+                    Min = 0,
+                    Max = 25
+                }
+            },
+            Tooltip = new Tooltip
+            {
+                Enabled = true,
+                X = new TooltipX
+                {
+                    Format = "hh:mm tt"
+                },
+            },
+            Colors = new List<string>
+            {
+                "#efc337", "#4d4d4d", "#2b4e89", "#ff3333", "#0064bd"
+            }
+        };
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -33,48 +67,6 @@
             isFirstRender = false;
             await UpdateChart();  // Ensure chart is updated after the first render
         }
-    }
-
-    private async Task LoadInitialData()
-    {
-        dataDictionary = await liveDataService.GetPowerDataOverview();
-        SetupChartOptions();
-    }
-
-    private void SetupChartOptions()
-    {
-        options = new ApexChartOptions<PowerData>
-            {
-                Xaxis = new XAxis
-                {
-                    Type = XAxisType.Datetime,
-                    Labels = new XAxisLabels
-                    {
-                        Format = "h:mm tt",
-                        DatetimeUTC = false
-                    },
-                },
-                Yaxis = new List<YAxis>
-                {
-                    new YAxis
-                    {
-                        Min = 0,
-                        Max = 25
-                    }
-                },
-                Tooltip = new Tooltip
-                {
-                    Enabled = true,
-                    X = new TooltipX
-                    {
-                        Format = "hh:mm tt"
-                    },
-                },
-                Colors = new List<string>
-                {
-                    "#efc337", "#4d4d4d", "#2b4e89", "#ff3333", "#0064bd"
-                }
-            };
     }
 
     private void OnChangeHandler()

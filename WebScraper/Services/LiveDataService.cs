@@ -178,26 +178,12 @@ namespace solarmhc.Models.Services
 
         public async Task<ConcurrentDictionary<string, List<PowerData>>> GetPowerDataOverview()
         {
-            if (_powerData.Count() <= 0)
-            {
-                _powerData[Constants.Names.SolarEdge] = await GetPowerData(Constants.Names.SolarEdge);
-                _powerData[Constants.Names.APS] = await GetPowerData(Constants.Names.APS);
-                _powerData[Constants.Names.Sunny] = await GetPowerData(Constants.Names.Sunny);
-                _powerData[Constants.Names.Huawei] = await GetPowerData(Constants.Names.Huawei);
-                _powerData[Constants.Names.Fronius] = await GetPowerData(Constants.Names.Fronius);
-            }
-
             return _powerData;
         }
 
-        public async Task SetPowerData(string dashboardId)
+        public async Task SetPowerData(string dashboardId, List<PowerData> pData)
         {
-            var newData = await _powerDataService.GetPowerDataForDateAsync(dashboardId);
-
-            _logger.LogInformation($"{dashboardId}: There are {newData.Count()} records in newData.");
-            _powerData[dashboardId] = newData;
-            _logger.LogInformation($"{dashboardId}: There are {_powerData.Count()} records in _powerData.");
-
+            _powerData[dashboardId] = pData;
             NotifyStateChanged();
         }
 
@@ -219,9 +205,9 @@ namespace solarmhc.Models.Services
             await Task.CompletedTask;
         }
 
-        public async Task UpdatePowerDataAsync(string dashboardId)
+        public async Task UpdatePowerDataAsync(string dashboardId, List<PowerData> pData)
         {
-            await SetPowerData(dashboardId);
+            await SetPowerData(dashboardId, pData);
             await Task.CompletedTask;
         }
 
