@@ -30,8 +30,8 @@
         if (firstRender)
         {
             isFirstRender = false;
-            await UpdateChart();  // Ensure chart is updated after the first render
             await LoadInitialData();
+            await UpdateChart();  // Ensure chart is updated after the first render
         }
     }
 
