@@ -6,9 +6,7 @@
 @implements IDisposable
 
 <MudCard Style="height: 100%;">
-    <MudCardContent Style="height: 91%;">
-        <MudSwitch @bind-Checked="showAverageData" ValueChanged="ToggleDataDisplay" Label="Show Average Data" T="bool" />
-
+    <MudCardContent Style="height: 100%;">
         <ApexChart TItem="PowerData" @ref="chart" Title="Daily Power (kW)" Options="options" Width="@("100%")" Height="@("100%")">
         </ApexChart>
     </MudCardContent>
@@ -40,7 +38,6 @@
     private async Task LoadInitialData()
     {
         dataDictionary = await liveDataService.GetPowerDataOverview();
-        CalculateAverageData();  // Calculate average data initially
         SetupChartOptions();
     }
 
@@ -50,8 +47,6 @@
             {
                 Xaxis = new XAxis
                 {
-                    Min = new DateTime(1, 1, 1, 0, 0, 0),
-                    Max = new DateTime(1, 1, 1, 23, 59, 59),
                     Type = XAxisType.Datetime,
                     Labels = new XAxisLabels
                     {
@@ -82,30 +77,6 @@
             };
     }
 
-    private void CalculateAverageData()
-    {
-        averageData = new List<PowerData>();
-
-        if (dataDictionary.Any())
-        {
-            var firstDashboard = dataDictionary.First().Value;
-
-            foreach (var entry in firstDashboard)
-            {
-                var date = entry.Date;
-                var averageIntake = dataDictionary.Values
-                    .Where(d => d.Any(e => e.Date == date))
-                    .Average(d => d.First(e => e.Date == date).Intake);
-
-                averageData.Add(new PowerData
-                {
-                    Date = date,
-                    Intake = averageIntake
-                });
-            }
-        }
-    }
-
     private void OnChangeHandler()
     {
         InvokeAsync(UpdateData);
@@ -114,7 +85,6 @@
     private async Task UpdateData()
     {
         dataDictionary = await liveDataService.GetPowerDataOverview();
-        CalculateAverageData();  // Recalculate average data after data changes
 
         await UpdateChart();
     }
@@ -127,58 +97,21 @@
             // Clear the chart safely
             chart.Series.Clear();
 
-            // Now add the new series
-            if (showAverageData)
+            foreach (var dashboardData in dataDictionary.OrderBy(x => x.Key))
             {
                 chart.Series.Add(new ApexPointSeries<PowerData>
                     {
                         Chart = chart,
-                        Name = "Average",
-                        Items = averageData,
+                        Name = dashboardData.Key,
+                        Items = dashboardData.Value,
                         XValue = (pd => pd.Date), // Map XValue to Date
                         YValue = (pd => pd.Intake) // Map YValue to Intake
                     });
-            }
-            else
-            {
-                foreach (var dashboardData in dataDictionary.OrderBy(x => x.Key))
-                {
-                    chart.Series.Add(new ApexPointSeries<PowerData>
-                        {
-                            Chart = chart,
-                            Name = dashboardData.Key,
-                            Items = dashboardData.Value,
-                            XValue = (pd => pd.Date), // Map XValue to Date
-                            YValue = (pd => pd.Intake) // Map YValue to Intake
-                        });
-                }
             }
 
             // Update the chart with the new series
             await chart.UpdateSeriesAsync();
         }
-    }
-
-    private async Task ToggleDataDisplay(bool value)
-    {
-        showAverageData = value;
-
-        if (value)
-        {
-            chart.Options.Colors = new List<string>
-            {
-                "#efc337", "#4d4d4d", "#2b4e89", "#ff3333", "#0064bd"
-            };
-        } else
-        {
-            chart.Options.Colors = new List<string>
-            {
-                "#fd8204", "#4d4d4d", "#2b4e89", "#ff3333", "#0064bd"
-            };
-        }
-
-        await chart.UpdateOptionsAsync(false, true, false);
-        await UpdateChart(); // Refresh the chart with the new data
     }
 
     public void Dispose()
