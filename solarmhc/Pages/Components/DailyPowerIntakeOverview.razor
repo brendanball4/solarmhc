@@ -23,6 +23,7 @@
     protected override async Task OnInitializedAsync()
     {
         liveDataService.OnChange += OnChangeHandler;
+        await LoadInitialData();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -30,7 +31,6 @@
         if (firstRender)
         {
             isFirstRender = false;
-            await LoadInitialData();
             await UpdateChart();  // Ensure chart is updated after the first render
         }
     }

@@ -178,6 +178,14 @@ namespace solarmhc.Models.Services
 
         public async Task<ConcurrentDictionary<string, List<PowerData>>> GetPowerDataOverview()
         {
+            if (_powerData.Count() <= 0)
+            {
+                _powerData[Constants.Names.SolarEdge] = await GetPowerData(Constants.Names.SolarEdge);
+                _powerData[Constants.Names.APS] = await GetPowerData(Constants.Names.APS);
+                _powerData[Constants.Names.Sunny] = await GetPowerData(Constants.Names.Sunny);
+                _powerData[Constants.Names.Huawei] = await GetPowerData(Constants.Names.Huawei);
+                _powerData[Constants.Names.Fronius] = await GetPowerData(Constants.Names.Fronius);
+            }
             return _powerData;
         }
 
