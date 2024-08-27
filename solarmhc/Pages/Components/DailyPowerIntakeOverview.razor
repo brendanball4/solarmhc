@@ -17,15 +17,31 @@
     private List<PowerData> averageData = new List<PowerData>();
     private ApexChart<PowerData> chart;
     private ApexChartOptions<PowerData> options = new();
-    private bool showAverageData = true;
     private bool isFirstRender = true;
 
     protected override async Task OnInitializedAsync()
     {
         liveDataService.OnChange += OnChangeHandler;
-        
-        dataDictionary = await liveDataService.GetPowerDataOverview();
+        await LoadInitialData();
+    }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            isFirstRender = false;
+            await UpdateChart();  // Ensure chart is updated after the first render
+        }
+    }
+
+    private async Task LoadInitialData()
+    {
+        dataDictionary = await liveDataService.GetPowerDataOverview();
+        SetupChartOptions();
+    }
+
+    private void SetupChartOptions()
+    {
         options = new ApexChartOptions<PowerData>
         {
             Xaxis = new XAxis
@@ -58,15 +74,6 @@
                 "#efc337", "#4d4d4d", "#2b4e89", "#ff3333", "#0064bd"
             }
         };
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            isFirstRender = false;
-            await UpdateChart();  // Ensure chart is updated after the first render
-        }
     }
 
     private void OnChangeHandler()

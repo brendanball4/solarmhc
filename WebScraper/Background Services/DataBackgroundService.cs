@@ -53,6 +53,24 @@ namespace solarmhc.Models.Background_Services
                 }
             }, stoppingToken);
 
+            _ = Task.Run(async () =>
+            {
+                while (!stoppingToken.IsCancellationRequested)
+                {
+                    var tasks = new List<Task>
+                    {
+                        FetchAndServeGraphDataAsync(Constants.Names.SolarEdge),
+                        FetchAndServeGraphDataAsync(Constants.Names.APS),
+                        FetchAndServeGraphDataAsync(Constants.Names.Sunny),
+                        FetchAndServeGraphDataAsync(Constants.Names.Huawei),
+                        FetchAndServeGraphDataAsync(Constants.Names.Fronius)
+                    };
+
+                    await Task.WhenAll(tasks); // Starts tasks concurrently and waits for all to complete
+                    await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken); // Adjust the delay as needed
+                }
+            }, stoppingToken);
+
             // Live data for viewing on the website, currently runs every 30 seconds
             while (!stoppingToken.IsCancellationRequested)
             {
@@ -62,12 +80,7 @@ namespace solarmhc.Models.Background_Services
                     FetchAndServeDataAsync(Constants.Names.APS),
                     FetchAndServeDataAsync(Constants.Names.Sunny),
                     FetchAndServeDataAsync(Constants.Names.Huawei),
-                    FetchAndServeDataAsync(Constants.Names.Fronius),
-                    FetchAndServeGraphDataAsync(Constants.Names.SolarEdge),
-                    FetchAndServeGraphDataAsync(Constants.Names.APS),
-                    FetchAndServeGraphDataAsync(Constants.Names.Sunny),
-                    FetchAndServeGraphDataAsync(Constants.Names.Huawei),
-                    FetchAndServeGraphDataAsync(Constants.Names.Fronius)
+                    FetchAndServeDataAsync(Constants.Names.Fronius)
                 };
 
                 await Task.WhenAll(tasks); // Starts tasks concurrently and waits for all to complete
