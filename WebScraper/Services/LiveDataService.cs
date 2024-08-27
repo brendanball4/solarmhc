@@ -107,7 +107,7 @@ namespace solarmhc.Models.Services
             if (currentTime.Hour + hoursToShow > endOfDayHour)
             {
                 // Handle transition to the next day
-                int remainingHoursToday = endOfDayHour - currentHour;
+                int remainingHoursToday = endOfDayHour - currentTime.Hour;
                 int hoursFromNextDay = hoursToShow - remainingHoursToday;
 
                 for (int i = currentTime.Hour + 1; i <= endOfDayHour; i++)
