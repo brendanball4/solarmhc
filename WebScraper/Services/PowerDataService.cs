@@ -34,11 +34,7 @@ namespace solarmhc.Models.Services
                     })
                     .ToListAsync();
 
-                foreach (var item in pData)
-                {
-                    TimeZoneInfo mountainTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time");
-                    item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date, mountainTimeZone);
-                }
+                //TODO: UTC?
 
                 return pData;
             }

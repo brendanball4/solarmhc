@@ -8,7 +8,7 @@
 
 <MudCard Style="height: 100%;">
     <MudCardContent Style="height: 100%;">
-        <ApexChart TItem="PowerData" @ref="chart" Title="Daily Power (kW)" Options="options" Width="@("100%")" Height="@("100%")">
+        <ApexChart TItem="PowerData" @ref="chart" Title="Daily Power (kWh)" Options="options" Width="@("100%")" Height="@("100%")">
             @foreach (var series in seriesDictionary)
             {
                 <ApexPointSeries TItem="PowerData" Items="@series.Value.Items" Name="@series.Key" SeriesType="SeriesType.Area" YValue="@(e => e.Intake)" XValue="@(e => e.Date)" />
@@ -131,7 +131,6 @@
                         YValue = (pd => pd.Intake) // Map YValue to Intake
                     });
             }
-
             // Update the chart with the new series
             await chart.UpdateSeriesAsync();
         }

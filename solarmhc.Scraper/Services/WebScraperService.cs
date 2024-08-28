@@ -261,6 +261,7 @@ namespace solarmhc.Scraper.Services
                 case Constants.Names.Fronius:
                     if (driver.Url.Contains("https://www.solarweb.com/PvSystems/PvSystem?pvSystemId="))
                     {
+                        driver.Navigate().Refresh();
                         correctPage = true;
                     }
                     break;
@@ -415,7 +416,7 @@ namespace solarmhc.Scraper.Services
                     SolarSegment = solarSegment,
                     KW = Math.Round(currentWattage, 2),
                     Utilization = Math.Round(utilizationPercentage, 2),
-                    TimeStamp = DateTime.UtcNow,
+                    TimeStamp = DateTime.Now,
                     Status = status
                 };
                 _logger.LogInformation($"{dashboardId}: Created PowerIntake Object.");

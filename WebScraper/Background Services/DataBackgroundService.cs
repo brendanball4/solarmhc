@@ -103,8 +103,7 @@ namespace solarmhc.Models.Background_Services
                     .OrderByDescending(x => x.TimeStamp)
                     .FirstOrDefaultAsync();
 
-                TimeZoneInfo mountainTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time");
-                data.TimeStamp = TimeZoneInfo.ConvertTimeFromUtc(data.TimeStamp, mountainTimeZone);
+                //TODO: UTC?
 
                 if (data != null)
                 {
@@ -115,40 +114,7 @@ namespace solarmhc.Models.Background_Services
 
         private async Task FetchAndServeGraphDataAsync(string dashboardId)
         {
-            // Grab the database values from the given dashboardId
-            using (var scope = _serviceProvider.CreateScope())
-            {
-                var context = scope.ServiceProvider.GetRequiredService<SolarMHCDbContext>();
-
-                SolarSegment seg = await context.SolarSegments.Where(x => x.Name == dashboardId).FirstOrDefaultAsync();
-                DateTime today = DateTime.UtcNow.Date;
-                List<PowerData> pData = await context.PowerIntakes
-                    .Where(x => x.SolarSegmentId == seg.Id)
-                    .Where(x => x.TimeStamp >= today && x.TimeStamp < today.AddDays(1))
-                    .Select(x => new PowerData
-                    {
-                        Intake = x.KW,
-                        Date = x.TimeStamp
-                    })
-                    .OrderBy(x => x.Date)
-                    .ToListAsync();
-
-                foreach (var item in pData)
-                {
-                    TimeZoneInfo mountainTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time");
-                    item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date, mountainTimeZone);
-                }
-
-                if (pData != null && pData.Count > 0)
-                {
-                    _liveDataService.UpdatePowerDataAsync(dashboardId, pData);
-                }
-                else
-                {
-                    _logger.LogError($"{dashboardId}: No data found in power intakes table");
-                    return;
-                }
-            }
+            await _liveDataService.UpdatePowerDataAsync(dashboardId);
         }
     }
 }

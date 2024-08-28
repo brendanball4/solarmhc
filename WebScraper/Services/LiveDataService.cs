@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using solarmhc.Models.Models;
 using System.Collections.Concurrent;
+using System.Runtime.CompilerServices;
 
 namespace solarmhc.Models.Services
 {
@@ -10,6 +11,7 @@ namespace solarmhc.Models.Services
             = new ConcurrentDictionary<string, DashboardData>();
         private readonly ConcurrentDictionary<string, List<PowerData>> _powerData
             = new ConcurrentDictionary<string, List<PowerData>>();
+        private readonly ConcurrentBag<DashboardData> _totalPower;
         private readonly WeatherApiService _weatherApiService;
         private WeatherData _weatherData;
         private readonly PowerDataService _powerDataService;
@@ -180,7 +182,7 @@ namespace solarmhc.Models.Services
             return _powerData;
         }
 
-        public async Task SetPowerData(string dashboardId, List<PowerData> pData)
+        public async Task SetPowerData(string dashboardId)
         {
             var newData = await _powerDataService.GetPowerDataForDateAsync(dashboardId);
 
@@ -207,9 +209,9 @@ namespace solarmhc.Models.Services
             await Task.CompletedTask;
         }
 
-        public async Task UpdatePowerDataAsync(string dashboardId, List<PowerData> pData)
+        public async Task UpdatePowerDataAsync(string dashboardId)
         {
-            SetPowerData(dashboardId, pData);
+            await SetPowerData(dashboardId);
             await Task.CompletedTask;
         }
 
@@ -222,6 +224,7 @@ namespace solarmhc.Models.Services
         public decimal CurrentWattage { get; set; }
         public double TotalEmissions { get; set; }
         public double SavedTrees { get; set; }
+        public DateTime TimeStamp { get; set; }
         public bool Status { get; set; }
     }
 

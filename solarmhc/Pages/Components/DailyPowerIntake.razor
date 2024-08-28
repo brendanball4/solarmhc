@@ -5,7 +5,7 @@
 @inject LiveDataService liveDataService
 @implements IDisposable
 
-<ApexChart TItem="PowerData" @ref="chart" Title="Daily Power (kW)" Options="options" Width="@("100%")" Height="500">
+<ApexChart TItem="PowerData" @ref="chart" Title="Daily Power (kWh)" Options="options" Width="@("100%")" Height="500">
     <ApexPointSeries TItem="PowerData" Items="@data" Name="kW" SeriesType="SeriesType.Area" XValue="@(e => e.Date)" YValue="@(e => e.Intake)"  />
 </ApexChart>
 
