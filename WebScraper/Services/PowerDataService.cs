@@ -24,9 +24,12 @@ namespace solarmhc.Models.Services
             {
                 var _context = scope.ServiceProvider.GetService<SolarMHCDbContext>();
 
+                var mountainTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time");
+                var mountainNow = TimeZoneInfo.ConvertTime(DateTime.Now, mountainTimeZone);
+
                 SolarSegment seg = await _context.SolarSegments.Where(x => x.Name == dashboardId).FirstOrDefaultAsync();
                 List<PowerData> pData = await _context.PowerIntakes
-                    .Where(x => x.SolarSegmentId == seg.Id && x.TimeStamp.Date == DateTime.Now.Date)
+                    .Where(x => x.SolarSegmentId == seg.Id && x.TimeStamp.Date.Day == mountainNow.Date.Day)
                     .Select(x => new PowerData
                     {
                         Date = x.TimeStamp,
