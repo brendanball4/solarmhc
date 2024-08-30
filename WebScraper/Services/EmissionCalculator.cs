@@ -45,17 +45,61 @@ namespace solarmhc.Models.Services
 
         public double CalculateEnvironmentalImpact(string dashboardId, decimal factor)
         {
-            var totalEnergy = EnergyCalculation(dashboardId);
+            double totalEnergy = EnergyCalculation(dashboardId);
 
             if (factor == Constants.Environmental.Canada.CO2Factor)
             {
-                var emissions = totalEnergy * ((double)factor / 1000);
+                double emissions = totalEnergy * ((double)factor / 1000);
+
+                switch (dashboardId)
+                {
+                    case Constants.Names.SolarEdge:
+                        emissions += (double)Constants.Environmental.StartingStatistics.CO2Emissions.SolarEdge;
+                        break;
+                    case Constants.Names.Sunny:
+                        emissions += (double)Constants.Environmental.StartingStatistics.CO2Emissions.Sunny;
+                        break;
+                    case Constants.Names.APS:
+                        emissions += (double)Constants.Environmental.StartingStatistics.CO2Emissions.APS;
+                        break;
+                    case Constants.Names.Huawei:
+                        emissions += (double)Constants.Environmental.StartingStatistics.CO2Emissions.Huawei;
+                        break;
+                    case Constants.Names.Fronius:
+                        emissions += (double)Constants.Environmental.StartingStatistics.CO2Emissions.Fronius;
+                        break;
+                    default:
+                        break;
+                }
+
                 _logger.LogInformation($"Calculating CO2 Emissions saved. ({emissions} kg of CO2 saved)");
                 return emissions;
             }
             else if (factor == Constants.Environmental.Canada.Trees)
             {
                 var trees = totalEnergy * (double)factor;
+
+                switch (dashboardId)
+                {
+                    case Constants.Names.SolarEdge:
+                        trees += (double)Constants.Environmental.StartingStatistics.TreesPlanted.SolarEdge;
+                        break;
+                    case Constants.Names.Sunny:
+                        trees += (double)Constants.Environmental.StartingStatistics.TreesPlanted.Sunny;
+                        break;
+                    case Constants.Names.APS:
+                        trees += (double)Constants.Environmental.StartingStatistics.TreesPlanted.APS;
+                        break;
+                    case Constants.Names.Huawei:
+                        trees += (double)Constants.Environmental.StartingStatistics.TreesPlanted.Huawei;
+                        break;
+                    case Constants.Names.Fronius:
+                        trees += (double)Constants.Environmental.StartingStatistics.TreesPlanted.Fronius;
+                        break;
+                    default:
+                        break;
+                }
+
                 _logger.LogInformation($"Calculating Equivalent Trees planted. ({trees} trees planted)");
                 return trees;
             }

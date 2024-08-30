@@ -101,7 +101,6 @@ C:\Users\Wanatda\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.Web.pd
 C:\Users\Wanatda\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.Web.genruntimeconfig.cache
 C:\Users\Wanatda\source\repos\solarmhc\solarmhc\obj\Debug\net6.0\ref\solarmhc.Web.dll
 C:\Users\ITEC\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\appsettings.Development.json
-C:\Users\ITEC\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\appsettings.json
 C:\Users\ITEC\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\solarmhc.Web.staticwebassets.runtime.json
 C:\Users\ITEC\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\solarmhc.Web.exe
 C:\Users\ITEC\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\solarmhc.Web.deps.json
@@ -397,3 +396,9 @@ C:\Users\Brendan\Documents\solarmhc\solarmhc\obj\Debug\net6.0\refint\solarmhc.We
 C:\Users\Brendan\Documents\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.Web.pdb
 C:\Users\Brendan\Documents\solarmhc\solarmhc\obj\Debug\net6.0\solarmhc.Web.genruntimeconfig.cache
 C:\Users\Brendan\Documents\solarmhc\solarmhc\obj\Debug\net6.0\ref\solarmhc.Web.dll
+C:\Users\ITEC\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\publish\web.config
+C:\Users\ITEC\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\publish\appsettings.Development.json
+C:\Users\ITEC\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\publish\appsettings.json
+C:\Users\ITEC\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\publish\solarmhc.Web.deps.json
+C:\Users\ITEC\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\publish\solarmhc.Web.runtimeconfig.json
+C:\Users\ITEC\source\repos\solarmhc\solarmhc\bin\Debug\net6.0\appsettings.json

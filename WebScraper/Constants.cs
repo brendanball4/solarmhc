@@ -21,7 +21,7 @@ namespace solarmhc.Models
 
         public static class Capacities
         {
-            public const double SolarEdge = 20;
+            public const double SolarEdge = 25;
             public const double Sunny = 25;
             public const double APS = 25;
             public const double Huawei = 25;
@@ -36,6 +36,25 @@ namespace solarmhc.Models
 
         public static class Environmental
         {
+            public static class StartingStatistics
+            {
+                public static class CO2Emissions
+                {
+                    public const decimal SolarEdge = 65837;
+                    public const decimal Sunny = 95840;
+                    public const decimal APS = 157020;
+                    public const decimal Huawei = 174600;
+                    public const decimal Fronius = 91070;
+                }
+                public static class TreesPlanted
+                {
+                    public const decimal SolarEdge = 1965;
+                    public const decimal Sunny = 1600;
+                    public const decimal APS = 1841;
+                    public const decimal Huawei = 2047;
+                    public const decimal Fronius = 2000;
+                }
+            }
             public static class Canada
             {
                 public const decimal CO2Factor = 392;
