@@ -26,7 +26,7 @@ namespace solarmhc.Models
             public const double APS = 25;
             public const double Huawei = 25;
             public const double Fronius = 25;
-            public const double TotalCapacity = 120;
+            public const double TotalCapacity = 125;
         }
 
         public static class WeatherApi

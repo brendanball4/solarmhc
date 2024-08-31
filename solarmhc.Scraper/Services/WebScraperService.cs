@@ -332,6 +332,7 @@ namespace solarmhc.Scraper.Services
                 try
                 {
                     await Task.Run(() => wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("div#module0"))));
+                    await Task.Delay(5000);
                 }
                 catch (WebDriverTimeoutException ex)
                 {

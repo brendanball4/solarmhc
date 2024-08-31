@@ -37,8 +37,6 @@ namespace solarmhc.Models.Services
                     })
                     .ToListAsync();
 
-                //TODO: UTC?
-
                 return pData;
             }
         }
