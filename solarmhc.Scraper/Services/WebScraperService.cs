@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.DevTools.V125.Debugger;
+using OpenQA.Selenium.DevTools.V125.DOM;
 using OpenQA.Selenium.DevTools.V125.LayerTree;
 using OpenQA.Selenium.DevTools.V125.Media;
 using OpenQA.Selenium.Interactions;
@@ -39,8 +40,16 @@ namespace solarmhc.Scraper.Services
 
         public async Task GenericFetchPowerDataAsync(string dataUrl, string dashboardId, string? dataPage, ScrapingSelectors selectedElements, AuthSelectors? authSelectors, bool cookies, bool iframe)
         {
+            ChromeDriver driver = null;
             // Attempt to grab the ChromeDriver instance for the given dashboardId
-            var driver = _driverManager.GetDriver(dashboardId);
+            try
+            {
+                driver = _driverManager.GetDriver(dashboardId);
+            }
+            catch (Exception)
+            {
+                _driverManager.ReopenChromeDriver(dashboardId);
+            }
 
             // Create a wait object for the webdriver
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
@@ -156,7 +165,7 @@ namespace solarmhc.Scraper.Services
                 if (dashboardId == Constants.Names.APS)
                 {
                     // Run APS specific logic and return out of this entire function.
-                    await FetchPowerDataAPS(driver, dashboardId, wait, loggedIn);
+                    await FetchPowerDataAPS(driver, dashboardId, wait, loggedIn, authSelectors, selectedElements);
                     return;
                 }
 
@@ -182,13 +191,6 @@ namespace solarmhc.Scraper.Services
                 }
 
                 _logger.LogDebug($"{dashboardId} | {CurrentDateTime()}: Current kW = {currentWattage}.");
-
-                if (currentWattage > 30)
-                {
-                    _logger.LogInformation($"{dashboardId} | {CurrentDateTime()}: System is currently displaying watts, converting to kW.");
-                    // Change from Watts to kW for systems that report watts at low utilization
-                    currentWattage /= 1000;
-                }
 
                 // Create utilization percentage based on the current wattage
                 var utilPercentage = (currentWattage / 25) * 100;
@@ -317,7 +319,7 @@ namespace solarmhc.Scraper.Services
             }
         }
 
-        private async Task FetchPowerDataAPS(ChromeDriver driver, string dashboardId, WebDriverWait wait, bool loggedIn)
+        private async Task FetchPowerDataAPS(ChromeDriver driver, string dashboardId, WebDriverWait wait, bool loggedIn, AuthSelectors authSelectors, ScrapingSelectors selectedElements)
         {
             try
             {
@@ -338,37 +340,59 @@ namespace solarmhc.Scraper.Services
                 {
                     // SYSTEM OFFLINE OR ERROR FINDING MODULES
                     _logger.LogError("There was an error finding the elements on the screen. Error: " + ex);
+                    driver.Navigate().GoToUrl(Constants.DataUrls.LoginPages.APS);
+                    var result = TryAuth(dashboardId, authSelectors, driver, wait, selectedElements);
+
+                    if (result)
+                    {
+                        _logger.LogInformation($"{dashboardId} failed to load the correct page. Successful re-login.");
+                        driver.Navigate().GoToUrl(Constants.DataUrls.DataPages.APSData);
+                    }
                 }
                 List<double> wattageValues = new List<double>();
 
                 // Adjust the range based on the number of panels
-                for (int i = 0; i <= 62; i++)
+                try
                 {
-                    try
+                    for (int i = 0; i <= 62; i++)
                     {
-                        // Ensure the driver session is still active before each find
-                        if (driver.SessionId == null)
+                        try
                         {
-                            throw new WebDriverException("WebDriver session is invalid.");
-                        }
+                            // Ensure the driver session is still active before each find
+                            if (driver.SessionId == null)
+                            {
+                                throw new WebDriverException("WebDriver session is invalid.");
+                            }
 
-                        // Locate the wattage element
-                        IWebElement wattageElement = driver.FindElement(By.Id($"module{i}"));
+                            // Locate the wattage element
+                            IWebElement wattageElement = driver.FindElement(By.Id($"module{i}"));
 
-                        // Parse the wattage value and add to the list
-                        if (double.TryParse(wattageElement.Text, out double wattage))
-                        {
-                            wattageValues.Add(wattage);
+                            // Parse the wattage value and add to the list
+                            if (double.TryParse(wattageElement.Text, out double wattage))
+                            {
+                                wattageValues.Add(wattage);
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Could not parse wattage for panel {i}");
+                            }
                         }
-                        else
+                        catch (Exception e)
                         {
-                            Console.WriteLine($"Could not parse wattage for panel {i}");
+                            if (i == maxAttempts)
+                            {
+                                _logger.LogError("Took too many attempts to find the modules. Error: " + e);
+                                SubmitPowerIntakeData(dashboardId, 0, 0, false);
+                                return;
+                            }
+                            Console.WriteLine($"Error fetching wattage for panel {i}: {e.Message}");
                         }
                     }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine($"Error fetching wattage for panel {i}: {e.Message}");
-                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError("Error: " + ex);
+                    throw;
                 }
 
                 double currentKw = wattageValues.Sum() / 1000; // Convert to kW

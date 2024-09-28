@@ -26,7 +26,7 @@ namespace solarmhc.Scraper.Services
             currentWattage = 0;
             try
             {
-                var lines = data.Split('\n');
+                var lines = data.Split('\n'); 
                 if (lines.Length >= 1)
                 {
                     // Clean and parse the W value
@@ -36,15 +36,19 @@ namespace solarmhc.Scraper.Services
                         kwString = lines[0].Replace("kW", "").Replace("\r", "").Trim();
                     } else if (data.Contains(" W"))
                     {
-                        currentWattage /= 1000;
                         kwString = lines[0].Replace("W", "").Replace("\r", "").Trim();
-                    } else
+                    } 
+                    else
                     {
                         kwString = lines[0];
                     }
 
                     if (decimal.TryParse(kwString, out currentWattage))
                     {
+                        if (data.Contains(" W"))
+                        {
+                            currentWattage /= 1000;
+                        }
                         return true;
                     }
                 }
